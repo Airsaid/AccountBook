@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">大大记账本</string>
+
+    <!--Dialog-->
+    <string name="dialog_title">温馨提示</string>
+    <string name="dialog_affirm">确认</string>
+    <string name="dialog_cancel">取消</string>
+    <!--Loading-->
+    <string name="load_msg">正在加载中...</string>
+    <!--标题名-->
+    <string name="title_login">登录</string>
+    <string name="title_register">注册</string>
+    <!--Hint-->
+    <string name="input_hint_empty">输入的内容不能为空</string>
+    <!--土司-->
+    <string name="toast_input_uname_or_pwd">请输入用户名或密码</string>
+    <string name="toast_login_success">登录成功</string>
+    <string name="toast_login_fail">登录失败</string>
+    <string name="toast_register_success">注册成功</string>
+    <string name="toast_register_fail">注册失败</string>
+
+</resources>
