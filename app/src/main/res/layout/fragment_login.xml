@@ -7,8 +7,8 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:stretchColumns="1">
 
         <TableRow>

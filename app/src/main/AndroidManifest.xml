@@ -30,6 +30,8 @@
         <activity android:name=".login.LoginActivity"/>
         <!--注册-->
         <activity android:name=".register.RegisterActivity"/>
+        <!--记账-->
+        <activity android:name=".account.AccountActivity"/>
     </application>
 
 </manifest>

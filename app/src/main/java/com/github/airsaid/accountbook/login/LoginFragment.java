@@ -38,7 +38,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @Override
     public View getLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_login, null);
     }
 
     @Override

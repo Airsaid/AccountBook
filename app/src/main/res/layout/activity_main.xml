@@ -18,4 +18,10 @@
         android:layout_height="wrap_content"
         android:onClick="register"
         android:text="注册"/>
+
+    <Button
+        android:text="记账"
+        android:onClick="account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

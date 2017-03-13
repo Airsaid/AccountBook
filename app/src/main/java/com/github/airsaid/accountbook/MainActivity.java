@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.github.airsaid.accountbook.account.AccountActivity;
 import com.github.airsaid.accountbook.login.LoginActivity;
 import com.github.airsaid.accountbook.register.RegisterActivity;
-import com.github.airsaid.accountbook.util.LogUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,5 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void register(View v){
         startActivity(new Intent(this, RegisterActivity.class));
+    }
+
+    public void account(View v){
+        startActivity(new Intent(this, AccountActivity.class));
     }
 }
