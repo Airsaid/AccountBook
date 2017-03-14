@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--下划线默认颜色-->
+        <item name="com.github.airsaid.accountbook:colorControlNormal">@color/colorControlNormal</item>
     </style>
 
     <!-- Splash主题 -->
@@ -16,5 +18,19 @@
 
     <!-- Toolbar 长按弹出Popup主题 -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <!--按钮样式-->
+    <style name="Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="Button.Default">
+        <item name="android:textColor">@color/textWhite</item>
+        <item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>
+    </style>
+    <style name="Button.Default.Margin">
+        <item name="android:layout_margin">@dimen/margin</item>
+    </style>
+
 
 </resources>

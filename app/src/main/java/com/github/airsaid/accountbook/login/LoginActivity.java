@@ -2,12 +2,12 @@ package com.github.airsaid.accountbook.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.data.source.LoginRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
-import com.github.airsaid.accountbook.util.UiUtils;
 
 /**
  * @author Airsaid
@@ -24,7 +24,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
-        initToolbar(UiUtils.getString(R.string.title_login));
+        Toolbar toolbar = initToolbar("");
+        toolbar.setNavigationIcon(null);
 
         // set fragment
         LoginFragment fragment =

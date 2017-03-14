@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <TableLayout
+    <ImageView
+        android:id="@+id/img_head"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:stretchColumns="1">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_login_name"/>
 
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="用户名："/>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:hint="@string/input_hint_phone"
+        app:counterEnabled="true"
+        app:counterMaxLength="11">
 
-            <EditText
-                android:id="@+id/edt_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入用户名"/>
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="密码："/>
-
-            <EditText
-                android:id="@+id/edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入密码"/>
-        </TableRow>
-
-        <Button
-            android:id="@+id/btn_login"
+        <android.support.design.widget.TextInputEditText
+            app:colorControlNormal="@color/colorPrimaryDark"
+            app:colorControlHighlight="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="登录"/>
-    </TableLayout>
+            android:inputType="phone"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:hint="@string/input_hint_pwd"
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+        app:passwordToggleDrawable="@mipmap/ic_pwd_look"
+        app:passwordToggleTintMode="src_in">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        style="@style/Button.Default.Margin"
+        android:text="@string/login"/>
 
 </LinearLayout>

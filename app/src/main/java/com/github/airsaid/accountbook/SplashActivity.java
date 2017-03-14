@@ -5,11 +5,13 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 import com.github.airsaid.accountbook.base.BaseActivity;
-import com.github.airsaid.accountbook.constants.AppConstants;
-import com.github.airsaid.accountbook.util.SPUtils;
+import com.github.airsaid.accountbook.login.LoginActivity;
+import com.github.airsaid.accountbook.util.AppUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
 
 import butterknife.BindView;
 
@@ -22,6 +24,8 @@ public class SplashActivity extends BaseActivity {
 
     @BindView(R.id.txt_app_name)
     TextView mTxtAppName;
+    @BindView(R.id.txt_version)
+    TextView mTxtVersion;
 
     @Override
     public int getLayoutRes() {
@@ -32,22 +36,34 @@ public class SplashActivity extends BaseActivity {
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "wwfoot.ttf");
         mTxtAppName.setTypeface(typeface);
+        setVersion();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // 判断是否是第一次登录
-                boolean isFirstLogin = (boolean) SPUtils.getSP(mContext
-                        , AppConstants.KEY_IS_FIRST_LOGIN, true);
                 Intent intent = new Intent();
-                if (isFirstLogin) {
+                // 判断用户是否已经登录
+                if (UserUtils.checkLogin()) {
+                    // 进入首页
                     intent.setClass(mContext, MainActivity.class);
                 } else {
-                    intent.setClass(mContext, MainActivity.class);
+                    // 进入登录页
+                    intent.setClass(mContext, LoginActivity.class);
                 }
                 startActivity(intent);
                 finish();
             }
         }, 2000);
+    }
+
+    /**
+     * 设置版本号
+     */
+    private void setVersion() {
+        mTxtVersion.setText("V".concat(AppUtils.getAppVersionName()));
+        AlphaAnimation anim = new AlphaAnimation(0f, 1f);
+        mTxtVersion.startAnimation(anim);
+        anim.setDuration(2000);
+        anim.start();
     }
 }

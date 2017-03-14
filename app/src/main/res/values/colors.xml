@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF6E00</color>
+    <!--<color name="colorPrimary">#FF6E00</color>
     <color name="colorPrimaryDark">#FF6E00</color>
-    <color name="colorAccent">#FF6E00</color>
+    <color name="colorAccent">#FF6E00</color>-->
+    <color name="colorPrimaryDark">#FF82A8</color>
+    <color name="colorPrimary">#FEACC3</color>
+    <color name="colorAccent">#FFBACD</color>
+    <color name="colorControlNormal">#CCCCCC</color>
     <!--页面背景色-->
     <color name="colorBg">#FFFFFF</color>
 
     <!--文字颜色-->
     <color name="textWhite">#FFFFFF</color>
+
+    <color name="black">#333333</color>
+    <color name="gray">#999999</color>
+
 </resources>
