@@ -1,23 +1,23 @@
 <resources>
     <dimen name="margin">15dp</dimen>
 
-    <dimen name="txt_10">10sp</dimen>
-    <dimen name="txt_11">11sp</dimen>
-    <dimen name="txt_12">12sp</dimen>
-    <dimen name="txt_13">13sp</dimen>
-    <dimen name="txt_14">14sp</dimen>
-    <dimen name="txt_15">15sp</dimen>
-    <dimen name="txt_16">16sp</dimen>
-    <dimen name="txt_17">17sp</dimen>
-    <dimen name="txt_18">18sp</dimen>
-    <dimen name="txt_19">19sp</dimen>
-    <dimen name="txt_20">20sp</dimen>
-    <dimen name="txt_21">21sp</dimen>
-    <dimen name="txt_22">22sp</dimen>
-    <dimen name="txt_23">23sp</dimen>
-    <dimen name="txt_24">24sp</dimen>
-    <dimen name="txt_25">25sp</dimen>
-    <dimen name="txt_26">26sp</dimen>
+    <dimen name="text10">10sp</dimen>
+    <dimen name="text11">11sp</dimen>
+    <dimen name="text12">12sp</dimen>
+    <dimen name="text13">13sp</dimen>
+    <dimen name="text14">14sp</dimen>
+    <dimen name="text15">15sp</dimen>
+    <dimen name="text16">16sp</dimen>
+    <dimen name="text17">17sp</dimen>
+    <dimen name="text18">18sp</dimen>
+    <dimen name="text19">19sp</dimen>
+    <dimen name="text20">20sp</dimen>
+    <dimen name="text21">21sp</dimen>
+    <dimen name="text22">22sp</dimen>
+    <dimen name="text23">23sp</dimen>
+    <dimen name="text24">24sp</dimen>
+    <dimen name="text25">25sp</dimen>
+    <dimen name="text26">26sp</dimen>
 
 
 </resources>

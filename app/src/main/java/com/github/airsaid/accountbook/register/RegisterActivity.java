@@ -37,6 +37,6 @@ public class RegisterActivity extends BaseActivity{
         }
 
         // create the presenter
-        new RegisterPersenter(new RegisterRepository(), fragment);
+        new RegisterPresenter(new RegisterRepository(), fragment);
     }
 }

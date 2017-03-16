@@ -15,12 +15,14 @@ public interface RegisterContract {
     interface View extends BaseView<Presenter>{
         void setLoadingIndicator(boolean active);
         void showRegisterSuccess();
-        void showRegisterFail(String msg);
+        void showRegisterFail(Error e);
+        void showGetCodeSuccess();
+        void showGetCodeFail(Error e);
     }
 
     interface Presenter extends BasePresenter{
+        void getCode(String phone);
         void register(User user);
-        boolean checkUserInfo(User user);
     }
 
 }

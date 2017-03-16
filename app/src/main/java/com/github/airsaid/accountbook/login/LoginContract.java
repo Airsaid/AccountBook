@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.login;
 
 import com.github.airsaid.accountbook.base.BasePresenter;
 import com.github.airsaid.accountbook.base.BaseView;
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 
 /**
@@ -15,7 +16,7 @@ public interface LoginContract {
     interface View extends BaseView<Presenter>{
         void setLoadingIndicator(boolean active);
         void showLoginSuccess();
-        void showLoginFail(String msg);
+        void showLoginFail(Error e);
     }
 
     interface Presenter extends BasePresenter{

@@ -19,13 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:hint="@string/input_hint_phone"
+        android:hint="@string/hint_phone"
         app:counterEnabled="true"
         app:counterMaxLength="11">
 
         <android.support.design.widget.TextInputEditText
-            app:colorControlNormal="@color/colorPrimaryDark"
-            app:colorControlHighlight="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"/>
@@ -38,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
-        android:hint="@string/input_hint_pwd"
+        android:hint="@string/hint_pwd"
         app:counterEnabled="true"
         app:counterMaxLength="16"
         app:passwordToggleDrawable="@mipmap/ic_pwd_look"
@@ -53,7 +51,33 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_login"
-        style="@style/Button.Default.Margin"
+        style="@style/Button.Default"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
         android:text="@string/login"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/txt_forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_password"/>
+
+        <TextView
+            android:id="@+id/txt_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/register"
+            android:textColor="@color/colorAccent"/>
+    </RelativeLayout>
+
 
 </LinearLayout>

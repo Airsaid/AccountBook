@@ -1,5 +1,6 @@
 package com.github.airsaid.accountbook.data.source;
 
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 
 /**
@@ -12,7 +13,7 @@ public interface LoginDataSource {
 
     interface LoginCallback{
         void loginSuccess();
-        void loginFail(String msg);
+        void loginFail(Error e);
     }
 
     void login(User user, LoginCallback callback);

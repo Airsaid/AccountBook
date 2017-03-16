@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -102,7 +103,7 @@ public class UiUtils {
      */
     public static boolean checkEmpty(EditText editText) {
         if(TextUtils.isEmpty(editText.getText().toString())){
-            ToastUtils.show(UiUtils.getContext(), UiUtils.getString(R.string.input_hint_empty));
+            ToastUtils.show(UiUtils.getContext(), UiUtils.getString(R.string.hint_empty));
             return true;
         }
         return false;
@@ -129,5 +130,9 @@ public class UiUtils {
             // 设置为透明
             window.setStatusBarColor(0);
         }
+    }
+
+    public static ColorStateList getColorList(int resId) {
+        return ContextCompat.getColorStateList(UiUtils.getContext(), resId);
     }
 }

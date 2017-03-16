@@ -11,10 +11,16 @@ import com.github.airsaid.accountbook.data.User;
 public interface RegisterDataSource {
 
     interface RegisterCallback{
-        void registerSuccess();
-        void registerFail(String msg);
+        void registerSuccess(User user);
+        void registerFail(Error e);
+    }
+
+    interface GetCodeCallback{
+        void getSuccess();
+        void getFail(Error e);
     }
 
     void register(User user, RegisterCallback callback);
 
+    void getCode(String phone, GetCodeCallback callback);
 }

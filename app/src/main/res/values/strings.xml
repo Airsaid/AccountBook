@@ -11,15 +11,27 @@
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
     <!--Hint-->
-    <string name="input_hint_empty">输入的内容不能为空</string>
-    <string name="input_hint_phone">请输入手机号</string>
-    <string name="input_hint_pwd">请输入密码 (6~16位)</string>
+    <string name="hint_empty">输入的内容不能为空</string>
+    <string name="hint_phone">请输入手机号</string>
+    <string name="hint_pwd">请输入密码</string>
+    <string name="hint_code">请输入验证码</string>
+    <string name="hint_right_phone">手机号输入有误</string>
+    <string name="hint_right_password">密码输入有误(6&#8211;16位字母数字组合)</string>
+    <string name="hint_right_code">验证码输入有误</string>
+    <string name="hint_right_phone_or_password">请输入正确的手机号或密码</string>
     <!--土司-->
-    <string name="toast_input_uname_or_pwd">请输入用户名或密码</string>
+    <string name="toast_input_name_or_pwd">请输入用户名或密码</string>
     <string name="toast_login_success">登录成功</string>
     <string name="toast_login_fail">登录失败</string>
     <string name="toast_register_success">注册成功</string>
     <string name="toast_register_fail">注册失败</string>
+    <string name="toast_get_code_success">获取验证码成功</string>
+
+
     <string name="login">登录</string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="register">注册</string>
+    <string name="get_code">获取验证码</string>
+    <string name="reset_get">重新获取</string>
 
 </resources>

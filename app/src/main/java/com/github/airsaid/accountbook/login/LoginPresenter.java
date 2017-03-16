@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.login;
 
 import android.text.TextUtils;
 
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.source.LoginDataSource;
 import com.github.airsaid.accountbook.data.source.LoginRepository;
@@ -34,16 +35,16 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            public void loginFail(String msg) {
+            public void loginFail(Error e) {
                 mView.setLoadingIndicator(false);
-                mView.showLoginFail(msg);
+                mView.showLoginFail(e);
             }
         });
     }
 
     @Override
     public boolean checkUserInfo(User user) {
-        String username = user.username;
+        String username = user.phone;
         String password = user.password;
         if(TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
             return false;
