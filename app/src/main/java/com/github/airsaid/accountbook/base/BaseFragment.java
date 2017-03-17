@@ -152,6 +152,13 @@ public abstract class BaseFragment extends Fragment {
      * 返回事件，默认退出当前 activity
      */
     protected void onBack(){
+        finish();
+    }
+
+    /**
+     * 销毁当前挂载的 Activity
+     */
+    protected void finish(){
         mActivity.finish();
     }
 

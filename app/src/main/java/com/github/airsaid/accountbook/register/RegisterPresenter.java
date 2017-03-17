@@ -1,8 +1,9 @@
 package com.github.airsaid.accountbook.register;
 
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
-import com.github.airsaid.accountbook.data.source.RegisterDataSource;
-import com.github.airsaid.accountbook.data.source.RegisterRepository;
+import com.github.airsaid.accountbook.data.source.UserDataSource;
+import com.github.airsaid.accountbook.data.source.UserRepository;
 
 /**
  * @author Airsaid
@@ -12,40 +13,21 @@ import com.github.airsaid.accountbook.data.source.RegisterRepository;
  */
 public class RegisterPresenter implements RegisterContract.Presenter {
 
-    private final RegisterRepository mRepository;
+    private final UserRepository mRepository;
     private final RegisterContract.View mView;
 
-    public RegisterPresenter(RegisterRepository repository, RegisterContract.View view){
+    public RegisterPresenter(UserRepository repository, RegisterContract.View view){
         mRepository = repository;
         mView = view;
         mView.setPresenter(this);
     }
 
     @Override
-    public void getCode(String phone) {
-        mView.setLoadingIndicator(true);
-        mRepository.getCode(phone, new RegisterDataSource.GetCodeCallback() {
-            @Override
-            public void getSuccess() {
-                mView.setLoadingIndicator(false);
-                mView.showGetCodeSuccess();
-            }
-
-            @Override
-            public void getFail(Error e) {
-                mView.setLoadingIndicator(false);
-                mView.showGetCodeFail(e);
-            }
-        });
-    }
-
-    @Override
     public void register(User user) {
         mView.setLoadingIndicator(true);
-        mRepository.register(user, new RegisterDataSource.RegisterCallback() {
-
+        mRepository.register(user, new UserDataSource.RegisterCallback() {
             @Override
-            public void registerSuccess(User user) {
+            public void registerSuccess() {
                 mView.setLoadingIndicator(false);
                 mView.showRegisterSuccess();
             }
@@ -54,6 +36,24 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             public void registerFail(Error e) {
                 mView.setLoadingIndicator(false);
                 mView.showRegisterFail(e);
+            }
+        });
+    }
+
+    @Override
+    public void verifyPhone(String code) {
+        mView.setLoadingIndicator(true);
+        mRepository.verifyPhone(code, new UserDataSource.VerifyPhoneCallback() {
+            @Override
+            public void verifySuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showVerifyPhoneSuccess();
+            }
+
+            @Override
+            public void verifyFail(Error e) {
+                mView.setLoadingIndicator(false);
+                mView.showVerifyPhoneFail(e);
             }
         });
     }

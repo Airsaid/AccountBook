@@ -11,13 +11,15 @@ import com.avos.avoscloud.AVException;
 public class Error {
 
     private AVException e;
+    public int code;
 
     public Error(AVException e){
         this.e = e;
+        this.code = e.getCode();
     }
 
     public int getCode(){
-        return e.getCode();
+        return code;
     }
 
     public Throwable getCause(){

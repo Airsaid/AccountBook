@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.register;
 
 import com.github.airsaid.accountbook.base.BasePresenter;
 import com.github.airsaid.accountbook.base.BaseView;
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 
 /**
@@ -16,13 +17,13 @@ public interface RegisterContract {
         void setLoadingIndicator(boolean active);
         void showRegisterSuccess();
         void showRegisterFail(Error e);
-        void showGetCodeSuccess();
-        void showGetCodeFail(Error e);
+        void showVerifyPhoneSuccess();
+        void showVerifyPhoneFail(Error e);
     }
 
     interface Presenter extends BasePresenter{
-        void getCode(String phone);
         void register(User user);
+        void verifyPhone(String code);
     }
 
 }

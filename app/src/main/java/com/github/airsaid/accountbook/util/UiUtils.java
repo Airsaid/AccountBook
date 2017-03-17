@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -13,8 +14,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 
+import com.github.airsaid.accountbook.MainActivity;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseApplication;
+import com.github.airsaid.accountbook.login.LoginActivity;
 
 
 /**
@@ -129,6 +132,45 @@ public class UiUtils {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // 设置为透明
             window.setStatusBarColor(0);
+        }
+    }
+
+    /**
+     * 进入首页
+     */
+    public static void enterHomePage(Context context){
+        ActivityManager.getInstance().popAllActivity();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+        if(context instanceof  Activity){
+            ((Activity)context).finish();
+        }
+    }
+
+    /**
+     * 进入登录页
+     * @param context 上下文
+     */
+    public static void enterLoginPage(Context context){
+        enterLoginPage(context, false);
+    }
+
+    /**
+     * 进入登录页
+     * @param context  上下文
+     * @param isFinish 是否关闭当前 Activity
+     */
+    public static void enterLoginPage(Context context, boolean isFinish){
+        ActivityManager.getInstance().popAllActivity();
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if(!(context instanceof Activity)){
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
+        if(isFinish && context instanceof Activity){
+            ((Activity)context).finish();
         }
     }
 

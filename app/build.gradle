@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
@@ -15,6 +18,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [
+                    "leancloud_appid" : properties.getProperty("leancloud.appid"),
+                    "leancloud_appkey" : properties.getProperty("leancloud.appkey")
+            ]
+        }
+        debug {
+            minifyEnabled false
+            manifestPlaceholders = [
+                    "leancloud_appid" : properties.getProperty("leancloud.appid"),
+                    "leancloud_appkey" : properties.getProperty("leancloud.appkey")
+            ]
         }
     }
 
@@ -27,6 +42,7 @@ android {
     lintOptions {
         abortOnError false
     }
+
 
     apply plugin: 'com.android.application'
     apply plugin: 'com.neenbedankt.android-apt'

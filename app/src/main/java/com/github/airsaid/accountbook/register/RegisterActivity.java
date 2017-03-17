@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
-import com.github.airsaid.accountbook.data.source.RegisterRepository;
+import com.github.airsaid.accountbook.data.source.UserRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
@@ -13,7 +13,7 @@ import com.github.airsaid.accountbook.util.UiUtils;
  * @author Airsaid
  * @Date 2017/2/21 22:01
  * @Blog http://blog.csdn.net/airsaid
- * @Desc 注册 Activitiy
+ * @Desc 注册 Activity
  */
 public class RegisterActivity extends BaseActivity{
 
@@ -37,6 +37,6 @@ public class RegisterActivity extends BaseActivity{
         }
 
         // create the presenter
-        new RegisterPresenter(new RegisterRepository(), fragment);
+        new RegisterPresenter(new UserRepository(), fragment);
     }
 }

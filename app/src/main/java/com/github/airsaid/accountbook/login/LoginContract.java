@@ -17,11 +17,17 @@ public interface LoginContract {
         void setLoadingIndicator(boolean active);
         void showLoginSuccess();
         void showLoginFail(Error e);
+        void showSendVerifyCodeSuccess();
+        void showSendVerifyCodeFail(Error e);
+        void showVerifyPhoneSuccess();
+        void showVerifyPhoneFail(Error e);
     }
 
     interface Presenter extends BasePresenter{
-        void login(User user);
         boolean checkUserInfo(User user);
+        void login(User user);
+        void requestPhoneVerify(String phone);
+        void verifyPhone(String code);
     }
 
 }

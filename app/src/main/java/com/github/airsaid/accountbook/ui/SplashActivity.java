@@ -1,4 +1,4 @@
-package com.github.airsaid.accountbook;
+package com.github.airsaid.accountbook.ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
+import com.github.airsaid.accountbook.MainActivity;
+import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.login.LoginActivity;
 import com.github.airsaid.accountbook.util.AppUtils;

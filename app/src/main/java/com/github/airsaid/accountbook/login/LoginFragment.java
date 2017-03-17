@@ -3,6 +3,7 @@ package com.github.airsaid.accountbook.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.register.RegisterActivity;
+import com.github.airsaid.accountbook.ui.dialog.VerifyPhoneDialog;
 import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
@@ -43,9 +45,10 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     @BindView(R.id.btn_login)
     Button mBtnLogin;
 
-    private LoginContract.Presenter mPresenter;
     private EditText mEdtPhone;
     private EditText mEdtPassword;
+    private LoginContract.Presenter mPresenter;
+    private VerifyPhoneDialog mVerifyPhoneDialog;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -60,6 +63,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
         mEdtPhone = mTilPhone.getEditText();
         mEdtPassword = mTilPassword.getEditText();
+        if(mEdtPassword == null) return;
         mEdtPassword.setOnFocusChangeListener(this);
 
         mEdtPhone.addTextChangedListener(new TextWatcher() {
@@ -114,6 +118,58 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
 
     @Override
     public void showLoginFail(Error e) {
+        // 判断手机号是否未验证
+        if(215 == e.code){
+            // 提示用户验证手机
+            Snackbar.make(mImgHead, UiUtils.getString(R.string.hint_verify_phone),  Snackbar.LENGTH_LONG)
+                    .setAction(UiUtils.getString(R.string.verify), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String phone = mEdtPhone.getText().toString();
+                            if(!RegexUtils.checkPhone(phone)){
+                                ToastUtils.show(mContext, UiUtils.getString(R.string.hint_right_phone));
+                            }else{
+                                mPresenter.requestPhoneVerify(phone);
+                            }
+
+                            mVerifyPhoneDialog = new VerifyPhoneDialog();
+                            mVerifyPhoneDialog.show(getChildFragmentManager(), "dialog");
+                            mVerifyPhoneDialog.setOnVerifyPhoneCallback(new VerifyPhoneDialog.OnVerifyPhoneCallback() {
+                                @Override
+                                public void onVerifySuccess(String code) {
+                                    mPresenter.verifyPhone(code);
+                                }
+
+                                @Override
+                                public void onVerifyFail(String msg) {
+                                    ToastUtils.show(mContext, msg);
+                                }
+                            });
+                        }
+                    }).show();
+        }else{
+            ToastUtils.show(mContext, e.getMessage());
+        }
+    }
+
+    @Override
+    public void showSendVerifyCodeSuccess() {
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_send_code));
+    }
+
+    @Override
+    public void showSendVerifyCodeFail(Error e) {
+        ToastUtils.show(mContext, e.getMessage());
+    }
+
+    @Override
+    public void showVerifyPhoneSuccess() {
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_verify_phone_success));
+        mVerifyPhoneDialog.dismiss();
+    }
+
+    @Override
+    public void showVerifyPhoneFail(Error e) {
         ToastUtils.show(mContext, e.getMessage());
     }
 
@@ -129,6 +185,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                 login();
                 break;
             case R.id.txt_forget_password:
+                ToastUtils.show(mContext, "开发中...");
                 break;
             case R.id.txt_register:
                 startActivity(new Intent(mContext, RegisterActivity.class));

@@ -12,6 +12,7 @@
 
     <!--文字颜色-->
     <color name="textWhite">#FFFFFF</color>
+    <color name="textBlack">#333333</color>
 
     <color name="black">#333333</color>
     <color name="gray">#999999</color>

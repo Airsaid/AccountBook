@@ -17,48 +17,17 @@
         android:id="@+id/til_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:hint="@string/hint_phone"
+        android:layout_margin="@dimen/margin"
         app:counterEnabled="true"
         app:counterMaxLength="11">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/hint_phone"
             android:inputType="phone"/>
 
     </android.support.design.widget.TextInputLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin">
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_code"
-                android:inputType="number"
-                android:maxLength="6"
-                android:textSize="@dimen/text14"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/btn_get_code"
-            style="@style/Button.Small"
-            android:layout_gravity="center_vertical"
-            android:text="@string/get_code"/>
-    </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_password"
@@ -66,14 +35,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
-        android:hint="@string/hint_pwd"
         app:counterEnabled="true"
         app:counterMaxLength="16"
         app:passwordToggleDrawable="@mipmap/ic_pwd_look"
         app:passwordToggleTintMode="src_in">
-\
+
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
+            android:hint="@string/hint_pwd"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
 

@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">大大记账本</string>
-
+    <string name="application_initialization_failed">应用初始化失败，请自行配置帐号。</string>
     <!--Dialog-->
     <string name="dialog_title">温馨提示</string>
     <string name="dialog_affirm">确认</string>
     <string name="dialog_cancel">取消</string>
+    <string name="dialog_finish">完成</string>
     <!--Loading-->
-    <string name="load_msg">正在加载中...</string>
+    <string name="load_msg">正在加载中&#8230;</string>
     <!--标题名-->
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
@@ -15,17 +16,21 @@
     <string name="hint_phone">请输入手机号</string>
     <string name="hint_pwd">请输入密码</string>
     <string name="hint_code">请输入验证码</string>
+    <string name="hint_receive_code">请输入收到的验证码</string>
     <string name="hint_right_phone">手机号输入有误</string>
     <string name="hint_right_password">密码输入有误(6&#8211;16位字母数字组合)</string>
     <string name="hint_right_code">验证码输入有误</string>
     <string name="hint_right_phone_or_password">请输入正确的手机号或密码</string>
+    <string name="hint_verify_phone">手机号未验证，请先验证。</string>
     <!--土司-->
     <string name="toast_input_name_or_pwd">请输入用户名或密码</string>
     <string name="toast_login_success">登录成功</string>
     <string name="toast_login_fail">登录失败</string>
-    <string name="toast_register_success">注册成功</string>
+    <string name="toast_register_success">恭喜您，注册成功~</string>
     <string name="toast_register_fail">注册失败</string>
     <string name="toast_get_code_success">获取验证码成功</string>
+    <string name="toast_send_code">验证码已发送</string>
+    <string name="toast_verify_phone_success">手机号验证成功</string>
 
 
     <string name="login">登录</string>
@@ -33,5 +38,7 @@
     <string name="register">注册</string>
     <string name="get_code">获取验证码</string>
     <string name="reset_get">重新获取</string>
+    <string name="verify_phone">验证手机号</string>
+    <string name="verify">验证</string>
 
 </resources>

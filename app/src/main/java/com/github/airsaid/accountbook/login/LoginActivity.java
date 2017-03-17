@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
-import com.github.airsaid.accountbook.data.source.LoginRepository;
+import com.github.airsaid.accountbook.data.source.UserRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
 
 /**
@@ -38,7 +38,7 @@ public class LoginActivity extends BaseActivity {
         }
 
         // create the presenter
-        new LoginPresenter(new LoginRepository(), fragment);
+        new LoginPresenter(new UserRepository(), fragment);
     }
 
 
