@@ -18,6 +18,7 @@ import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.forgetpwd.ForgetPasswordActivity;
 import com.github.airsaid.accountbook.register.RegisterActivity;
 import com.github.airsaid.accountbook.ui.dialog.VerifyPhoneDialog;
 import com.github.airsaid.accountbook.util.ProgressUtils;
@@ -185,7 +186,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                 login();
                 break;
             case R.id.txt_forget_password:
-                ToastUtils.show(mContext, "开发中...");
+                startActivity(new Intent(mContext, ForgetPasswordActivity.class));
                 break;
             case R.id.txt_register:
                 startActivity(new Intent(mContext, RegisterActivity.class));

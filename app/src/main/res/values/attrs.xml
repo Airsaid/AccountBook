@@ -38,4 +38,14 @@
         <attr name="defaultImage" format="integer|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="VerifyCodeButton">
+        <!--默认 Button 背景-->
+        <attr name="android:background"/>
+        <!--点击获取验证码后 Button 背景-->
+        <attr name="vcb_clickAfterBackground" format="reference"/>
+        <!--倒计时时间，单位为秒-->
+        <attr name="vcb_countdownTime" format="integer"/>
+        <!--倒计时后的提示文字，如：重新获取-->
+        <attr name="vcb_afterCountdownText" format="string"/>
+    </declare-styleable>
 </resources>

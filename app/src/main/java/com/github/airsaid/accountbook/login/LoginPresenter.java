@@ -45,7 +45,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void requestPhoneVerify(String phone) {
         mView.setLoadingIndicator(true);
-        mRepository.requestPhoneVerify(phone, new UserDataSource.sendVerifyCodeCallback() {
+        mRepository.requestPhoneVerify(phone, new UserDataSource.SendVerifyCodeCallback() {
             @Override
             public void sendVerifyCodeSuccess() {
                 mView.setLoadingIndicator(false);

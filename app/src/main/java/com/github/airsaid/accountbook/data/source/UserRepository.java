@@ -5,7 +5,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
-import com.avos.avoscloud.RequestMobileCodeCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
@@ -36,6 +35,7 @@ public class UserRepository implements UserDataSource {
                 if (e == null) {
                     callback.registerSuccess();
                 } else {
+                    e.printStackTrace();
                     callback.registerFail(new Error(e));
                 }
             }
@@ -55,6 +55,7 @@ public class UserRepository implements UserDataSource {
                 if(e == null){
                     callback.loginSuccess();
                 }else{
+                    e.printStackTrace();
                     callback.loginFail(new Error(e));
                 }
             }
@@ -74,6 +75,7 @@ public class UserRepository implements UserDataSource {
                 if(e == null){
                     callback.verifySuccess();
                 } else {
+                    e.printStackTrace();
                     callback.verifyFail(new Error(e));
                 }
             }
@@ -86,14 +88,56 @@ public class UserRepository implements UserDataSource {
      * @param callback
      */
     @Override
-    public void requestPhoneVerify(String phone, final sendVerifyCodeCallback callback) {
-        AVUser.requestMobilePhoneVerifyInBackground(phone, new RequestMobileCodeCallback() {
+    public void requestPhoneVerify(String phone, final SendVerifyCodeCallback callback) {
+        AVUser.requestMobilePhoneVerifyInBackground(phone, new com.avos.avoscloud.RequestMobileCodeCallback() {
             @Override
             public void done(AVException e) {
                 if(e == null){
                     callback.sendVerifyCodeSuccess();
                 } else {
+                    e.printStackTrace();
                     callback.sendVerifyCodeFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    /**
+     * 发送手机号码重置密码的验证码
+     * @param phone
+     * @param callback
+     */
+    @Override
+    public void requestPasswordResetBySmsCode(String phone, final RequestMobileCodeCallback callback) {
+        AVUser.requestPasswordResetBySmsCodeInBackground(phone, new com.avos.avoscloud.RequestMobileCodeCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e == null) {
+                    callback.requestSuccess();
+                } else {
+                    e.printStackTrace();
+                    callback.requestFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    /**
+     * 手机号码重置密码
+     * @param code
+     * @param newPassword
+     * @param callback
+     */
+    @Override
+    public void resetPasswordBySmsCode(String code, String newPassword, final UpdatePasswordCallback callback) {
+        AVUser.resetPasswordBySmsCodeInBackground(code, newPassword, new com.avos.avoscloud.UpdatePasswordCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e == null) {
+                    callback.updateSuccess();
+                } else {
+                    e.printStackTrace();
+                    callback.updateFail(new Error(e));
                 }
             }
         });

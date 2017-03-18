@@ -11,10 +11,12 @@
     <!--标题名-->
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
+    <string name="title_forget_password">找回密码</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
     <string name="hint_pwd">请输入密码</string>
+    <string name="hint_new_pwd">请输入新密码</string>
     <string name="hint_code">请输入验证码</string>
     <string name="hint_receive_code">请输入收到的验证码</string>
     <string name="hint_right_phone">手机号输入有误</string>
@@ -31,6 +33,7 @@
     <string name="toast_get_code_success">获取验证码成功</string>
     <string name="toast_send_code">验证码已发送</string>
     <string name="toast_verify_phone_success">手机号验证成功</string>
+    <string name="toast_update_password_success">密码修改成功</string>
 
 
     <string name="login">登录</string>
@@ -40,5 +43,6 @@
     <string name="reset_get">重新获取</string>
     <string name="verify_phone">验证手机号</string>
     <string name="verify">验证</string>
+    <string name="finish">完成</string>
 
 </resources>

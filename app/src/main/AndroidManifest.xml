@@ -38,6 +38,8 @@
         <activity android:name=".register.RegisterActivity"/>
         <!--记账-->
         <activity android:name=".account.AccountActivity"/>
+        <!--找回密码-->
+        <activity android:name=".forgetpwd.ForgetPasswordActivity"/>
     </application>
 
 </manifest>

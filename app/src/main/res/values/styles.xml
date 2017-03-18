@@ -9,6 +9,19 @@
         <!--下划线默认颜色-->
         <item name="com.github.airsaid.accountbook:colorControlNormal">@color/colorControlNormal</item>
         <item name="android:textSize">@dimen/text14</item>
+        <!--配置 Activity 跳转动画-->
+        <item name="android:windowAnimationStyle">@style/activityAnim</item>
+    </style>
+
+    <style name="activityAnim">
+        <!--用于设置打开新的Activity并进入新的Activity展示的动画-->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <!--用于设置打开新的Activity并销毁之前的Activity展示的动画-->
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <!--用于设置关闭当前Activity进入上一个Activity展示的动画-->
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <!--用于设置关闭当前Activity时展示的动画-->
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
     <!-- Splash主题 -->
@@ -24,22 +37,23 @@
     <style name="Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text14</item>
     </style>
 
     <style name="Button.Default">
         <item name="android:textColor">@color/textWhite</item>
-        <item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>
+        <item name="android:background">@drawable/bg_button_default</item>
+        <!--<item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>-->
     </style>
 
     <style name="Button.Default.Margin">
         <item name="android:layout_margin">@dimen/margin</item>
     </style>
-    <style name="Button.Small">
+    <style name="Button.Default.Small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">35dp</item>
-        <item name="android:textColor">@color/textWhite</item>
         <item name="android:textSize">@dimen/text12</item>
-        <item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>
+        <!--<item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>-->
     </style>
 
 

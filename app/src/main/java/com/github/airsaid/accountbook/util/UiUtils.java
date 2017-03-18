@@ -177,4 +177,5 @@ public class UiUtils {
     public static ColorStateList getColorList(int resId) {
         return ContextCompat.getColorStateList(UiUtils.getContext(), resId);
     }
+
 }

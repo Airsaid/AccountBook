@@ -32,11 +32,26 @@ public interface UserDataSource {
 
     void verifyPhone(String code, VerifyPhoneCallback callback);
 
-    interface sendVerifyCodeCallback{
+    interface SendVerifyCodeCallback {
         void sendVerifyCodeSuccess();
         void sendVerifyCodeFail(Error e);
     }
 
-    void requestPhoneVerify(String phone, sendVerifyCodeCallback callback);
+    void requestPhoneVerify(String phone, SendVerifyCodeCallback callback);
+
+
+    interface RequestMobileCodeCallback {
+        void requestSuccess();
+        void requestFail(Error e);
+    }
+
+    void requestPasswordResetBySmsCode(String phone, RequestMobileCodeCallback callback);
+
+    interface UpdatePasswordCallback {
+        void updateSuccess();
+        void updateFail(Error e);
+    }
+
+    void resetPasswordBySmsCode(String phone, String code, UpdatePasswordCallback callback);
 
 }
