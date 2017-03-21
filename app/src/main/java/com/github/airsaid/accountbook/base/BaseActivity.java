@@ -7,8 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.github.airsaid.accountbook.R;
@@ -32,7 +33,7 @@ public abstract class BaseActivity extends SlideBackActivity {
         // 设置 Activity 屏幕方向
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 隐藏 ActionBar
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         this.mContext = this;
 
@@ -151,17 +152,15 @@ public abstract class BaseActivity extends SlideBackActivity {
         finish();
     }
 
-   /* @Override
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(null != this.getCurrentFocus()){
-            *//**
-             * 点击空白位置 隐藏软键盘
-             *//*
+            // 点击空白位置 隐藏软键盘
             InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
         return super.onTouchEvent(event);
-    }*/
+    }
 
     /**
      * 获取布局

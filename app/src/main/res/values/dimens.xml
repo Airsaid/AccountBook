@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="nav_header_height">160dp</dimen>
     <dimen name="margin">15dp</dimen>
 
     <dimen name="text10">10sp</dimen>

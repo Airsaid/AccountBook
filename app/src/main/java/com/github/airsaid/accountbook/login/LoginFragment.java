@@ -114,6 +114,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     @Override
     public void showLoginSuccess() {
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_success));
+        UiUtils.enterHomePage(mContext);
     }
 
     @Override

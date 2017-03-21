@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">大大记账本</string>
     <string name="application_initialization_failed">应用初始化失败，请自行配置帐号。</string>
+    <string name="navigation_drawer_open">打开导航抽屉</string>
+    <string name="navigation_drawer_close">关闭导航抽屉</string>
     <!--Dialog-->
     <string name="dialog_title">温馨提示</string>
     <string name="dialog_affirm">确认</string>

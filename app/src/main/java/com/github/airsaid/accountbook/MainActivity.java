@@ -1,94 +1,83 @@
 package com.github.airsaid.accountbook;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
-import com.github.airsaid.accountbook.account.AccountActivity;
-import com.github.airsaid.accountbook.login.LoginActivity;
-import com.github.airsaid.accountbook.register.RegisterActivity;
+import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.util.ToastUtils;
+import com.github.airsaid.accountbook.util.UiUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import butterknife.BindView;
+import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+    @BindView(R.id.nav_view)
+    NavigationView mNavView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public int getLayoutRes() {
+        return R.layout.activity_main;
     }
 
-    public void login(View v){
-        startActivity(new Intent(this, LoginActivity.class));
+    @Override
+    public void onCreateActivity(@Nullable Bundle savedInstanceState) {
+        initToolbar(UiUtils.getString(R.string.app_name));
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar
+                , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        mNavView.setNavigationItemSelectedListener(this);
     }
 
-    public void register(View v){
-        startActivity(new Intent(this, RegisterActivity.class));
-    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        ToastUtils.show(mContext, "点击了：" + id);
+        if (id == R.id.nav_camera) {
 
-    public void account(View v){
-        startActivity(new Intent(this, AccountActivity.class));
-    }
+        } else if (id == R.id.nav_gallery) {
 
-    public void query(View v){
-        final TextView txtQuery = (TextView) findViewById(R.id.txt_query);
+        } else if (id == R.id.nav_slideshow) {
 
-        final AVQuery<AVObject> startDateQuery = new AVQuery<>("Account");
-        startDateQuery.whereGreaterThanOrEqualTo("date", getDateWithDateString("2017-03"));
+        } else if (id == R.id.nav_manage) {
 
-        final AVQuery<AVObject> endDateQuery = new AVQuery<>("Account");
-        endDateQuery.whereLessThan("date", getDateWithDateString("2017-04"));
+        } else if (id == R.id.nav_share) {
 
-        AVQuery<AVObject> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
-        query.findInBackground(new FindCallback<AVObject>() {
-            @Override
-            public void done(List<AVObject> list, AVException e) {
-                if(e == null){
-                    StringBuilder sb = new StringBuilder();
-                    for (AVObject avObject : list) {
-                        String money = (String) avObject.get("money");
-                        String note = (String) avObject.get("note");
-                        Date date = (Date) avObject.get("date");
-                        sb.append("\r\n金额: " + money);
-                        sb.append("\r\n备注: " + note);
-//                        sb.append("\r\n日期: " + date.toString());
-//                        Calendar c = Calendar.getInstance(Locale.CHINA);
-//                        c.setTime(date);
+        } else if (id == R.id.nav_send) {
 
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-                        String time = format.format(date);
-                        sb.append("\r\n日期: " + time);
-                        Log.d("test", "money: " + money);
-                        Log.d("test", "note: " + note);
-                        Log.d("test", "date: " + date.toString());
-                    }
-                    txtQuery.setText(sb.toString());
-                }
-            }
-        });
-    }
-
-    private Date getDateWithDateString(String dateString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-        Date date = null;
-        try {
-            date = dateFormat.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-        return date;
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @OnClick(R.id.fab)
+    public void onClick() {
+        ToastUtils.show(mContext, "新建账目");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
