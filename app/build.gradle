@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.airsaid.accountbook"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0.0"
@@ -67,4 +67,8 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     // 消息传递库
     compile 'org.greenrobot:eventbus:3.0.0'
+    // 转场动画库
+    compile 'me.immortalz:transitionhelper:1.0.6'
+    // RecyclerView Adapter 库
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.0'
 }

@@ -42,4 +42,16 @@ public class AppConfig {
      */
     public static final int CACHE_SIZE = 104857600;// 100MB
 
+    /**
+     * 支出分类
+     */
+    public static final int TYPE_COST = 1;
+
+    /**
+     * 收入分类
+     */
+    public static final int TYPE_INCOME = 2;
+
+
+
 }

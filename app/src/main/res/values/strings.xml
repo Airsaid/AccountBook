@@ -46,5 +46,10 @@
     <string name="verify_phone">验证手机号</string>
     <string name="verify">验证</string>
     <string name="finish">完成</string>
+    <string name="income">收入</string>
+    <string name="pay">支出</string>
+    <string name="save">保存</string>
+    <string name="money_normal">0.00</string>
+    <string name="say_something">说点什么吧...</string>
 
 </resources>

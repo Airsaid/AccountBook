@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="account_type">
+        <item>一般</item>
+        <item>餐饮</item>
+        <item>交通</item>
+        <item>购物</item>
+        <item>学习</item>
+        <item>医疗</item>
+        <item>水电</item>
+        <item>住房</item>
+        <item>母婴</item>
+        <item>运动</item>
+        <item>丽人</item>
+        <item>生活用品</item>
+        <item>数码</item>
+        <item>娱乐</item>
+        <item>维修</item>
+    </array>
+</resources>

@@ -11,12 +11,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.github.airsaid.accountbook.account.AccountActivity;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import immortalz.me.library.TransitionsHeleper;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,15 +54,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ToastUtils.show(mContext, "点击了：" + id);
         if (id == R.id.nav_camera) {
 
-        } else if (id == R.id.nav_gallery) {
+        }else if(id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        }else if(id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        }else if(id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        }else if(id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        }else if(id == R.id.nav_send) {
 
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -69,7 +71,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @OnClick(R.id.fab)
     public void onClick() {
-        ToastUtils.show(mContext, "新建账目");
+        TransitionsHeleper.startActivity(this, AccountActivity.class, mFab);
     }
 
     @Override

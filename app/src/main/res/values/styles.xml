@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -7,7 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!--下划线默认颜色-->
-        <item name="com.github.airsaid.accountbook:colorControlNormal">@color/colorControlNormal</item>
+        <item name="com.github.airsaid.accountbook:colorControlNormal">@color/colorControlNormal
+        </item>
         <item name="android:textSize">@dimen/text14</item>
         <!--配置 Activity 跳转动画-->
         <item name="android:windowAnimationStyle">@style/activityAnim</item>
@@ -40,6 +41,16 @@
     <!-- Toolbar 长按弹出Popup主题 -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!--分割线样式-->
+    <style name="Divide">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divide_height</item>
+    </style>
+
+    <style name="Divide.Default">
+        <item name="android:background">@color/colorDivide</item>
+    </style>
+
     <!--按钮样式-->
     <style name="Button">
         <item name="android:layout_width">match_parent</item>
@@ -56,6 +67,7 @@
     <style name="Button.Default.Margin">
         <item name="android:layout_margin">@dimen/margin</item>
     </style>
+
     <style name="Button.Default.Small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">35dp</item>
@@ -63,5 +75,24 @@
         <!--<item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>-->
     </style>
 
+    <!--文字样式-->
+    <style name="Text">
+        <item name="android:textSize">@dimen/text14</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Text.Black">
+        <item name="android:textColor">@color/textBlack</item>
+    </style>
+    <style name="Text.White">
+        <item name="android:textColor">@color/textWhite</item>
+    </style>
+    <style name="Text.Brown">
+        <item name="android:textColor">@color/textBrown</item>
+    </style>
+    <style name="Text.Maple">
+        <item name="android:textColor">@color/textMaple</item>
+    </style>
 
 </resources>

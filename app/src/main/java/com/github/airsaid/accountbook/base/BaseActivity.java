@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -74,8 +75,10 @@ public abstract class BaseActivity extends SlideBackActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
         // 设置标题
-        TextView txtTitle = (TextView) findViewById(R.id.txt_title_title);
-        txtTitle.setText(title);
+        if(!TextUtils.isEmpty(title)){
+            TextView txtTitle = (TextView) findViewById(R.id.txt_title_title);
+            txtTitle.setText(title);
+        }
         // 设置左侧图标
         mToolbar.setNavigationIcon(R.mipmap.ic_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

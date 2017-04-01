@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.airsaid.accountbook.MainActivity;
 import com.github.airsaid.accountbook.R;
@@ -176,6 +177,10 @@ public class UiUtils {
 
     public static ColorStateList getColorList(int resId) {
         return ContextCompat.getColorStateList(UiUtils.getContext(), resId);
+    }
+
+    public static void setCompoundDrawables(TextView textView, Drawable left, Drawable top, Drawable right, Drawable bottom){
+        textView.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
     }
 
 }

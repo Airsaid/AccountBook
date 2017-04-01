@@ -206,7 +206,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                 mPresenter.login(user);
             }else{
                 ToastUtils.show(mContext, UiUtils.getString(R.string.hint_right_phone_or_password));
-            }
+            } 
         } else {
             ToastUtils.show(mContext, UiUtils.getString(R.string.toast_input_name_or_pwd));
         }

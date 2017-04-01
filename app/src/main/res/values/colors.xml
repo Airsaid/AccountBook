@@ -7,14 +7,21 @@
     <color name="colorPrimary">#FEACC3</color>
     <color name="colorAccent">#FFBACD</color>
     <color name="colorControlNormal">#CCCCCC</color>
+    <color name="colorDivide">#F9F9F9</color>
     <!--页面背景色-->
     <color name="colorBg">#FFFFFF</color>
-
+    <color name="colorBackground">#F9F9F9</color>
     <!--文字颜色-->
     <color name="textWhite">#FFFFFF</color>
     <color name="textBlack">#333333</color>
+    <color name="textBrown">#6A4A57</color>
+    <color name="textPink">#FE88A8</color>
+    <color name="textMaple">#977F8A</color>
 
     <color name="black">#333333</color>
     <color name="gray">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#91D7E3</color>
+    <color name="colorTabSelect">#FFE0AA</color>
 
 </resources>
