@@ -95,4 +95,12 @@
         <item name="android:textColor">@color/textMaple</item>
     </style>
 
+    <!--数字输入 Dialog 样式-->
+    <style name="DecimalPickerTheme" parent="SimpleNumberPickerTheme">
+        <item name="snpKeyColor">@android:color/white</item>
+        <item name="snpNumberColor">@android:color/white</item>
+        <item name="snpBackspaceColor">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="snpDialogBackground">@color/colorAccent</item>
+    </style>
 </resources>

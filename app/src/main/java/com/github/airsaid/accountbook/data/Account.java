@@ -14,9 +14,20 @@ public class Account {
     // 消费金额
     public String money;
     // 消费类型
-    public String ctype;
+    public String cType;
     // 时间
     public Date date;
     // 备注
     public String note;
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "type=" + type +
+                ", money='" + money + '\'' +
+                ", cType='" + cType + '\'' +
+                ", date=" + date +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -22,8 +22,8 @@
             android:background="@drawable/bg_tb_select"
             android:gravity="center"
             android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:paddingTop="5dp"
             android:text="@string/pay"
             android:textColor="@color/textWhite"
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:paddingTop="5dp"
             android:text="@string/income"
             android:textColor="#fff"

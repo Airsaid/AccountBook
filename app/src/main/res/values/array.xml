@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="account_type">
+    <array name="account_cost_type">
         <item>一般</item>
         <item>餐饮</item>
         <item>交通</item>
@@ -16,5 +16,15 @@
         <item>数码</item>
         <item>娱乐</item>
         <item>维修</item>
+    </array>
+
+    <array name="account_income_type">
+        <item>一般</item>
+        <item>工资</item>
+        <item>零花钱</item>
+        <item>外快</item>
+        <item>投资</item>
+        <item>意外收入</item>
+        <item>红包</item>
     </array>
 </resources>

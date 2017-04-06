@@ -36,6 +36,8 @@
     <string name="toast_send_code">验证码已发送</string>
     <string name="toast_verify_phone_success">手机号验证成功</string>
     <string name="toast_update_password_success">密码修改成功</string>
+    <string name="toast_save_success">保存成功</string>
+    <string name="toast_save_fail">保存失败</string>
 
 
     <string name="login">登录</string>

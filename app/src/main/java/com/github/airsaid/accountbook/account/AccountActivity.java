@@ -17,6 +17,7 @@ import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
+import com.github.airsaid.accountbook.util.AnimUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,9 +73,9 @@ public class AccountActivity extends BaseActivity {
             public void loadCopyView(InfoBean bean, ImageView copyView) {
                 AnimatorSet set = new AnimatorSet();
                 set.playTogether(
-                        ObjectAnimator.ofFloat(copyView, "rotation", 0, 180),
-                        ObjectAnimator.ofFloat(copyView, "scaleX", 1, 0),
-                        ObjectAnimator.ofFloat(copyView, "scaleY", 1, 0)
+                        ObjectAnimator.ofFloat(copyView, AnimUtils.ROTATION, 0, 180),
+                        ObjectAnimator.ofFloat(copyView, AnimUtils.SCALE_X, 1, 0),
+                        ObjectAnimator.ofFloat(copyView, AnimUtils.SCALE_Y, 1, 0)
                 );
                 set.setInterpolator(new AccelerateInterpolator());
                 set.setDuration(duration / 4 * 5).start();
@@ -137,92 +138,4 @@ public class AccountActivity extends BaseActivity {
         }
     }
 
-    /* @OnClick({R.id.txt_type, R.id.txt_consume_type, R.id.txt_date})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.txt_type:
-                final String[] types = {"支出", "收入"};
-                new AlertDialog.Builder(this)
-                        .setTitle("选择类别")
-                        .setItems(types, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mTxtType.setText(types[which]);
-                                mType = which + 1;
-                            }
-                        })
-                        .create()
-                        .show();
-                break;
-            case R.id.txt_consume_type:
-                final String[] ctypes = {"一般", "学习", "餐饮", "交通", "购物", "医疗"};
-                new AlertDialog.Builder(this)
-                        .setTitle("选择类别")
-                        .setItems(ctypes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mTxtConsumeType.setText(ctypes[which]);
-                                mCType = ctypes[which];
-                            }
-                        })
-                        .create()
-                        .show();
-                break;
-            case R.id.txt_date:
-
-                break;
-        }
-    }
-
-    public void save(View v){
-        if(mType == -1){
-            ToastUtils.show(this, "请选择类型");
-            return;
-        }
-
-        if(mCType == null){
-            ToastUtils.show(this, "请选择消费类型");
-            return;
-        }
-
-        String price = mEdtPrice.getText().toString();
-        if(TextUtils.isEmpty(price)){
-            ToastUtils.show(this, "请输入金额");
-            return;
-        }
-
-        String remarks = mEdtRemarks.getText().toString();
-        if(TextUtils.isEmpty(remarks)){
-            ToastUtils.show(this, "请输入备注");
-            return;
-        }
-
-        Account account = new Account();
-        account.type = mType;
-        account.ctype = mCType;
-        account.money = price;
-        account.note = remarks;
-        account.date = mDate;
-        saveAccount(account);
-    }
-
-    private void saveAccount(Account account){
-        AVObject a = new AVObject("Account");
-        a.put("type", account.type);
-        a.put("ctype", account.ctype);
-        a.put("money", account.money);
-        a.put("date", account.date);
-        a.put("note", account.note);
-        a.put("uid", AVUser.getCurrentUser());
-        a.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                if(e == null){
-                    ToastUtils.show(mContext, "保存成功！");
-                }else{
-                    ToastUtils.show(mContext, e.getMessage());
-                }
-            }
-        });
-    }*/
 }

@@ -64,6 +64,12 @@ public class RegexUtils {
     public static final String PASSWORD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
 
     /**
+     * 金额的正则，格式 XXXX （整数位不超过10位，无小数位）或者XXXX.xx（整数位不超过10位，有小数位时必须为2位）
+     * 最大金额 9999999999.99 最小金额 0
+     */
+    public static final String MONEY = "^(([0-9]|([1-9][0-9]{0,9}))((\\.[0-9]{1,2})?))$";
+
+    /**
      * 匹配给定的字符串是否是一个邮箱账号，"www."可省略不写
      *
      * @param string 给定的字符串
@@ -185,5 +191,14 @@ public class RegexUtils {
      */
     public static boolean checkCode(String code){
         return code.length() == 6;
+    }
+
+    /**
+     * 校验输入的金额是否正确
+     * @param money 金额
+     * @return true: 正确 false：不正确
+     */
+    public static boolean checkMoney(String money){
+        return money.matches(MONEY);
     }
 }

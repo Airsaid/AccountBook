@@ -2,6 +2,8 @@ package com.github.airsaid.accountbook.account;
 
 import com.github.airsaid.accountbook.base.BasePresenter;
 import com.github.airsaid.accountbook.base.BaseView;
+import com.github.airsaid.accountbook.data.Account;
+import com.github.airsaid.accountbook.data.Error;
 
 /**
  * @author Airsaid
@@ -13,12 +15,16 @@ public class AccountContract {
 
     interface View extends BaseView<Presenter>{
         void save();
+        void saveSuccess();
+        void saveFail(Error e);
         void selectCost();
         void selectIncome();
-        void showSelectDate();
+        void showSelectDateDialog();
+        void showInputMoneyDialog();
     }
 
     interface Presenter extends BasePresenter{
+        void saveAccount(Account account);
     }
 
 }

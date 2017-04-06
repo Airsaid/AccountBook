@@ -18,4 +18,16 @@ public class ApiConstant {
     /** 测试：文章列表 */
     public static final String HOME_ARTICLES = "api/home/articles";
 
+    /*   数据库表名   */
+    public static final String TAB_ACCOUNT = "Account";
+
+
+    /*   数据库字段名   */
+    public static final String TYPE         = "type";
+    public static final String CTYPE        = "cType";
+    public static final String MONEY        = "money";
+    public static final String DATE         = "date";
+    public static final String NOTE         = "note";
+    public static final String UID          = "uid";
+
 }

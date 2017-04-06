@@ -17,9 +17,17 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.AccountTypeAdapter;
 import com.github.airsaid.accountbook.base.BaseFragment;
+import com.github.airsaid.accountbook.constants.AppConfig;
+import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountType;
+import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.util.AnimUtils;
+import com.github.airsaid.accountbook.util.ArithUtils;
+import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
+import com.sbgapps.simplenumberpicker.decimal.DecimalPickerDialog;
+import com.sbgapps.simplenumberpicker.decimal.DecimalPickerHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +45,7 @@ import butterknife.OnClick;
  * @date 2017/4/1
  * @desc
  */
-public class AccountFragment extends BaseFragment implements AccountContract.View {
+public class AccountFragment extends BaseFragment implements AccountContract.View , DecimalPickerHandler {
 
     @BindView(R.id.txt_type)
     TextView mTxtType;
@@ -51,9 +59,11 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     EditText mEdtNote;
 
     private AccountContract.Presenter mPresenter;
+
     // 记账类型数据
     private List<AccountType> mTypes = new ArrayList<>();
     private AccountTypeAdapter mTypeAdapter;
+    private Account mAccount;
 
     public static AccountFragment newInstance() {
         return new AccountFragment();
@@ -88,31 +98,57 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     /**
      * 初始化数据
      */
-    private void initData(){
+    private void initData() {
+        // 初始化账目对象
+        mAccount = new Account();
+        mAccount.type = AppConfig.TYPE_COST;// 默认支出分类
         // 初始化分类数据
+        initTypeData();
+        // 设置默认日期
+        Calendar calendar = Calendar.getInstance();
+        setSelectData(calendar);
+
+    }
+
+    /**
+     * 初始化分类数据
+     */
+    private void initTypeData() {
         mTypes.clear();
-        String[] types = getResources().getStringArray(R.array.account_type);
+        String[] types;
+        if(mAccount.type == AppConfig.TYPE_COST){
+            types = getResources().getStringArray(R.array.account_cost_type);
+        }else{
+            types = getResources().getStringArray(R.array.account_income_type);
+        }
         for (int i = 0; i < types.length; i++) {
             AccountType type = new AccountType();
-            int resId = getResources().getIdentifier("ic_cost_type_".concat(String.valueOf(i)), "mipmap"
-                            , getActivity().getPackageName());
+            int resId;
+            if(mAccount.type == AppConfig.TYPE_COST){
+                resId = getResources().getIdentifier("ic_cost_type_".concat(String.valueOf(i)), "mipmap"
+                        , getActivity().getPackageName());
+            }else{
+                resId = getResources().getIdentifier("ic_income_type_".concat(String.valueOf(i)), "mipmap"
+                        , getActivity().getPackageName());
+            }
             type.drawable = UiUtils.getDrawable(resId);
             type.type = types[i];
             mTypes.add(type);
         }
         mTypeAdapter.setNewData(mTypes);
-
         // 设置默认分类选中
         setAccountType(0);
-        // 设置默认日期
-        Calendar calendar = Calendar.getInstance();
-        setSelectData(calendar);
     }
 
-    private void setAccountType(int position){
+    /**
+     * 设置消费或收入分类
+     * @param position 选中的位置
+     */
+    private void setAccountType(int position) {
         AccountType type = mTypeAdapter.getData().get(position);
         UiUtils.setCompoundDrawables(mTxtType, type.drawable, null, null, null);
         mTxtType.setText(type.type);
+        mAccount.cType = type.type;
     }
 
     @Override
@@ -120,9 +156,33 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         mPresenter = presenter;
     }
 
+    /**
+     * 保存账目数据
+     */
     @Override
     public void save() {
-        ToastUtils.show(mContext, "保存");
+        // 获取输入金额
+        String money = mTxtMoney.getText().toString();
+        // 获取输入备注
+        String note = mEdtNote.getText().toString();
+        if(!RegexUtils.checkMoney(money)){
+            AnimUtils.startVibrateAnim(mTxtMoney, -1);
+        }else{
+            mAccount.money = money;
+            mAccount.note = note;
+            mPresenter.saveAccount(mAccount);
+        }
+    }
+
+    @Override
+    public void saveSuccess() {
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_save_success));
+        finish();
+    }
+
+    @Override
+    public void saveFail(Error e) {
+        ToastUtils.show(mContext, e.getMessage());
     }
 
     /**
@@ -130,7 +190,9 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     @Override
     public void selectCost() {
-        ToastUtils.show(mContext, "选择了支出");
+        mAccount.type = AppConfig.TYPE_COST;
+        initTypeData();
+        mTxtMoney.setTextColor(UiUtils.getColor(R.color.textPink));
     }
 
     /**
@@ -138,14 +200,16 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     @Override
     public void selectIncome() {
-        ToastUtils.show(mContext, "选择了收入");
+        mAccount.type = AppConfig.TYPE_INCOME;
+        initTypeData();
+        mTxtMoney.setTextColor(UiUtils.getColor(R.color.textLightBlue));
     }
 
     /**
      * 显示选择日期弹框
      */
     @Override
-    public void showSelectDate() {
+    public void showSelectDateDialog() {
         Calendar c = Calendar.getInstance();
         new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -159,18 +223,51 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     }
 
     /**
+     * 显示输入金额弹框
+     */
+    @Override
+    public void showInputMoneyDialog() {
+        new DecimalPickerDialog.Builder()
+                .setReference(1)
+                .setNatural(false)
+                .setRelative(false)
+                .setTheme(R.style.DecimalPickerTheme)
+                .create()
+                .show(getChildFragmentManager(), "TAG_DEC_DIALOG");
+    }
+
+    @Override
+    public void onDecimalNumberPicked(int i, float v) {
+        Double money = Double.valueOf(Float.toString(v));
+        String moneyStr = ArithUtils.formatMoney(money);
+        if(RegexUtils.checkMoney(moneyStr)){
+            mTxtMoney.setText(moneyStr);
+        }else{
+            AnimUtils.startVibrateAnim(mTxtMoney, -1);
+        }
+    }
+
+    /**
      * 设置选择的日期
      */
-    private void setSelectData(Calendar calendar){
+    private void setSelectData(Calendar calendar) {
         Date date = calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.CHINA);
         String time = format.format(date);
         mTxtDate.setText(time);
+        mAccount.date = date;
     }
 
-
-    @OnClick(R.id.txt_date)
-    public void onClick() {
-        showSelectDate();
+    @OnClick({R.id.txt_money, R.id.txt_date})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.txt_money:
+                showInputMoneyDialog();
+                break;
+            case R.id.txt_date:
+                showSelectDateDialog();
+                break;
+        }
     }
+
 }

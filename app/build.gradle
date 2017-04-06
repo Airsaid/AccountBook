@@ -71,4 +71,6 @@ dependencies {
     compile 'me.immortalz:transitionhelper:1.0.6'
     // RecyclerView Adapter 库
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.0'
+    // MD 风格输入 Dialog
+    compile 'com.github.StephaneBg:SimpleNumberPicker:1.2'
 }
