@@ -1,5 +1,8 @@
 package com.github.airsaid.accountbook.data;
 
+import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.util.UiUtils;
+
 import java.util.Date;
 
 /**
@@ -19,6 +22,22 @@ public class Account {
     public Date date;
     // 备注
     public String note;
+
+    public Account(){
+
+    }
+
+    public Account(int type, String money, String cType, Date date, String note) {
+        this.type = type;
+        this.money = money;
+        this.cType = cType;
+        this.date = date;
+        this.note = note;
+    }
+
+    public String getMoneyStr(){
+        return UiUtils.getString(R.string.rmb).concat(" ").concat(money);
+    }
 
     @Override
     public String toString() {

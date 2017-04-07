@@ -30,6 +30,11 @@ public abstract class BaseFragment extends Fragment {
     private AppCompatActivity mCompatActivity;
     protected LayoutInflater mLayoutInflater;
 
+    // 是否可见
+    protected boolean mIsVisiable;
+    // 是否已经调用了 onCreateView
+    protected boolean mIsViewCreate;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mIsViewCreate = true;
         // 绑定依赖注入框架
         ButterKnife.bind(this, mView);
     }
@@ -174,13 +180,23 @@ public abstract class BaseFragment extends Fragment {
      */
     public abstract View getLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
-    public abstract void onCreateFragment(@Nullable Bundle savedInstanceState);
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        mIsVisiable = isVisibleToUser;
+        if(mIsVisiable && mIsViewCreate){
+            onLazyLoadData();
+        }
+    }
+
+    protected void onLazyLoadData(){
+
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
-
-
+    public abstract void onCreateFragment(@Nullable Bundle savedInstanceState);
 }

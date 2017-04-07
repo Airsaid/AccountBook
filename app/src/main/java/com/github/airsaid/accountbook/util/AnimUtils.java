@@ -22,6 +22,9 @@ public class AnimUtils {
     public static final String SCALE_Y       = "scaleY";
     public static final String ALPHA         = "alpha";
 
+    private AnimUtils() {
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
 
     /**
      * 对指定 View 开始抖动动画。

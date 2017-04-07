@@ -31,7 +31,7 @@
             android:name="LEANCLOUD_APPKEY"
             android:value="${leancloud_appkey}"/>
         <!--主页-->
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".main.MainActivity"/>
         <!--登录-->
         <activity android:name=".login.LoginActivity"/>
         <!--注册-->

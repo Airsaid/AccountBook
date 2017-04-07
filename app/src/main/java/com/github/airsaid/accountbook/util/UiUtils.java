@@ -8,14 +8,18 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.airsaid.accountbook.MainActivity;
+import com.github.airsaid.accountbook.main.MainActivity;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseApplication;
 import com.github.airsaid.accountbook.login.LoginActivity;
@@ -181,6 +185,40 @@ public class UiUtils {
 
     public static void setCompoundDrawables(TextView textView, Drawable left, Drawable top, Drawable right, Drawable bottom){
         textView.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
+    }
+
+    /**
+     * 获取列表为空时显示的 Empty View
+     * @return 默认 Empty View
+     */
+    public static View getEmptyView(Context context, RecyclerView recyclerView){
+        return getEmptyView(context, recyclerView, null, -1);
+    }
+
+    /**
+     * 获取列表为空时显示的 Empty View
+     * @param emptyText 提示文字
+     * @return Empty View
+     */
+    public static View getEmptyView(Context context, RecyclerView recyclerView, String emptyText){
+        return getEmptyView(context, recyclerView, emptyText, -1);
+    }
+
+    /**
+     * 获取列表为空时显示的 Empty View
+     * @param emptyText  提示文字
+     * @param emptyImgId 图片
+     * @return Empty View
+     */
+    public static View getEmptyView(Context context, RecyclerView recyclerView, String emptyText, int emptyImgId){
+        View emptyView = LayoutInflater.from(context).inflate(R.layout.view_empty, (ViewGroup) recyclerView.getParent(), false);
+        if(emptyText != null){
+            ((TextView)emptyView.findViewById(R.id.txt_empty)).setText(emptyText);
+        }
+        if(emptyImgId != -1){
+            ((ImageView)emptyView.findViewById(R.id.img_empty)).setImageResource(emptyImgId);
+        }
+        return emptyView;
     }
 
 }

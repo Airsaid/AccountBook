@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
-import com.github.airsaid.accountbook.MainActivity;
+import com.github.airsaid.accountbook.main.MainActivity;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.login.LoginActivity;

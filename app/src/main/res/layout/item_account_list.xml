@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="15dp"
+                                    android:layout_marginStart="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="vertical"
+                                    android:stateListAnimator="@animator/touch_card_view"
+                                    app:contentPadding="10dp"
+                                    tools:targetApi="lollipop">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_type"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            tools:src="@mipmap/ic_cost_type_0"/>
+
+        <TextView
+            android:id="@+id/txt_money"
+            style="@style/Text.Red"
+            android:layout_toEndOf="@id/img_type"
+            android:textSize="@dimen/text18"
+            tools:text="¥ 50"/>
+
+        <TextView
+            android:id="@+id/txt_note"
+            style="@style/Text.Brown"
+            android:layout_alignStart="@id/txt_money"
+            android:layout_below="@id/txt_money"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="我是备注"/>
+
+        <TextView
+            android:id="@+id/txt_date"
+            style="@style/Text.Maple"
+            android:layout_alignBottom="@id/img_type"
+            android:layout_alignStart="@id/txt_money"
+            android:layout_marginTop="10dp"
+            tools:text="2017-04-07"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

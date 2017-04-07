@@ -94,6 +94,9 @@
     <style name="Text.Maple">
         <item name="android:textColor">@color/textMaple</item>
     </style>
+    <style name="Text.Red">
+        <item name="android:textColor">@color/textRed</item>
+    </style>
 
     <!--数字输入 Dialog 样式-->
     <style name="DecimalPickerTheme" parent="SimpleNumberPickerTheme">
@@ -102,5 +105,21 @@
         <item name="snpBackspaceColor">@android:color/white</item>
         <item name="colorAccent">@android:color/white</item>
         <item name="snpDialogBackground">@color/colorAccent</item>
+    </style>
+
+    <!--自定义 TabLayout 样式-->
+    <style name="CustomTabLayoutTheme" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabTextAppearance">@style/CustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/tabSelectedTextColor</item>
+    </style>
+    <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text14</item>
+        <item name="android:textColor">@color/tabNormalTextColor</item>
+        <item name="textAllCaps">true</item>
     </style>
 </resources>
