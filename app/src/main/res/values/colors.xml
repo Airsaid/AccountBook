@@ -6,11 +6,11 @@
     <color name="colorPrimaryDark">#FF82A8</color>
     <color name="colorPrimary">#FEACC3</color>
     <color name="colorAccent">#FFBACD</color>
-    <color name="colorControlNormal">#CCCCCC</color>
     <color name="colorDivide">#F9F9F9</color>
     <color name="colorTabSelect">#FFE0AA</color>
     <color name="colorMainDateBg">#F7F7F7</color>
-    <!--页面背景色-->
+    <!--页面默认背景色-->
+    <color name="colorControlNormal">#CCCCCC</color>
     <color name="colorBg">#FFFFFF</color>
     <color name="colorBackground">#F9F9F9</color>
     <!--文字颜色-->

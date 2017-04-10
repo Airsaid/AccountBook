@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
-import com.github.airsaid.accountbook.main.MainFragment;
-import com.github.airsaid.accountbook.main.MainPresenter;
+import com.github.airsaid.accountbook.mvp.main.MainFragment;
+import com.github.airsaid.accountbook.mvp.main.MainPresenter;
 
 /**
  * @author Airsaid

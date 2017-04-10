@@ -8,7 +8,7 @@ import com.avos.avoscloud.AVException;
  * @date 2017/3/16
  * @desc 错误信息类，对 AVException 进行封装，用于获取 code 错误码，或者错误信息 message。
  */
-public class Error {
+public class Error{
 
     private AVException e;
     public int code;

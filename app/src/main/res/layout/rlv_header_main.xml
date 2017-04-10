@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorPrimary"
+              android:paddingBottom="10dp"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:paddingTop="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Text.White"
+            android:drawablePadding="10dp"
+            android:drawableStart="@mipmap/ic_month_cost"
+            android:gravity="center_vertical"
+            android:text="@string/cur_month_cost"
+            android:textSize="@dimen/text16"/>
+
+        <TextView
+            android:id="@+id/txt_total_cost"
+            style="@style/Text.White"
+            android:textSize="@dimen/text16"
+            tools:text="100"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Text.White"
+            android:drawablePadding="10dp"
+            android:drawableStart="@mipmap/ic_month_income"
+            android:gravity="center_vertical"
+            android:text="@string/cur_month_income"
+            android:textSize="@dimen/text16"/>
+
+        <TextView
+            android:id="@+id/txt_total_income"
+            style="@style/Text.White"
+            android:textSize="@dimen/text16"
+            tools:text="100"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.github.airsaid.accountbook.util;
 
 import com.avos.avoscloud.AVUser;
+import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.data.User;
 
 /**
  * @author Airsaid
@@ -15,11 +17,34 @@ public class UserUtils {
     }
 
     /**
-     * 校验用户是否已经登录
+     * 校验用户是否已经登录。
      * @return true: 已登录 false: 未登录
      */
     public static boolean checkLogin(){
-        return null != AVUser.getCurrentUser();
+        return null != AVUser.getCurrentUser(User.class);
+    }
+
+    /**
+     * 获取当前登录 User 对象。
+     * @return User 对象
+     */
+    public static User getUser(){
+        return AVUser.getCurrentUser(User.class);
+    }
+
+    /**
+     * 根据类型获取性别字符串。
+     * @param sex 性别类型，0：未设置、1：男、2：女。
+     * @return
+     */
+    public static String getSexText(int sex){
+        if(sex == 1){
+            return UiUtils.getString(R.string.man);
+        }else if(sex == 2){
+            return UiUtils.getString(R.string.woman);
+        }else{
+            return UiUtils.getString(R.string.not_set);
+        }
     }
 
 }

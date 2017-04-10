@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--轮播图-->
-    <declare-styleable name="BannerLayoutStyle">
-        <attr name="selectedIndicatorColor" format="color|reference" />
-        <attr name="unSelectedIndicatorColor" format="color|reference" />
-
-        <attr name="selectedIndicatorShape" format="enum">
-            <enum name="rect" value="0" />
-            <enum name="oval" value="1" />
-        </attr>
-
-        <attr name="unSelectedIndicatorShape" format="enum">
-            <enum name="rect" value="0" />
-            <enum name="oval" value="1" />
-        </attr>
-
-        <attr name="selectedIndicatorHeight" format="dimension|reference" />
-        <attr name="selectedIndicatorWidth" format="dimension|reference" />
-
-        <attr name="unSelectedIndicatorHeight" format="dimension|reference" />
-        <attr name="unSelectedIndicatorWidth" format="dimension|reference" />
-
-        <attr name="indicatorPosition" format="enum">
-            <enum name="centerBottom" value="0" />
-            <enum name="rightBottom" value="1" />
-            <enum name="leftBottom" value="2" />
-            <enum name="centerTop" value="3" />
-            <enum name="rightTop" value="4" />
-            <enum name="leftTop" value="5" />
-        </attr>
-
-        <attr name="indicatorSpace" format="dimension|reference" />
-        <attr name="indicatorMargin" format="dimension|reference" />
-        <attr name="autoPlayDuration" format="integer|reference" />
-        <attr name="scrollDuration" format="integer|reference" />
-        <attr name="isAutoPlay" format="boolean"/>
-        <attr name="defaultImage" format="integer|reference"/>
-    </declare-styleable>
-
+    <!--验证码按钮-->
     <declare-styleable name="VerifyCodeButton">
         <!--默认 Button 背景-->
         <attr name="android:background"/>
@@ -47,5 +10,15 @@
         <attr name="vcb_countdownTime" format="integer"/>
         <!--倒计时后的提示文字，如：重新获取-->
         <attr name="vcb_afterCountdownText" format="string"/>
+    </declare-styleable>
+
+    <!--通用 Item-->
+    <declare-styleable name="CommonItemLayout">
+        <attr name="cil_leftText" format="string"/>
+        <attr name="cil_leftImage" format="reference"/>
+        <attr name="cil_leftTextColor" format="color"/>
+        <attr name="cil_rightText" format="string"/>
+        <attr name="cil_rightTextColor" format="color"/>
+        <attr name="cil_rightImage" format="reference"/>
     </declare-styleable>
 </resources>

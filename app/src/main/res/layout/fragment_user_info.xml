@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
+
+        <RelativeLayout
+            android:id="@+id/rlt_update_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding">
+
+            <TextView
+                style="@style/Text.Brown"
+                android:layout_centerVertical="true"
+                android:text="@string/icon"/>
+
+            <ImageView
+                android:id="@+id/img_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/ic_def_icon"/>
+        </RelativeLayout>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/username"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightText="Airsaid"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/sex"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightText="男"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/age"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightText="18"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+    </LinearLayout>
+</LinearLayout>

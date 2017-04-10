@@ -17,6 +17,7 @@
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
     <string name="title_forget_password">找回密码</string>
+    <string name="title_user_info">个人资料</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -58,6 +59,13 @@
     <string name="say_something">说点什么吧&#8230;</string>
     <string name="cur_month_cost">当月支出</string>
     <string name="cur_month_income">当月收入</string>
+    <string name="icon">头像</string>
+    <string name="username">用户名</string>
+    <string name="sex">性别</string>
+    <string name="age">年龄</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="not_set">未设置</string>
 
 
 </resources>

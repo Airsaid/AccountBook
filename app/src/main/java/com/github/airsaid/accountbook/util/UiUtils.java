@@ -19,10 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.airsaid.accountbook.main.MainActivity;
+import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseApplication;
-import com.github.airsaid.accountbook.login.LoginActivity;
+import com.github.airsaid.accountbook.mvp.login.LoginActivity;
 
 
 /**
