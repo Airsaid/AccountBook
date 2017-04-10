@@ -52,6 +52,7 @@ public class AppConfig {
      */
     public static final int TYPE_INCOME = 2;
 
-
+    /** 分页条目 */
+    public static final int LIMIT = 12;
 
 }

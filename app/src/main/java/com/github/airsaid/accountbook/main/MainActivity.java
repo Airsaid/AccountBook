@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.account.AccountActivity;
-import com.github.airsaid.accountbook.adapter.SimpleFragmentPagerAdapter;
+import com.github.airsaid.accountbook.adapter.MainFragmentPagerAdapter;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
@@ -43,6 +43,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     ViewPager mViewPager;
 
     private String[] mTitles;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setSlideable(false);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public int getLayoutRes() {
@@ -81,7 +87,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 初始化 ViewPager 的 Adapter
      */
     private void initAdapter(){
-        SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(
+        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(
                 getSupportFragmentManager(), mTitles);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);

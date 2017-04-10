@@ -8,6 +8,10 @@ package com.github.airsaid.accountbook.constants;
  */
 public class MsgConstants {
 
-    public static final int CUSTOM_MSG_BASE = 10000;
+    public static final int CUSTOM_MSG_BASE = 1;
+
+    /** 账目保存成功 */
+    public static final int MSG_SAVE_ACCOUNT_SUCCESS = CUSTOM_MSG_BASE << 1;
+
 
 }

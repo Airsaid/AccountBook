@@ -56,6 +56,8 @@
     <string name="save">保存</string>
     <string name="money_normal">0.00</string>
     <string name="say_something">说点什么吧&#8230;</string>
+    <string name="cur_month_cost">当月支出</string>
+    <string name="cur_month_income">当月收入</string>
 
 
 </resources>

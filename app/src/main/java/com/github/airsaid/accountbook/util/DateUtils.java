@@ -18,10 +18,16 @@ public class DateUtils {
 
     /** 首页 TAB 格式 */
     public static final String FORMAT_MAIN_TAB = "yyyy年MM月";
+    /** 月和日格式 */
+    public static final String FORMAT_MONTH_DAY = "MM月dd日";
+    /** 单获取天格式 */
+    public static final String FORMAT_DAY = "dd";
 
     private DateUtils() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
+
+    private static String[] weeks = {"星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
 
     /**
      * 将指定的日期字符串转换为 Date 对象。
@@ -74,6 +80,28 @@ public class DateUtils {
     public static String getDateText(Calendar c, String format){
         SimpleDateFormat f = new SimpleDateFormat(format != null ? format : FORMAT, Locale.CHINA);
         return f.format(c.getTime());
+    }
+
+    /**
+     * 获取带星期的日期。
+     * @param date     日期对象
+     * @param format   日期格式
+     * @return 如：2017-04-07 星期一
+     */
+    public static String getWeekDate(Date date, String format){
+        SimpleDateFormat f = new SimpleDateFormat(format != null ? format : FORMAT, Locale.CHINA);
+        return f.format(date).concat(" ").concat(getWeekForDate(date));
+    }
+
+    /**
+     * 通过 Date 对象获取对应的星期。
+     * @param date 日期对象。
+     * @return 如：星期一
+     */
+    public static String getWeekForDate(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return weeks[c.get(Calendar.DAY_OF_WEEK) - 1];
     }
 
 }

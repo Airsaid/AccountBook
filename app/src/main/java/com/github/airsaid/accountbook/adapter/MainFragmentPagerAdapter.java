@@ -16,13 +16,15 @@ import com.github.airsaid.accountbook.main.MainPresenter;
  * @date 2017/4/6
  * @desc
  */
-public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles;
+    private final AccountRepository mRepository;
 
-    public SimpleFragmentPagerAdapter(FragmentManager fm, String[] titles) {
+    public MainFragmentPagerAdapter(FragmentManager fm, String[] titles) {
         super(fm);
         this.titles = titles;
+        mRepository = new AccountRepository();
     }
 
     @Override
@@ -30,7 +32,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.EXTRA_POSITION, titles[position]);
         MainFragment fragment = MainFragment.newInstance(bundle);
-        new MainPresenter(new AccountRepository(), fragment);
+        new MainPresenter(mRepository, fragment);
         return fragment;
     }
 

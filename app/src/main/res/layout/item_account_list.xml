@@ -4,6 +4,7 @@
                                     xmlns:tools="http://schemas.android.com/tools"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
                                     android:layout_marginEnd="15dp"
                                     android:layout_marginStart="15dp"
                                     android:layout_marginTop="10dp"
@@ -22,14 +23,24 @@
             android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
+            android:contentDescription="@string/app_name"
             tools:src="@mipmap/ic_cost_type_0"/>
 
         <TextView
             android:id="@+id/txt_money"
             style="@style/Text.Red"
             android:layout_toEndOf="@id/img_type"
-            android:textSize="@dimen/text18"
+            android:textSize="@dimen/text20"
             tools:text="¥ 50"/>
+
+        <TextView
+            android:id="@+id/txt_type"
+            style="@style/Text.White"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/txt_money"
+            android:background="@drawable/bg_text_type_main"
+            android:textSize="@dimen/text14"
+            tools:text="分类"/>
 
         <TextView
             android:id="@+id/txt_note"

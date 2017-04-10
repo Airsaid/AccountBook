@@ -7,20 +7,16 @@ package com.github.airsaid.accountbook.constants;
 public class ApiConstant {
 
     /** 服务器地址 */
-    public static final String API_SERVER_URL = "http://m42.lanbaoapp.com/";
+    public static final String API_SERVER_URL = "";
 
     /** 图片服务器地址 */
-    public static final String IMG_SERVER_URL = "http://m42.lanbaoapp.com/";
+    public static final String IMG_SERVER_URL = "";
 
     /** 视屏服务器地址 */
-    public static final String VIDEO_SERVER_URL = "http://m42.lanbaoapp.com/";
-
-    /** 测试：文章列表 */
-    public static final String HOME_ARTICLES = "api/home/articles";
+    public static final String VIDEO_SERVER_URL = "";
 
     /*   数据库表名   */
     public static final String TAB_ACCOUNT = "Account";
-
 
     /*   数据库字段名   */
     public static final String TYPE         = "type";

@@ -14,6 +14,8 @@ import com.github.airsaid.accountbook.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +72,13 @@ public class AccountRepository implements AccountDataSource {
                         String note = a.getString(ApiConstant.NOTE);
                         accounts.add(new Account(type, money, cType, date, note));
                     }
+                    // 按照最新时间进行排序
+                    Collections.sort(accounts, new Comparator<Account>() {
+                        @Override
+                        public int compare(Account a1, Account a2) {
+                            return a2.date.compareTo(a1.date);
+                        }
+                    });
                     callback.querySuccess(accounts);
                 }else{
                     callback.queryFail(new Error(e));

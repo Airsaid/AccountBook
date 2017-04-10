@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.account;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.AccountTypeAdapter;
 import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.constants.AppConfig;
+import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountType;
 import com.github.airsaid.accountbook.data.Error;
@@ -28,6 +30,8 @@ import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.sbgapps.simplenumberpicker.decimal.DecimalPickerDialog;
 import com.sbgapps.simplenumberpicker.decimal.DecimalPickerHandler;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -176,6 +180,10 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
 
     @Override
     public void saveSuccess() {
+        Message msg = new Message();
+        msg.what = MsgConstants.MSG_SAVE_ACCOUNT_SUCCESS;
+        EventBus.getDefault().post(msg);
+
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_save_success));
         finish();
     }

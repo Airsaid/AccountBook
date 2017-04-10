@@ -1,5 +1,6 @@
 package com.github.airsaid.accountbook.data;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.util.UiUtils;
 
@@ -11,7 +12,13 @@ import java.util.Date;
  * @Blog http://blog.csdn.net/airsaid
  * @Desc
  */
-public class Account {
+public class Account implements MultiItemEntity {
+
+    public static final int TYPE_DEFAULT = 1;
+    public static final int TYPE_DATE    = 2;
+
+    // 条目类型
+    public int itemType;
     // 账目类型 支出：1 收入：2
     public int type;
     // 消费金额
@@ -23,9 +30,7 @@ public class Account {
     // 备注
     public String note;
 
-    public Account(){
-
-    }
+    public Account(){}
 
     public Account(int type, String money, String cType, Date date, String note) {
         this.type = type;
@@ -48,5 +53,17 @@ public class Account {
                 ", date=" + date +
                 ", note='" + note + '\'' +
                 '}';
+    }
+
+    @Override
+    public int getItemType() {
+        return itemType;
+    }
+
+    /**
+     * 设置条目类型
+     */
+    public void setItemType(int type){
+        this.itemType = type;
     }
 }

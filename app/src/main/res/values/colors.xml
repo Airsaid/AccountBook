@@ -9,6 +9,7 @@
     <color name="colorControlNormal">#CCCCCC</color>
     <color name="colorDivide">#F9F9F9</color>
     <color name="colorTabSelect">#FFE0AA</color>
+    <color name="colorMainDateBg">#F7F7F7</color>
     <!--页面背景色-->
     <color name="colorBg">#FFFFFF</color>
     <color name="colorBackground">#F9F9F9</color>
@@ -28,8 +29,8 @@
     <color name="transparent">#00000000</color>
 
     <!--tab layout 文字颜色-->
-    <color name="tabNormalTextColor">#FFFFFF</color>
-    <color name="tabSelectedTextColor">#FFE0AA</color>
-    <color name="tabIndicatorColor">#FFE0AA</color>
+    <color name="tabNormalTextColor">#8CFFFFFF</color>
+    <color name="tabSelectedTextColor">#FFFFFF</color>
+    <color name="tabIndicatorColor">#FFFFFF</color>
 
 </resources>
