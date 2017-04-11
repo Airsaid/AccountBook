@@ -1,7 +1,11 @@
 package com.github.airsaid.accountbook.mvp.user;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +14,21 @@ import android.widget.RelativeLayout;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseFragment;
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.util.DimenUtils;
+import com.github.airsaid.accountbook.util.LogUtils;
+import com.github.airsaid.accountbook.util.ProgressUtils;
+import com.github.airsaid.accountbook.util.ToastUtils;
+import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 import com.github.airsaid.accountbook.widget.CommonItemLayout;
+import com.luck.picture.lib.model.FunctionConfig;
+import com.luck.picture.lib.model.LocalMediaLoader;
+import com.luck.picture.lib.model.PictureConfig;
+import com.yalantis.ucrop.entity.LocalMedia;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -58,7 +74,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
     }
 
     /**
-     * 设置用户信息。
+     * 设置用户信息
      */
     private void setUserInfo() {
         User user = UserUtils.getUser();
@@ -66,9 +82,9 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
             String username = user.getUsername();
             int sex = user.getSex();
             int age = user.getAge();
-            mCilAge.setRightText(String.valueOf(age));
-            mCilUsername.setRightText(username);
+            mCilAge.setRightText(String.valueOf(age).concat(UiUtils.getString(R.string.year)));
             mCilSex.setRightText(UserUtils.getSexText(sex));
+            mCilUsername.setRightText(username);
         }
     }
 
@@ -76,7 +92,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlt_update_icon:  // 修改头像
-                showUpdateIconDialog();
+                showUpdateIcon();
                 break;
             case R.id.cil_username:     // 修改用户名
                 showUpdateUsernameDialog();
@@ -90,23 +106,132 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
         }
     }
 
+    /**
+     * 显示修改头像页面
+     */
     @Override
-    public void showUpdateIconDialog() {
-
+    public void showUpdateIcon() {
+        FunctionConfig config = new FunctionConfig();
+        config.setType(LocalMediaLoader.TYPE_IMAGE);
+        config.setCompress(false);
+        config.setMaxSelectNum(1);
+        config.setSelectMode(2);
+        config.setShowCamera(true);
+        config.setEnablePreview(true);
+        config.setEnableCrop(true);
+        config.setPreviewColor(UiUtils.getColor(R.color.textWhite));
+        config.setCompleteColor(UiUtils.getColor(R.color.textWhite));
+        config.setBottomBgColor(UiUtils.getColor(R.color.colorAccent));
+        config.setPreviewBottomBgColor(UiUtils.getColor(R.color.colorAccent));
+        PictureConfig.init(config);
+        // 启动相册并设置回调函数
+        PictureConfig.getPictureConfig().openPhoto(mContext, new PictureConfig.OnSelectResultCallback() {
+            @Override
+            public void onSelectSuccess(List<LocalMedia> list) {
+                for (LocalMedia media : list) {
+                    // 判断是否压缩过
+                    if(media.isCompressed()){
+                        // 压缩过，取压缩图：media.getCompressPath();
+                        LogUtils.e("test", "compPath: " + media.getCompressPath());
+                    }else{
+                        // 取原图：media.getPath();
+                        LogUtils.e("test", "path: " + media.getPath());
+                        if(media.getCutPath() != null){
+                            // 注意：如果media.getCatPath();不为空的话 就代表裁剪的图片，上传时可取，但是如果又压缩过，则取最终压缩过的compressPath
+                            LogUtils.e("test", "cutPath: " + media.getCutPath());
+                        }
+                    }
+                }
+            }
+        });
     }
 
+    /**
+     * 显示修改用户名 Dialog
+     */
     @Override
     public void showUpdateUsernameDialog() {
-
+        // 回显用户名
+        final AppCompatEditText editText = new AppCompatEditText(mContext);
+        String username = mCilUsername.getRightText();
+        editText.setText(username);
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title_update_username))
+                .setView(editText, DimenUtils.dp2px(15f), DimenUtils.dp2px(15f), DimenUtils.dp2px(15f), DimenUtils.dp2px(15f))
+                .setNegativeButton(UiUtils.getString(R.string.dialog_cancel), null)
+                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newUsername = editText.getText().toString();
+                        if(TextUtils.isEmpty(newUsername) || newUsername.length() > 16){
+                            ToastUtils.show(mContext, UiUtils.getString(R.string.toast_username_length));
+                        }else{
+                            User user = UserUtils.getUser();
+                            user.setUsername(newUsername);
+                            ProgressUtils.show(mContext, UiUtils.getString(R.string.load_update));
+                            mPresenter.saveUserInfo(user);
+                        }
+                    }
+                }).create().show();
     }
 
+    /**
+     * 显示修改性别 Dialog
+     */
     @Override
     public void showUpdateSexDialog() {
-
+        final String[] sexs = UiUtils.getStringArray(R.array.update_sex);
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title_update_sex))
+                .setItems(sexs, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        User user = UserUtils.getUser();
+                        user.setSex(which + 1);
+                        ProgressUtils.show(mContext, UiUtils.getString(R.string.load_update));
+                        mPresenter.saveUserInfo(user);
+                    }
+                }).create().show();
     }
 
+    /**
+     * 显示修改年龄 Dialog
+     */
     @Override
     public void showUpdateAgeDialog() {
+        String[] ages = new String[150];
+        for (int i = 0; i < 150; i++) {
+            ages[i] = String.valueOf(i).concat(UiUtils.getString(R.string.year));
+        }
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title_update_sex))
+                .setItems(ages, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        User user = UserUtils.getUser();
+                        user.setAge(which);
+                        ProgressUtils.show(mContext, UiUtils.getString(R.string.load_update));
+                        mPresenter.saveUserInfo(user);
+                    }
+                }).create().show();
+    }
 
+    /**
+     * 保存用户信息成功
+     */
+    @Override
+    public void saveUserInfoSuccess() {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_update_success));
+        setUserInfo();
+    }
+
+    /**
+     * 保存用户信息失败
+     */
+    @Override
+    public void saveUserInfoFail(Error e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, e.getMessage());
     }
 }

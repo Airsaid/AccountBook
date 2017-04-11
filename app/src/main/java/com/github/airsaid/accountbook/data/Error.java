@@ -115,7 +115,7 @@ public class Error{
             case 218:
                 return "无效的密码，不允许空白密码。";
             case 219:
-                return "登录失败次数超过限制，请稍候再试。";
+                return "登录失败次数超过限制，请稍候再试，或者通过忘记密码重设密码。";
             case 251:
                 return "无效的账户连接";
             case 252:

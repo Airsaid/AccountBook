@@ -5,6 +5,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
@@ -49,7 +50,7 @@ public class UserRepository implements UserDataSource {
      */
     @Override
     public void login(User user, final LoginCallback callback) {
-        AVUser.logInInBackground(user.phone, user.password, new LogInCallback<AVUser>() {
+        AVUser.loginByMobilePhoneNumberInBackground(user.phone, user.password, new LogInCallback<AVUser>() {
             @Override
             public void done(AVUser avUser, AVException e) {
                 if(e == null){
@@ -138,6 +139,26 @@ public class UserRepository implements UserDataSource {
                 } else {
                     e.printStackTrace();
                     callback.updateFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    /**
+     * 保存用户信息
+     * @param user
+     * @param callback
+     */
+    @Override
+    public void saveUserInfo(User user, final SaveUserInfoCallback callback) {
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e == null){
+                    callback.saveSuccess();
+                }else{
+                    e.printStackTrace();
+                    callback.saveFail(new Error(e));
                 }
             }
         });

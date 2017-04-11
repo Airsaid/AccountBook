@@ -1,5 +1,8 @@
 package com.github.airsaid.accountbook.mvp.user;
 
+import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.data.source.UserDataSource;
 import com.github.airsaid.accountbook.data.source.UserRepository;
 
 /**
@@ -22,5 +25,20 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public void saveUserInfo(User user) {
+        mRepository.saveUserInfo(user, new UserDataSource.SaveUserInfoCallback() {
+            @Override
+            public void saveSuccess() {
+                mView.saveUserInfoSuccess();
+            }
+
+            @Override
+            public void saveFail(Error e) {
+                mView.saveUserInfoFail(e);
+            }
+        });
     }
 }

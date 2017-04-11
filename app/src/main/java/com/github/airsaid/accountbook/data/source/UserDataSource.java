@@ -54,4 +54,12 @@ public interface UserDataSource {
 
     void resetPasswordBySmsCode(String phone, String code, UpdatePasswordCallback callback);
 
+    interface SaveUserInfoCallback{
+        void saveSuccess();
+        void saveFail(Error e);
+    }
+
+    void saveUserInfo(User user, SaveUserInfoCallback callback);
+
+
 }

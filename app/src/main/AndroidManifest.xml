@@ -10,6 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 基础模块 END -->
 
+    <!--读取外部存储-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--相机拍照-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -42,6 +47,16 @@
         <activity android:name=".mvp.user.UserInfoActivity"/>
         <!--找回密码-->
         <activity android:name=".ui.activity.ForgetPasswordActivity"/>
+
+        <provider
+          android:name="android.support.v4.content.FileProvider"
+          android:authorities="${applicationId}.provider"
+          android:exported="false"
+          android:grantUriPermissions="true">
+            <meta-data
+              android:name="android.support.FILE_PROVIDER_PATHS"
+              android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
