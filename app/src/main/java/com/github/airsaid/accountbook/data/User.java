@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.data;
 
 import android.os.Parcel;
 
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
 import com.github.airsaid.accountbook.constants.ApiConstant;
 
@@ -15,12 +16,11 @@ public class User extends AVUser{
 
     public String phone;
     public String password;
-    public AVUser user;
 
     /** 年龄 */
-    public int age = 0;
+    private int age = 0;
     /** 性别，0：未设置、1：男 、2：女 */
-    public int sex = 0;
+    private int sex = 0;
 
     public User(){
         super();
@@ -28,10 +28,6 @@ public class User extends AVUser{
 
     public User(Parcel in){
         super(in);
-    }
-
-    public User(AVUser user) {
-        this.user = user;
     }
 
     public static final Creator CREATOR = AVObjectCreator.instance;
@@ -54,5 +50,14 @@ public class User extends AVUser{
     public int getSex(){
         sex = getInt(ApiConstant.SEX);
         return sex;
+    }
+
+    public void setAvatar(AVFile avator){
+        put(ApiConstant.AVATAR, avator);
+//            AVFile avator = AVFile.withAbsoluteLocalPath(file.getName(), file.getPath());
+    }
+
+    public AVFile getAvatar(){
+        return getAVFile(ApiConstant.AVATAR);
     }
 }

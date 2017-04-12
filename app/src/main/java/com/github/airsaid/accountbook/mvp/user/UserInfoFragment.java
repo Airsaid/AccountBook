@@ -12,12 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.avos.avoscloud.AVFile;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.util.DimenUtils;
-import com.github.airsaid.accountbook.util.LogUtils;
+import com.github.airsaid.accountbook.util.ImageLoader;
 import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
@@ -28,6 +29,7 @@ import com.luck.picture.lib.model.LocalMediaLoader;
 import com.luck.picture.lib.model.PictureConfig;
 import com.yalantis.ucrop.entity.LocalMedia;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,6 +87,10 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
             mCilAge.setRightText(String.valueOf(age).concat(UiUtils.getString(R.string.year)));
             mCilSex.setRightText(UserUtils.getSexText(sex));
             mCilUsername.setRightText(username);
+            AVFile avatar = user.getAvatar();
+            if(avatar != null){
+                ImageLoader.getIns(this).loadIcon(avatar.getUrl(), mImgIcon);
+            }
         }
     }
 
@@ -113,12 +119,13 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
     public void showUpdateIcon() {
         FunctionConfig config = new FunctionConfig();
         config.setType(LocalMediaLoader.TYPE_IMAGE);
-        config.setCompress(false);
+        config.setCompress(true);
         config.setMaxSelectNum(1);
         config.setSelectMode(2);
         config.setShowCamera(true);
         config.setEnablePreview(true);
         config.setEnableCrop(true);
+        config.setCopyMode(FunctionConfig.CROP_MODEL_DEFAULT);
         config.setPreviewColor(UiUtils.getColor(R.color.textWhite));
         config.setCompleteColor(UiUtils.getColor(R.color.textWhite));
         config.setBottomBgColor(UiUtils.getColor(R.color.colorAccent));
@@ -128,19 +135,34 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
         PictureConfig.getPictureConfig().openPhoto(mContext, new PictureConfig.OnSelectResultCallback() {
             @Override
             public void onSelectSuccess(List<LocalMedia> list) {
-                for (LocalMedia media : list) {
+                String path = "";
+                if(list != null && list.size() > 0){
+                    LocalMedia media = list.get(0);
                     // 判断是否压缩过
                     if(media.isCompressed()){
                         // 压缩过，取压缩图：media.getCompressPath();
-                        LogUtils.e("test", "compPath: " + media.getCompressPath());
+                        path = media.getCompressPath();
                     }else{
                         // 取原图：media.getPath();
-                        LogUtils.e("test", "path: " + media.getPath());
+                        path = media.getPath();
+                        // 判断是否裁剪
                         if(media.getCutPath() != null){
-                            // 注意：如果media.getCatPath();不为空的话 就代表裁剪的图片，上传时可取，但是如果又压缩过，则取最终压缩过的compressPath
-                            LogUtils.e("test", "cutPath: " + media.getCutPath());
+                            // 取裁剪图
+                            path = media.getCutPath();
                         }
                     }
+                }
+
+                try {
+                    File avatarFile = new File(path);
+                    AVFile avatar = AVFile.withAbsoluteLocalPath(avatarFile.getName(), avatarFile.getPath());
+                    User user = UserUtils.getUser();
+                    user.setAvatar(avatar);
+                    ProgressUtils.show(mContext, UiUtils.getString(R.string.load_update));
+                    mPresenter.saveUserInfo(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.show(mContext, UiUtils.getString(R.string.toast_upload_fail));
                 }
             }
         });
@@ -199,8 +221,8 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
      */
     @Override
     public void showUpdateAgeDialog() {
-        String[] ages = new String[150];
-        for (int i = 0; i < 150; i++) {
+        String[] ages = new String[131];
+        for (int i = 0; i < 131; i++) {
             ages[i] = String.valueOf(i).concat(UiUtils.getString(R.string.year));
         }
         new AlertDialog.Builder(mContext)

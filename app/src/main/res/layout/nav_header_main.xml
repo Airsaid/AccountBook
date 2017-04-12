@@ -17,12 +17,12 @@
         android:src="@mipmap/ic_def_icon"/>
 
     <TextView
-        android:id="@+id/txt_nickname"
+        android:id="@+id/txt_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="我是昵称"/>
+        tools:text="用户名"/>
 
     <TextView
         android:id="@+id/txt_phone"

@@ -27,6 +27,7 @@ public class ApiConstant {
     public static final String UID          = "uid";
     public static final String AGE          = "age";
     public static final String SEX          = "sex";
+    public static final String AVATAR       = "avatar";
 
 
 }

@@ -17,12 +17,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVFile;
 import com.github.airsaid.accountbook.R;
-import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.adapter.MainFragmentPagerAdapter;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.mvp.user.UserInfoActivity;
+import com.github.airsaid.accountbook.util.ImageLoader;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
@@ -51,7 +53,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private ImageView mImgIcon;
     private TextView mTxtPhone;
-    private TextView mTxtNickname;
+    private TextView mTxtUsername;
 
     private String[] mTitles;
 
@@ -80,25 +82,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initView();
         initTitles();
         initAdapter();
-        setUserInfo();
     }
 
     private void initView() {
         View headerView = mNavView.getHeaderView(0);
         mImgIcon = (ImageView) headerView.findViewById(R.id.img_icon);
         mTxtPhone = (TextView) headerView.findViewById(R.id.txt_phone);
-        mTxtNickname = (TextView) headerView.findViewById(R.id.txt_nickname);
+        mTxtUsername = (TextView) headerView.findViewById(R.id.txt_username);
         mImgIcon.setOnClickListener(this);
-    }
-
-    private void setUserInfo(){
-        User user = UserUtils.getUser();
-        if(user != null){
-            String username = user.getUsername();
-            String phone = user.getMobilePhoneNumber();
-            mTxtNickname.setText(username);
-            mTxtPhone.setText(phone);
-        }
     }
 
     /**
@@ -127,6 +118,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Calendar c = Calendar.getInstance(Locale.CHINA);
         int month = c.get(Calendar.MONTH);
         mViewPager.setCurrentItem(month);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUserInfo();
+    }
+
+    private void setUserInfo(){
+        User user = UserUtils.getUser();
+        if(user != null){
+            String username = user.getUsername();
+            String phone = user.getMobilePhoneNumber();
+            mTxtUsername.setText(username);
+            mTxtPhone.setText(phone);
+            AVFile avatar = user.getAvatar();
+            if(avatar != null){
+                ImageLoader.getIns(this).loadIcon(avatar.getUrl(), mImgIcon);
+            }
+        }
     }
 
     @Override

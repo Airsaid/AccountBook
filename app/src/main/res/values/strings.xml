@@ -45,9 +45,10 @@
     <string name="toast_update_password_success">密码修改成功</string>
     <string name="toast_save_success">保存成功</string>
     <string name="toast_save_fail">保存失败</string>
-    <string name="toast_username_length">请输入1-16位的用户名</string>
+    <string name="toast_username_length">请输入1&#8211;16位的用户名</string>
     <string name="toast_update_success">修改成功</string>
     <string name="toast_update_fail">修改失败</string>
+    <string name="toast_upload_fail">上传失败</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>
