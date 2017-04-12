@@ -7,9 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseActivity extends SlideBackActivity {
 
+    protected static String TAG;
     protected Activity mContext;
     private Toolbar mToolbar;
 
@@ -34,12 +35,17 @@ public abstract class BaseActivity extends SlideBackActivity {
         // 设置 Activity 屏幕方向
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 隐藏 ActionBar
-//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 设置 TAG
+        TAG = this.getClass().getSimpleName();
+        // 将当前 Activity 推入栈中
+        ActivityManager.getInstance().pushActivity(this);
         super.onCreate(savedInstanceState);
         this.mContext = this;
 
         // 设置布局
-        setContentView(LayoutInflater.from(this).inflate(getLayoutRes(), null));
+        setContentView(getLayoutRes());
+
         // 绑定依赖注入框架
         ButterKnife.bind(this);
 
@@ -54,13 +60,11 @@ public abstract class BaseActivity extends SlideBackActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        ActivityManager.getInstance().pushActivity(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ActivityManager.getInstance().popActivity(this);
     }
 
     /**
@@ -163,6 +167,12 @@ public abstract class BaseActivity extends SlideBackActivity {
             return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManager.getInstance().popActivity(this);
     }
 
     /**

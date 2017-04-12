@@ -7,12 +7,14 @@
     <string name="empty_data">暂无数据</string>
     <string name="empty_account_data">该月还没有记账呢~</string>
     <!--Dialog-->
-    <string name="dialog_title">温馨提示</string>
+    <string name="dialog_title">提示</string>
     <string name="dialog_affirm">确认</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_finish">完成</string>
     <string name="dialog_title_update_username">修改用户名</string>
     <string name="dialog_title_update_sex">修改性别</string>
+    <string name="dialog_content_clear_cache">确认清除缓存吗？</string>
+    <string name="dialog_content_login_out">确认退出登录吗？</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -21,6 +23,7 @@
     <string name="title_register">注册</string>
     <string name="title_forget_password">找回密码</string>
     <string name="title_user_info">个人资料</string>
+    <string name="title_setting">设置</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -49,6 +52,8 @@
     <string name="toast_update_success">修改成功</string>
     <string name="toast_update_fail">修改失败</string>
     <string name="toast_upload_fail">上传失败</string>
+    <string name="toast_clear_cache_success">清理成功</string>
+    <string name="toast_login_out_success">退出成功</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>
@@ -74,6 +79,17 @@
     <string name="woman">女</string>
     <string name="not_set">未设置</string>
     <string name="year">岁</string>
+    <string name="setting">设置</string>
+    <string name="home">首页</string>
+    <string name="account_books">帐薄</string>
+    <string name="count">统计</string>
+    <string name="feedback">反馈</string>
+    <string name="other">其他</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="update_phone">修改手机号</string>
+    <string name="update_password">修改账户密码</string>
+    <string name="about_app">关于大大记账本</string>
+    <string name="login_out">退出登录</string>
 
 
 </resources>

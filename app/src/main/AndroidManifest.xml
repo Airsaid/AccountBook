@@ -47,6 +47,8 @@
         <activity android:name=".mvp.user.UserInfoActivity"/>
         <!--找回密码-->
         <activity android:name=".ui.activity.ForgetPasswordActivity"/>
+        <!--设置-->
+        <activity android:name=".ui.activity.SettingActivity"/>
 
         <provider
           android:name="android.support.v4.content.FileProvider"

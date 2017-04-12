@@ -42,12 +42,12 @@ public class ActivityManager {
     /**
      * 弹出栈顶 Activity
      */
-    public void popActivity(Activity activity) {  
+    public void popActivity(Activity activity) {
         if(activity == null || activityStack == null) {
             return;
         }
         if(activityStack.contains(activity)) {
-            activityStack.remove(activity); 
+            activityStack.remove(activity);
         }
         currActivity = activity;
     }
@@ -65,7 +65,7 @@ public class ActivityManager {
     public void popAllActivityExceptOne(Class cls) {
         while (true) {
             Activity activity = getTopActivity();
-            if(null != activity && activity.getClass().equals(cls)){
+            if(null != activity && !activity.getClass().equals(cls)){
                 destroyActivity(activity);
             }else{
                 break;
@@ -109,5 +109,4 @@ public class ActivityManager {
 
         return activityStack.size();
     }
-
 }

@@ -2,6 +2,9 @@ package com.github.airsaid.accountbook.constants;
 
 import android.os.Environment;
 
+import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.util.UiUtils;
+
 import java.io.File;
 
 /**
@@ -20,22 +23,22 @@ public class AppConfig {
     /**
      * 缓存目录名字
      */
-    public static final String CACHE_DIR_NAME = "cache";
+    public static final String CACHE_DIR_NAME = UiUtils.getString(R.string.app_name);
 
     /**
      * 缓存目录路径
      */
-    public static final String CACHE_PATH = SDCARD_PATH.concat(CACHE_DIR_NAME.concat(File.separator));
+    public static final String CACHE_PATH = SDCARD_PATH.concat(CACHE_DIR_NAME);
 
     /**
      * 文件缓存目录路径
      */
-    public static final String CACHE_FILE_PATH = CACHE_PATH.concat("file");
+    public static final String CACHE_FILE_PATH = CACHE_PATH.concat(File.separator).concat("file");
 
     /**
      * 图片缓存目录路径
      */
-    public static final String CHCHE_IMAGE_PATH =  CACHE_PATH.concat("image");
+    public static final String CHCHE_IMAGE_PATH = CACHE_PATH.concat(File.separator).concat("image");
 
     /**
      * 缓存大小

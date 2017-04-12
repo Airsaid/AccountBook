@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBackground"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_update_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/update_phone"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/update_password"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/clear_cache"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/about_app"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llt_login_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Text.Red"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/padding"
+            android:text="@string/login_out"/>
+    </LinearLayout>
+</LinearLayout>

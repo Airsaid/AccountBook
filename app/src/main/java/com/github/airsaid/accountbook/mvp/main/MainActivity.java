@@ -24,8 +24,8 @@ import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.mvp.user.UserInfoActivity;
+import com.github.airsaid.accountbook.ui.activity.SettingActivity;
 import com.github.airsaid.accountbook.util.ImageLoader;
-import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
@@ -61,6 +61,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setSlideable(false);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUserInfo();
     }
 
     @Override
@@ -120,12 +126,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mViewPager.setCurrentItem(month);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUserInfo();
-    }
-
     private void setUserInfo(){
         User user = UserUtils.getUser();
         if(user != null){
@@ -142,20 +142,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        ToastUtils.show(mContext, "点击了：" + id);
-        if (id == R.id.nav_camera) {
+        switch (item.getItemId()){
+            case R.id.nav_home:
 
-        }else if(id == R.id.nav_gallery) {
+                break;
+            case R.id.nav_account_books:
 
-        }else if(id == R.id.nav_slideshow) {
+                break;
+            case R.id.nav_count:
 
-        }else if(id == R.id.nav_manage) {
+                break;
+            case R.id.nav_feedback:
 
-        }else if(id == R.id.nav_share) {
-
-        }else if(id == R.id.nav_send) {
-
+                break;
+            case R.id.nav_setting:
+                startActivity(new Intent(mContext, SettingActivity.class));
+                break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

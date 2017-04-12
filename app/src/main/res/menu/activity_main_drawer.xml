@@ -3,34 +3,30 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@android:drawable/ic_menu_camera"
-            android:title="Import"/>
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@mipmap/ic_nav_home"
+            android:title="@string/home"/>
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Gallery"/>
+            android:id="@+id/nav_account_books"
+            android:icon="@mipmap/ic_nav_account_books"
+            android:title="@string/account_books"/>
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow"/>
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools"/>
+            android:id="@+id/nav_count"
+            android:icon="@mipmap/ic_nav_count"
+            android:title="@string/count"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/other">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@android:drawable/ic_menu_share"
-                android:title="Share"/>
+                android:id="@+id/nav_feedback"
+                android:icon="@mipmap/ic_nav_feedback"
+                android:title="@string/feedback"/>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@android:drawable/ic_menu_send"
-                android:title="Send"/>
+                android:id="@+id/nav_setting"
+                android:icon="@mipmap/ic_nav_set"
+                android:title="@string/setting"/>
         </menu>
     </item>
-
 </menu>
