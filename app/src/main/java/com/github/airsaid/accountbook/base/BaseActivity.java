@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.util.ActivityManager;
@@ -75,14 +74,15 @@ public abstract class BaseActivity extends SlideBackActivity {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // 取消原有左侧标题
             actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
         }
         // 设置标题
         if(!TextUtils.isEmpty(title)){
-            TextView txtTitle = (TextView) findViewById(R.id.txt_title_title);
-            txtTitle.setText(title);
+            mToolbar.setTitle(title);
         }
+
         // 设置左侧图标
         mToolbar.setNavigationIcon(R.mipmap.ic_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -99,8 +99,7 @@ public abstract class BaseActivity extends SlideBackActivity {
      */
     public void setTitle(String title){
         if(mToolbar != null){
-            TextView txtTitle = (TextView) findViewById(R.id.txt_title_title);
-            txtTitle.setText(title);
+            mToolbar.setTitle(title);
         }
     }
 
@@ -109,46 +108,7 @@ public abstract class BaseActivity extends SlideBackActivity {
      */
     public void setTitleTextColor(int id) {
         if (mToolbar != null) {
-            TextView txtTitle = (TextView) findViewById(R.id.txt_title_title);
-            txtTitle.setTextColor(id);
-        }
-    }
-
-    /**
-     * 设置左侧标题
-     */
-    public void setLeftTitle(String leftTitle){
-        if(mToolbar != null && leftTitle != null){
-            mToolbar.setNavigationIcon(null);
-            TextView txtLeftTitle = (TextView) findViewById(R.id.txt_title_left);
-            txtLeftTitle.setVisibility(View.VISIBLE);
-            txtLeftTitle.setText(leftTitle);
-            txtLeftTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onBack();
-                }
-            });
-        }
-    }
-
-    /**
-     * 设置左侧标题颜色
-     */
-    public void setLeftTitleColor(int id){
-        if(mToolbar != null){
-            TextView txtLeftTitle = (TextView) findViewById(R.id.txt_title_left);
-            txtLeftTitle.setTextColor(id);
-        }
-    }
-
-    /**
-     * 设置左侧标题字体大小
-     */
-    public void setLeftTitleSize(float size){
-        if(mToolbar != null){
-            TextView txtLeftTitle = (TextView) findViewById(R.id.txt_title_left);
-            txtLeftTitle.setTextSize(size);
+            mToolbar.setTitleTextColor(id);
         }
     }
 

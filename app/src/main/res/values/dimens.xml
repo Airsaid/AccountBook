@@ -1,12 +1,4 @@
 <resources>
-    <dimen name="nav_header_height">200dp</dimen>
-    <dimen name="margin">15dp</dimen>
-    <dimen name="padding">15dp</dimen>
-    <dimen name="view_margin">10dp</dimen>
-    <dimen name="view_padding">10dp</dimen>
-    <dimen name="divide_height">1dp</dimen>
-    <dimen name="elevation_height">2dp</dimen>
-
     <dimen name="text10">10sp</dimen>
     <dimen name="text11">11sp</dimen>
     <dimen name="text12">12sp</dimen>
@@ -24,6 +16,13 @@
     <dimen name="text24">24sp</dimen>
     <dimen name="text25">25sp</dimen>
     <dimen name="text26">26sp</dimen>
-
+    <dimen name="nav_header_height">200dp</dimen>
+    <dimen name="margin">15dp</dimen>
+    <dimen name="padding">15dp</dimen>
+    <dimen name="view_margin">10dp</dimen>
+    <dimen name="view_padding">10dp</dimen>
+    <dimen name="divide_height">1dp</dimen>
+    <dimen name="elevation_height">2dp</dimen>
+    <dimen name="about_page_header_height">230dp</dimen>
 
 </resources>

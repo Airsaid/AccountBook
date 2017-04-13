@@ -80,6 +80,7 @@
         <item name="android:textSize">@dimen/text14</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:lineSpacingExtra">5dp</item>
     </style>
 
     <style name="Text.Black">
@@ -96,6 +97,12 @@
     </style>
     <style name="Text.Red">
         <item name="android:textColor">@color/textRed</item>
+    </style>
+    <style name="Text.Gray">
+        <item name="android:textColor">@color/textGray</item>
+    </style>
+    <style name="Text.Grayish">
+        <item name="android:textColor">@color/textGrayish</item>
     </style>
 
     <!--数字输入 Dialog 样式-->
@@ -122,4 +129,47 @@
         <item name="android:textColor">@color/tabNormalTextColor</item>
         <item name="textAllCaps">true</item>
     </style>
+
+    <style name="AboutPage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="AboutPage.Header"/>
+
+    <style name="AboutPage.Header.ToolbarTitleExpanded"
+           parent="@android:style/TextAppearance">
+        <item name="android:textColor">#00000000</item>
+    </style>
+
+    <style name="AboutPage.Header.Icon">
+        <item name="android:layout_width">66dp</item>
+        <item name="android:layout_height">66dp</item>
+    </style>
+
+    <style name="AboutPage.Header.Slogan">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AboutPage.Header.Version">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Toolbar">
+    </style>
+
+    <style name="Toolbar.TextAppearance"
+           parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textWhite</item>
+        <item name="android:textSize">@dimen/text20</item>
+    </style>
+
 </resources>

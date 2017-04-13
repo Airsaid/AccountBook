@@ -49,6 +49,8 @@
         <activity android:name=".ui.activity.ForgetPasswordActivity"/>
         <!--设置-->
         <activity android:name=".ui.activity.SettingActivity"/>
+        <!--设置-->
+        <activity android:name=".ui.activity.AboutPageActivity"/>
 
         <provider
           android:name="android.support.v4.content.FileProvider"

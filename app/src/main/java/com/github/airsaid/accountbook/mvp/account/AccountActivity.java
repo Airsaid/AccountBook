@@ -68,7 +68,7 @@ public class AccountActivity extends BaseActivity {
     }
 
     private void showAnim() {
-        TransitionsHeleper.getInstance().setShowMethod(new ColorShowMethod(R.color.colorBg, R.color.colorPrimary) {
+        TransitionsHeleper.getInstance().setShowMethod(new ColorShowMethod(R.color.white, R.color.colorPrimary) {
             @Override
             public void loadCopyView(InfoBean bean, ImageView copyView) {
                 AnimatorSet set = new AnimatorSet();

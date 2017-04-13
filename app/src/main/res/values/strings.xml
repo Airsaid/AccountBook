@@ -24,6 +24,7 @@
     <string name="title_forget_password">找回密码</string>
     <string name="title_user_info">个人资料</string>
     <string name="title_setting">设置</string>
+    <string name="title_about">关于大大记账本</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -90,6 +91,10 @@
     <string name="update_password">修改账户密码</string>
     <string name="about_app">关于大大记账本</string>
     <string name="login_out">退出登录</string>
+    <string name="about_content">谨以此 App，送给我的姚大大。</string>
+    <string name="developers">Developers</string>
+    <string name="airsaid">Airsaid</string>
+    <string name="github_link">https://github.com/Airsaid</string>
 
 
 </resources>

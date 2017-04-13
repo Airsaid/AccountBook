@@ -1,6 +1,7 @@
 package com.github.airsaid.accountbook.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -69,6 +70,7 @@ public class SettingActivity extends BaseActivity {
                 showClearCacheDialog();
                 break;
             case R.id.cil_about:            // 关于 APP
+                startActivity(new Intent(mContext, AboutPageActivity.class));
                 break;
             case R.id.llt_login_out:        // 退出登录
                 showLoginOutDialog();
