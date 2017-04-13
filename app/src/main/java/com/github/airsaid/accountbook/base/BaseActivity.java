@@ -37,18 +37,23 @@ public abstract class BaseActivity extends SlideBackActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置 TAG
         TAG = this.getClass().getSimpleName();
-        // 将当前 Activity 推入栈中
-        ActivityManager.getInstance().pushActivity(this);
+
         super.onCreate(savedInstanceState);
         this.mContext = this;
 
         // 设置布局
-        setContentView(getLayoutRes());
+        setContentView(getView());
 
         // 绑定依赖注入框架
         ButterKnife.bind(this);
 
         onCreateActivity(savedInstanceState);
+        // 将当前 Activity 推入栈中
+        ActivityManager.getInstance().pushActivity(this);
+    }
+    
+    private View getView(){
+        return getLayoutInflater().inflate(getLayoutRes(), null, true);
     }
 
     @Override

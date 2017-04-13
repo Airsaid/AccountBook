@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.MainFragmentPagerAdapter;
 import com.github.airsaid.accountbook.base.BaseActivity;
@@ -153,7 +154,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
             case R.id.nav_feedback:
-
+                FeedbackAgent agent = new FeedbackAgent(mContext);
+                agent.startDefaultThreadActivity();
                 break;
             case R.id.nav_setting:
                 startActivity(new Intent(mContext, SettingActivity.class));

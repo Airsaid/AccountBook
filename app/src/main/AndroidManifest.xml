@@ -3,11 +3,11 @@
           package="com.github.airsaid.accountbook">
 
     <!-- 基础模块（必须加入以下声明）START -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!-- 基础模块 END -->
 
     <!--读取外部存储-->
@@ -21,8 +21,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".SplashActivity">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,6 +37,8 @@
         <meta-data
             android:name="LEANCLOUD_APPKEY"
             android:value="${leancloud_appkey}"/>
+        <!--用户反馈组件-->
+        <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"/>
         <!--主页-->
         <activity android:name=".mvp.main.MainActivity"/>
         <!--登录-->
@@ -51,15 +55,14 @@
         <activity android:name=".ui.activity.SettingActivity"/>
         <!--设置-->
         <activity android:name=".ui.activity.AboutPageActivity"/>
-
         <provider
-          android:name="android.support.v4.content.FileProvider"
-          android:authorities="${applicationId}.provider"
-          android:exported="false"
-          android:grantUriPermissions="true">
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
-              android:name="android.support.FILE_PROVIDER_PATHS"
-              android:resource="@xml/file_paths" />
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
         </provider>
     </application>
 

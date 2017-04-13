@@ -34,6 +34,12 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
     //为了解决部分第三方库重复打包了META-INF的问题
     packagingOptions{
         exclude 'META-INF/LICENSE.txt'

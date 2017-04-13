@@ -8,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
-import com.github.airsaid.accountbook.mvp.main.MainActivity;
-import com.github.airsaid.accountbook.R;
+import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.mvp.login.LoginActivity;
+import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.util.AppUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
@@ -36,6 +36,10 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
+        // 设置新回复通知
+        FeedbackAgent agent = new FeedbackAgent(mContext);
+        agent.sync();
+
         Typeface typeface = Typeface.createFromAsset(getAssets(), "wwfoot.ttf");
         mTxtAppName.setTypeface(typeface);
         setVersion();
