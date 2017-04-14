@@ -11,11 +11,10 @@ import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.util.DateUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -53,12 +52,16 @@ public class AccountRepository implements AccountDataSource {
         AVQuery<AVObject> startDateQuery = new AVQuery<>(ApiConstant.TAB_ACCOUNT);
         startDateQuery.whereGreaterThanOrEqualTo(ApiConstant.DATE,
                 DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
+        startDateQuery.whereEqualTo(ApiConstant.UID, UserUtils.getUser());
 
         AVQuery<AVObject> endDateQuery = new AVQuery<>(ApiConstant.TAB_ACCOUNT);
         endDateQuery.whereLessThan(ApiConstant.DATE
                 , DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));
+        endDateQuery.whereEqualTo(ApiConstant.UID, UserUtils.getUser());
 
         AVQuery<AVObject> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
+        // 按时间，降序排列
+        query.orderByDescending(ApiConstant.DATE);
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
@@ -72,13 +75,6 @@ public class AccountRepository implements AccountDataSource {
                         String note = a.getString(ApiConstant.NOTE);
                         accounts.add(new Account(type, money, cType, date, note));
                     }
-                    // 按照最新时间进行排序
-                    Collections.sort(accounts, new Comparator<Account>() {
-                        @Override
-                        public int compare(Account a1, Account a2) {
-                            return a2.date.compareTo(a1.date);
-                        }
-                    });
                     callback.querySuccess(accounts);
                 }else{
                     callback.queryFail(new Error(e));

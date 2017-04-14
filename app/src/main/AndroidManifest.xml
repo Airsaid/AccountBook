@@ -49,11 +49,13 @@
         <activity android:name=".mvp.account.AccountActivity"/>
         <!--个人资料-->
         <activity android:name=".mvp.user.UserInfoActivity"/>
+        <!--帐薄-->
+        <activity android:name=".mvp.books.AccountBooksActivity"/>
         <!--找回密码-->
         <activity android:name=".ui.activity.ForgetPasswordActivity"/>
         <!--设置-->
         <activity android:name=".ui.activity.SettingActivity"/>
-        <!--设置-->
+        <!--关于我们-->
         <activity android:name=".ui.activity.AboutPageActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"

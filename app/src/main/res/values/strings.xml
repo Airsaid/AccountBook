@@ -25,6 +25,7 @@
     <string name="title_user_info">个人资料</string>
     <string name="title_setting">设置</string>
     <string name="title_about">关于大大记账本</string>
+    <string name="title_account_books">帐薄</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -95,6 +96,8 @@
     <string name="developers">Developers</string>
     <string name="airsaid">Airsaid</string>
     <string name="github_link">https://github.com/Airsaid</string>
+    <string name="add">添加</string>
+    <string name="cur_account_books">当前帐薄</string>
 
 
 </resources>
