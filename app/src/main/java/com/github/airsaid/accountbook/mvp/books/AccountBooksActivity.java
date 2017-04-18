@@ -50,8 +50,11 @@ public class AccountBooksActivity extends BaseActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_title_add:   // 添加帐薄
+            case R.id.menu_title_add:         // 添加帐薄
                 ToastUtils.show(mContext, "添加帐薄");
+                break;
+            case R.id.menu_title_add_share:   // 加入记账
+                ToastUtils.show(mContext, "加入记账");
                 break;
         }
         return super.onOptionsItemSelected(item);

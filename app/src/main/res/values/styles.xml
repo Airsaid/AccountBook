@@ -7,11 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!--下划线默认颜色-->
-        <item name="com.github.airsaid.accountbook:colorControlNormal">@color/colorControlNormal
-        </item>
+        <item name="com.github.airsaid.accountbook:colorControlNormal">@color/colorControlNormal</item>
         <item name="android:textSize">@dimen/text14</item>
         <!--配置 Activity 跳转动画-->
         <item name="android:windowAnimationStyle">@style/activityAnim</item>
+
+        <item name="android:actionOverflowButtonStyle">@style/AddActionBittonOverFlow</item>
+    </style>
+
+    <style name="AddActionBittonOverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@mipmap/ic_title_add</item>
+        <item name="android:dropDownVerticalOffset">52dp</item>
     </style>
 
     <style name="activityAnim">
