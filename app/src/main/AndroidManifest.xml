@@ -57,6 +57,8 @@
         <activity android:name=".ui.activity.SettingActivity"/>
         <!--关于我们-->
         <activity android:name=".ui.activity.AboutPageActivity"/>
+        <!--邀请好友-->
+        <activity android:name=".ui.activity.AddShareUserActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

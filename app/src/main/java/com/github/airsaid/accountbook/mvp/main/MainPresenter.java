@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.mvp.main;
 
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.source.AccountDataSource;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 
@@ -29,8 +30,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void queryAccount(String startDate, String endDate, int page) {
-        mRepository.queryAccount(startDate, endDate, page, new AccountDataSource.QueryAccountListCallback() {
+    public void queryAccount(User user, String startDate, String endDate, int page) {
+        mRepository.queryAccounts(user, startDate, endDate, page, new AccountDataSource.QueryAccountListCallback() {
             @Override
             public void querySuccess(List<Account> list) {
                 mView.querySuccess(list);

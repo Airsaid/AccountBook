@@ -4,7 +4,7 @@ import android.os.Parcel;
 
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
-import com.github.airsaid.accountbook.constants.ApiConstant;
+import com.github.airsaid.accountbook.constants.Api;
 
 /**
  * @author Airsaid
@@ -33,31 +33,30 @@ public class User extends AVUser{
     public static final Creator CREATOR = AVObjectCreator.instance;
 
     public void setAge(int age){
-        put(ApiConstant.AGE, age);
+        put(Api.AGE, age);
         this.age = age;
     }
 
     public int getAge(){
-        age = getInt(ApiConstant.AGE);
+        age = getInt(Api.AGE);
         return age;
     }
 
     public void setSex(int sex){
-        put(ApiConstant.SEX, sex);
+        put(Api.SEX, sex);
         this.sex = sex;
     }
 
     public int getSex(){
-        sex = getInt(ApiConstant.SEX);
+        sex = getInt(Api.SEX);
         return sex;
     }
 
-    public void setAvatar(AVFile avator){
-        put(ApiConstant.AVATAR, avator);
-//            AVFile avator = AVFile.withAbsoluteLocalPath(file.getName(), file.getPath());
+    public void setAvatar(AVFile avatar){
+        put(Api.AVATAR, avatar);
     }
 
     public AVFile getAvatar(){
-        return getAVFile(ApiConstant.AVATAR);
+        return getAVFile(Api.AVATAR);
     }
 }

@@ -43,25 +43,25 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
         moneySpan.setSpan(mSizeMinSpan, 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         // 设置类型
-        helper.setImageResource(R.id.img_type, AppConfig.TYPE_COST == item.type ?
+        helper.setImageResource(R.id.img_type, AppConfig.TYPE_COST == item.getType() ?
                 R.mipmap.ic_type_cost : R.mipmap.ic_type_income)
                 // 设置金额
                 .setText(R.id.txt_money, moneySpan)
                 // 设置分类
-                .setVisible(R.id.txt_type, !TextUtils.isEmpty(item.cType))
-                .setText(R.id.txt_type, item.cType)
+                .setVisible(R.id.txt_type, !TextUtils.isEmpty(item.getCType()))
+                .setText(R.id.txt_type, item.getCType())
                 // 设置备注
-                .setVisible(R.id.txt_note, !TextUtils.isEmpty(item.note))
-                .setText(R.id.txt_note, item.note)
+                .setVisible(R.id.txt_note, !TextUtils.isEmpty(item.getNote()))
+                .setText(R.id.txt_note, item.getNote())
                 // 设置日期
-                .setText(R.id.txt_date, DateUtils.getDateText(item.date, DateUtils.FORMAT));
+                .setText(R.id.txt_date, DateUtils.getDateText(item.getDate(), DateUtils.FORMAT));
 
         if(item.getItemType() == Account.TYPE_DATE){
             // 设置当天日期
             helper.setText(R.id.txt_day_date,
-                    DateUtils.getWeekDate(item.date, DateUtils.FORMAT_MONTH_DAY));
+                    DateUtils.getWeekDate(item.getDate(), DateUtils.FORMAT_MONTH_DAY));
             // 设置当天总收入、支出
-            helper.setText(R.id.txt_day_money, getDayMoney(data, item.date));
+            helper.setText(R.id.txt_day_money, getDayMoney(data, item.getDate()));
         }
     }
 
@@ -80,15 +80,15 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
         for (Account account : list) {
             // 判断如果是指定天
             Calendar c = Calendar.getInstance(Locale.CHINA);
-            c.setTime(account.date);
+            c.setTime(account.getDate());
             int day = c.get(Calendar.DAY_OF_MONTH);
             c.setTime(date);
             int day2 = c.get(Calendar.DAY_OF_MONTH);
             if(day == day2){
-                if(AppConfig.TYPE_COST == account.type){
-                    totalCostMoney = ArithUtils.add(totalCostMoney, Double.parseDouble(account.money));
+                if(AppConfig.TYPE_COST == account.getType()){
+                    totalCostMoney = ArithUtils.add(totalCostMoney, Double.parseDouble(account.getMoney()));
                 }else{
-                    totalIncomeMoney = ArithUtils.add(totalIncomeMoney, Double.parseDouble(account.money));
+                    totalIncomeMoney = ArithUtils.add(totalIncomeMoney, Double.parseDouble(account.getMoney()));
                 }
             }
         }
@@ -104,7 +104,7 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
         String preDay = "";
         for (Account account : list) {
             // 获取天
-            String day = DateUtils.getDateText(account.date, DateUtils.FORMAT_DAY);
+            String day = DateUtils.getDateText(account.getDate(), DateUtils.FORMAT_DAY);
             // 根据是否是同一天设置条目类型
             account.setItemType(day.equals(preDay) ? Account.TYPE_DEFAULT : Account.TYPE_DATE);
             // 赋值给上一天
@@ -120,8 +120,8 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
         double costTotalMoney = 0;
         double incomeTotalMoney = 0;
         for (Account account : data) {
-            double money = Double.parseDouble(account.money);
-            if(AppConfig.TYPE_COST == account.type){
+            double money = Double.parseDouble(account.getMoney());
+            if(AppConfig.TYPE_COST == account.getType()){
                 costTotalMoney = ArithUtils.add(costTotalMoney, money);
             }else{
                 incomeTotalMoney = ArithUtils.add(incomeTotalMoney, money);

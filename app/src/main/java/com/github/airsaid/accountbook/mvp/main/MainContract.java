@@ -4,6 +4,7 @@ import com.github.airsaid.accountbook.base.BasePresenter;
 import com.github.airsaid.accountbook.base.BaseView;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.User;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MainContract {
     }
 
     interface Presenter extends BasePresenter{
-        void queryAccount(String startDate, String endDate, int page);
+        void queryAccount(User user, String startDate, String endDate, int page);
     }
 
 }

@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.mvp.account;
 
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 
@@ -27,8 +28,8 @@ public class AccountPresenter implements AccountContract.Presenter {
     }
 
     @Override
-    public void saveAccount(Account account) {
-        mRepository.saveAccount(account, new Callback() {
+    public void saveAccount(User user, Account account) {
+        mRepository.saveAccount(user, account, new Callback() {
             @Override
             public void requestSuccess() {
                 mView.saveSuccess();

@@ -1,5 +1,6 @@
 package com.github.airsaid.accountbook.mvp.books;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.AccountBooksAdapter;
 import com.github.airsaid.accountbook.base.BaseFragment;
-import com.github.airsaid.accountbook.data.AccountBooks;
+import com.github.airsaid.accountbook.constants.AppConstants;
+import com.github.airsaid.accountbook.data.AccountBook;
+import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.ui.activity.AddShareUserActivity;
+import com.github.airsaid.accountbook.util.ToastUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
+import com.github.airsaid.accountbook.widget.recycler.OnSimpleClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -49,25 +57,37 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     @Override
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
         initAdapter();
-        initData();
-    }
-
-    private void initData() {
-        AccountBooks books = new AccountBooks();
-        books.cover = R.mipmap.book_icon1;
-        books.name = "日常帐薄";
-        books.isCur = true;
-        books.scene = "日常";
-        books.sceneImg = R.mipmap.book_scene1;
-        mAdapter.addData(books);
+        mPresenter.queryBooks(UserUtils.getUser());
     }
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAdapter = new AccountBooksAdapter(R.layout.item_account_books_list, new ArrayList<AccountBooks>());
+        mAdapter = new AccountBooksAdapter(R.layout.item_account_books_list, new ArrayList<AccountBook>());
         mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                switch (view.getId()){
+                    case R.id.img_add_user: // 进入邀请好友页
+                        AccountBook book = (AccountBook) baseQuickAdapter.getData().get(i);
+                        Intent intent = new Intent(mContext, AddShareUserActivity.class);
+                        intent.putExtra(AppConstants.EXTRA_DATA, book);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
     }
 
+    @Override
+    public void queryBooksSuccess(List<AccountBook> books) {
+        mAdapter.setNewData(books);
+    }
+
+    @Override
+    public void queryBooksFail(Error e) {
+        ToastUtils.show(mContext, e.getMessage());
+    }
 
 }

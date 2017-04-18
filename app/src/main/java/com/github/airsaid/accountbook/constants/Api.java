@@ -4,7 +4,7 @@ package com.github.airsaid.accountbook.constants;
  * Created by zhouyou on 2016/6/24.
  * Class desc: api constant store
  */
-public class ApiConstant {
+public class Api {
 
     /** 服务器地址 */
     public static final String API_SERVER_URL = "";
@@ -16,9 +16,19 @@ public class ApiConstant {
     public static final String VIDEO_SERVER_URL = "";
 
     /*   数据库表名   */
-    public static final String TAB_ACCOUNT = "Account";
+    public static final String TAB_BOOK     = "AccountBook";
+    public static final String TAB_ACCOUNT  = "Account";
 
     /*   数据库字段名   */
+    public static final String BID          = "bid";
+    public static final String OWNER        = "owner";
+    public static final String NAME         = "name";
+    public static final String COVER        = "cover";
+    public static final String SCENE        = "scene";
+    public static final String IS_CURRENT	= "isCurrent";
+    public static final String SHARES	    = "shares";
+
+
     public static final String TYPE         = "type";
     public static final String CTYPE        = "cType";
     public static final String MONEY        = "money";

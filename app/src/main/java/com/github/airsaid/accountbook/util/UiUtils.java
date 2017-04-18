@@ -97,6 +97,16 @@ public class UiUtils {
     }
 
     /**
+     * 通过图片名称获取图片资源 id
+     * @param imageName 图片名称
+     * @return 图片资源 id
+     */
+    public static int getImageResIdByName(String imageName){
+        return getResources().getIdentifier(imageName, "mipmap"
+                , AppUtils.getPackageName());
+    }
+
+    /**
      * 加载布局（使用View方式）
      *
      * @param resource 布局资源id
@@ -219,6 +229,32 @@ public class UiUtils {
             ((ImageView)emptyView.findViewById(R.id.img_empty)).setImageResource(emptyImgId);
         }
         return emptyView;
+    }
+
+    /**
+     * 通过场景名获取场景资源图片 id
+     * @param scene 场景名称
+     * @return 场景资源图片 id
+     */
+    public static int getSceneImageResIdByName(String scene){
+        switch (scene){
+            case "日常":
+                return R.mipmap.book_scene1;
+            case "校园":
+                return R.mipmap.book_scene2;
+            case "生意":
+                return R.mipmap.book_scene3;
+            case "家庭":
+                return R.mipmap.book_scene4;
+            case "旅行":
+                return R.mipmap.book_scene5;
+            case "装修":
+                return R.mipmap.book_scene6;
+            case "结婚":
+                return R.mipmap.book_scene7;
+            default:
+                return R.mipmap.book_scene1;
+        }
     }
 
 }

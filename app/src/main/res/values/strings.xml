@@ -26,6 +26,7 @@
     <string name="title_setting">设置</string>
     <string name="title_about">关于大大记账本</string>
     <string name="title_account_books">帐薄</string>
+    <string name="title_add_share_user">邀请好友</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -56,6 +57,7 @@
     <string name="toast_upload_fail">上传失败</string>
     <string name="toast_clear_cache_success">清理成功</string>
     <string name="toast_login_out_success">退出成功</string>
+    <string name="toast_add_fail_login_reset">添加失败，请重新登录后重试</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>
@@ -98,6 +100,12 @@
     <string name="github_link">https://github.com/Airsaid</string>
     <string name="add">添加</string>
     <string name="cur_account_books">当前帐薄</string>
+    <string name="def_book_name">日常帐薄</string>
+    <string name="def_book_scene">日常</string>
+    <string name="def_book_cover">book_icon1</string>
+    <string name="scene1">日常</string>
+    <string name="add_share_friends">邀请共同记账好友</string>
+    <string name="hint_add_share_user">帐薄 ID 是每个帐薄用来共享的号码，想要你的亲友一起来记账，只需把帐薄 ID 发给亲友，亲友可在“帐薄”页点击右上角的 + 号，选择加入记账，即可开始共同记账。</string>
 
 
 </resources>

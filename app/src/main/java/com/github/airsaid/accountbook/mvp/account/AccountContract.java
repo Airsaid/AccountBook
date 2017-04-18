@@ -4,6 +4,7 @@ import com.github.airsaid.accountbook.base.BasePresenter;
 import com.github.airsaid.accountbook.base.BaseView;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.User;
 
 /**
  * @author Airsaid
@@ -24,7 +25,7 @@ public class AccountContract {
     }
 
     interface Presenter extends BasePresenter{
-        void saveAccount(Account account);
+        void saveAccount(User user, Account account);
     }
 
 }

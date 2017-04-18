@@ -6,7 +6,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVObject;
 import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.data.Account;
+import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
@@ -25,7 +28,16 @@ public class BaseApplication extends Application{
         super.onCreate();
         mContext = getApplicationContext();
 
+        registSubClass();
         initLeancloud();
+    }
+
+    /**
+     * 注册子类
+     */
+    private void registSubClass() {
+        AVObject.registerSubclass(AccountBook.class);
+        AVObject.registerSubclass(Account.class);
     }
 
     /**

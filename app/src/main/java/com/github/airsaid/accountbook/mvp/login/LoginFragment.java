@@ -16,15 +16,20 @@ import android.widget.ImageView;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseFragment;
+import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
-import com.github.airsaid.accountbook.ui.activity.ForgetPasswordActivity;
+import com.github.airsaid.accountbook.data.i.Callback;
+import com.github.airsaid.accountbook.data.source.AccountDataSource;
+import com.github.airsaid.accountbook.data.source.AccountRepository;
 import com.github.airsaid.accountbook.mvp.register.RegisterActivity;
+import com.github.airsaid.accountbook.ui.activity.ForgetPasswordActivity;
 import com.github.airsaid.accountbook.ui.dialog.VerifyPhoneDialog;
 import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -114,8 +119,38 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
 
     @Override
     public void showLoginSuccess() {
-        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_success));
-        UiUtils.enterHomePage(mContext);
+        // 登陆成功，判断是否有创建默认帐薄，如果没有则创建一个
+        final User user = UserUtils.getUser();
+        final AccountRepository repository = new AccountRepository();
+        repository.queryDefaultBook(user, new AccountDataSource.QueryDefaultBookCallback() {
+            @Override
+            public void querySuccess(AccountBook book) {
+                // 有默认帐薄，直接登录
+                if(book != null){
+                    ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_success));
+                    UiUtils.enterHomePage(mContext);
+                }else{
+                    // 创建默认帐薄
+                    repository.createDefaultBook(user, new Callback() {
+                        @Override
+                        public void requestSuccess() {
+                            ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_success));
+                            UiUtils.enterHomePage(mContext);
+                        }
+
+                        @Override
+                        public void requestFail(Error e) {
+                            ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_fail));
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void queryFail(Error e) {
+                ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_fail));
+            }
+        });
     }
 
     @Override

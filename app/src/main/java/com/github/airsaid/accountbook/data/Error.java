@@ -12,6 +12,11 @@ public class Error{
 
     private AVException e;
     public int code;
+    public String message;
+
+    public Error(){
+
+    }
 
     public Error(AVException e){
         this.e = e;
@@ -31,6 +36,10 @@ public class Error{
     }
 
     public String getMessage(){
+        if(message != null){
+            return message;
+        }
+
         switch (getCode()){
             case 1:
                 return "服务器内部错误或参数错误";

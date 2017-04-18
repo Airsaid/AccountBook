@@ -28,6 +28,7 @@ import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
 import com.sbgapps.simplenumberpicker.decimal.DecimalPickerDialog;
 import com.sbgapps.simplenumberpicker.decimal.DecimalPickerHandler;
 
@@ -105,13 +106,12 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     private void initData() {
         // 初始化账目对象
         mAccount = new Account();
-        mAccount.type = AppConfig.TYPE_COST;// 默认支出分类
+        mAccount.setType(AppConfig.TYPE_COST); // 默认支出分类
         // 初始化分类数据
         initTypeData();
         // 设置默认日期
         Calendar calendar = Calendar.getInstance();
         setSelectData(calendar);
-
     }
 
     /**
@@ -120,7 +120,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     private void initTypeData() {
         mTypes.clear();
         String[] types;
-        if(mAccount.type == AppConfig.TYPE_COST){
+        if(mAccount.getType() == AppConfig.TYPE_COST){
             types = getResources().getStringArray(R.array.account_cost_type);
         }else{
             types = getResources().getStringArray(R.array.account_income_type);
@@ -128,7 +128,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         for (int i = 0; i < types.length; i++) {
             AccountType type = new AccountType();
             int resId;
-            if(mAccount.type == AppConfig.TYPE_COST){
+            if(mAccount.getType() == AppConfig.TYPE_COST){
                 resId = getResources().getIdentifier("ic_cost_type_".concat(String.valueOf(i)), "mipmap"
                         , getActivity().getPackageName());
             }else{
@@ -152,7 +152,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         AccountType type = mTypeAdapter.getData().get(position);
         UiUtils.setCompoundDrawables(mTxtType, type.drawable, null, null, null);
         mTxtType.setText(type.type);
-        mAccount.cType = type.type;
+        mAccount.setCType(type.type);
     }
 
     @Override
@@ -172,9 +172,9 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         if(!RegexUtils.checkMoney(money)){
             AnimUtils.startVibrateAnim(mTxtMoney, -1);
         }else{
-            mAccount.money = money;
-            mAccount.note = note;
-            mPresenter.saveAccount(mAccount);
+            mAccount.setMoney(money);
+            mAccount.setNote(note);
+            mPresenter.saveAccount(UserUtils.getUser(), mAccount);
         }
     }
 
@@ -198,7 +198,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     @Override
     public void selectCost() {
-        mAccount.type = AppConfig.TYPE_COST;
+        mAccount.setType(AppConfig.TYPE_COST);
         initTypeData();
         mTxtMoney.setTextColor(UiUtils.getColor(R.color.textPink));
     }
@@ -208,7 +208,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     @Override
     public void selectIncome() {
-        mAccount.type = AppConfig.TYPE_INCOME;
+        mAccount.setType(AppConfig.TYPE_INCOME);
         initTypeData();
         mTxtMoney.setTextColor(UiUtils.getColor(R.color.textLightBlue));
     }
@@ -263,7 +263,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.CHINA);
         String time = format.format(date);
         mTxtDate.setText(time);
-        mAccount.date = date;
+        mAccount.setDate(date);
     }
 
     @OnClick({R.id.txt_money, R.id.txt_date})

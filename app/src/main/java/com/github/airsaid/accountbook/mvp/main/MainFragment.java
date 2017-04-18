@@ -22,6 +22,7 @@ import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.util.DateUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -133,7 +134,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
      * 请求数据。
      */
     private void requestData() {
-        mPresenter.queryAccount(mStartDate, mEndDate, mPage);
+        mPresenter.queryAccount(UserUtils.getUser(), mStartDate, mEndDate, mPage);
     }
 
     @Override

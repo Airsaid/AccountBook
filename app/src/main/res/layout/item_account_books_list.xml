@@ -24,8 +24,8 @@
             android:layout_height="170dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"
             tools:src="@mipmap/book_icon1"/>
 
         <ImageView
@@ -39,6 +39,8 @@
             android:id="@+id/txt_name"
             style="@style/Text.Brown"
             android:layout_toEndOf="@id/img_cover"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textSize="@dimen/text18"
             tools:text="日常帐薄"/>
 

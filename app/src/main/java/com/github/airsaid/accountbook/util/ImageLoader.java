@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.Transformation;
 import com.github.airsaid.accountbook.R;
-import com.github.airsaid.accountbook.constants.ApiConstant;
+import com.github.airsaid.accountbook.constants.Api;
 import com.github.airsaid.accountbook.widget.transform.CropCircleTransformation;
 
 import java.io.File;
@@ -146,7 +146,7 @@ public class ImageLoader {
         if(object instanceof String){
             String imageUrl = (String) object;
             if(!imageUrl.startsWith("http://")){
-                imageUrl = ApiConstant.IMG_SERVER_URL.concat(imageUrl);
+                imageUrl = Api.IMG_SERVER_URL.concat(imageUrl);
             }
             builder = with.load(imageUrl);
         }else if(object instanceof Integer){
