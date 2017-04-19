@@ -15,6 +15,7 @@
     <string name="dialog_title_update_sex">修改性别</string>
     <string name="dialog_content_clear_cache">确认清除缓存吗？</string>
     <string name="dialog_content_login_out">确认退出登录吗？</string>
+    <string name="dialog_title_input_bid">输入帐薄 ID</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -59,6 +60,7 @@
     <string name="toast_login_out_success">退出成功</string>
     <string name="toast_add_fail_login_reset">添加失败，请重新登录后重试</string>
     <string name="toast_copy_success_send_friend">复制成功，快发送给你的亲友吧~</string>
+    <string name="toast_input_bid">请输入帐薄 ID</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>
@@ -104,11 +106,12 @@
     <string name="def_book_name">日常帐薄</string>
     <string name="def_book_scene">日常</string>
     <string name="def_book_cover">book_icon1</string>
-    <string name="hint_add_share_user">帐薄 ID 是每个帐薄用来共享的号码，想要你的亲友一起来记账，只需把帐薄 ID 发给亲友，亲友可在“帐薄”页点击右上角的 + 号，选择加入记账，即可开始共同记账。</string>
+    <string name="hint_add_share_user">帐薄 ID 是每个帐薄用来共享的号码，想要你的亲友一起来记账，只需把帐薄 ID 发给亲友，亲友可在 “帐薄” 页点击右上角菜单，选择加入记账，即可开始共同记账。</string>
     <string name="book_id_sign">账簿ID：</string>
     <string name="copy_book_id">复制账簿ID</string>
     <string name="add_account_book">添加账簿</string>
     <string name="add_share_book">加入记账</string>
+
 
 
 </resources>

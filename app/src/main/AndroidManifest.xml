@@ -43,9 +43,13 @@
         <!--主页-->
         <activity android:name=".mvp.main.MainActivity"/>
         <!--登录-->
-        <activity android:name=".mvp.login.LoginActivity"/>
+        <activity
+            android:name=".mvp.login.LoginActivity"
+            android:theme="@style/AppTheme.GrayControl"/>
         <!--注册-->
-        <activity android:name=".mvp.register.RegisterActivity"/>
+        <activity
+            android:name=".mvp.register.RegisterActivity"
+            android:theme="@style/AppTheme.GrayControl"/>
         <!--记账-->
         <activity android:name=".mvp.account.AccountActivity"/>
         <!--个人资料-->
@@ -53,7 +57,9 @@
         <!--帐薄-->
         <activity android:name=".mvp.books.AccountBooksActivity"/>
         <!--找回密码-->
-        <activity android:name=".ui.activity.ForgetPasswordActivity"/>
+        <activity
+            android:name=".ui.activity.ForgetPasswordActivity"
+            android:theme="@style/AppTheme.GrayControl"/>
         <!--设置-->
         <activity android:name=".ui.activity.SettingActivity"/>
         <!--关于我们-->

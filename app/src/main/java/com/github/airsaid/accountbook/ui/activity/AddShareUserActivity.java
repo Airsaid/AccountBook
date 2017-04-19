@@ -15,7 +15,6 @@ import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author Airsaid
@@ -30,13 +29,13 @@ public class AddShareUserActivity extends BaseActivity {
     ImageView mImgScene;
     @BindView(R.id.txt_name)
     TextView mTxtName;
-    @BindView(R.id.txt_bid)
-    TextView mTxtBid;
+//    @BindView(R.id.txt_bid)
+//    TextView mTxtBid;
     private AccountBook mBook;
 
     @Override
     public int getLayoutRes() {
-        return R.layout.activity_add_share_user;
+        return R.layout.activity_base_toolbar;
     }
 
     @Override
@@ -54,10 +53,10 @@ public class AddShareUserActivity extends BaseActivity {
         mImgCover.setImageResource(coverId);
         mImgScene.setImageResource(sceneId);
         mTxtName.setText(book.getName());
-        mTxtBid.setText(UiUtils.getString(R.string.book_id_sign) + book.getBid());
+//        mTxtBid.setText(UiUtils.getString(R.string.book_id_sign) + book.getBid());
     }
 
-    @OnClick(R.id.btn_copy_bid)
+//    @OnClick(R.id.btn_copy_bid)
     public void onClick() {
         // 复制账簿 ID
         String bid = String.valueOf(mBook.getBid());
