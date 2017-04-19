@@ -60,7 +60,9 @@
     <string name="toast_login_out_success">退出成功</string>
     <string name="toast_add_fail_login_reset">添加失败，请重新登录后重试</string>
     <string name="toast_copy_success_send_friend">复制成功，快发送给你的亲友吧~</string>
-    <string name="toast_input_bid">请输入帐薄 ID</string>
+    <string name="toast_input_bid_error">帐薄ID输入有误</string>
+    <string name="toast_add_share_book_fail">加入失败</string>
+    <string name="toast_add_share_book_success">加入成功</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>

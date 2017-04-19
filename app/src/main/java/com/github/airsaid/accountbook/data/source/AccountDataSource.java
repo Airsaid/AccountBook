@@ -31,6 +31,12 @@ public interface AccountDataSource {
     /** 查询指定用户下所有的帐薄 */
     void queryBooks(User user, QueryBooksCallback callback);
 
+    /** 根据帐薄 ID 加入共享帐薄*/
+    void addShareBook(User user, long bid, Callback callback);
+
+    /** 添加一条帐薄数据 */
+    void addBook(AccountBook book, Callback callback);
+
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
         void queryFail(Error e);
