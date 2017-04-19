@@ -63,6 +63,7 @@
     <string name="toast_input_bid_error">帐薄ID输入有误</string>
     <string name="toast_add_share_book_fail">加入失败</string>
     <string name="toast_add_share_book_success">加入成功</string>
+    <string name="toast_query_book_empty">找不到账簿 ID 对应的账簿啊~</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>

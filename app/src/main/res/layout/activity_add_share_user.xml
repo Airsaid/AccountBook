@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBackground"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:id="@+id/img_cover"
+            android:layout_width="125dp"
+            android:layout_height="170dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"
+            tools:src="@mipmap/book_icon1"/>
+
+        <ImageView
+            android:id="@+id/img_scene"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            tools:ignore="ContentDescription"
+            tools:src="@mipmap/book_scene1"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_name"
+        style="@style/Text.Brown"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/text18"
+        tools:text="日常帐薄"/>
+
+    <TextView
+        android:id="@+id/txt_bid"
+        style="@style/Text.Brown"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/text16"
+        tools:text="帐薄ID：10000"/>
+
+    <Button
+        android:id="@+id/btn_copy_bid"
+        style="@style/Button.Default.Margin"
+        android:text="@string/copy_book_id"/>
+
+    <TextView
+        style="@style/Text.Maple"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="5dp"
+        android:text="@string/hint_add_share_user"
+        android:textSize="@dimen/text12"/>
+
+
+</LinearLayout>
