@@ -29,6 +29,11 @@ public class AccountBook extends AVObject {
         super(in);
     }
 
+    /** 设置帐薄 id */
+    public void setBid(long bid){
+        put(Api.BID, bid);
+    }
+
     /** 获取帐薄 id */
     public long getBid(){
         return getLong(Api.BID);

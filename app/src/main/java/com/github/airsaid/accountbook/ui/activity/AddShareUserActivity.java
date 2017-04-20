@@ -15,6 +15,7 @@ import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Airsaid
@@ -23,6 +24,7 @@ import butterknife.BindView;
  * @desc 添加共享用户 (邀请好友一起记账)
  */
 public class AddShareUserActivity extends BaseActivity {
+
     @BindView(R.id.img_cover)
     ImageView mImgCover;
     @BindView(R.id.img_scene)
@@ -31,11 +33,12 @@ public class AddShareUserActivity extends BaseActivity {
     TextView mTxtName;
     @BindView(R.id.txt_bid)
     TextView mTxtBid;
+
     private AccountBook mBook;
 
     @Override
     public int getLayoutRes() {
-        return R.layout.activity_base_toolbar;
+        return R.layout.activity_add_share_user;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class AddShareUserActivity extends BaseActivity {
         mTxtBid.setText(UiUtils.getString(R.string.book_id_sign) + book.getBid());
     }
 
-//    @OnClick(R.id.btn_copy_bid)
+    @OnClick(R.id.btn_copy_bid)
     public void onClick() {
         // 复制账簿 ID
         String bid = String.valueOf(mBook.getBid());

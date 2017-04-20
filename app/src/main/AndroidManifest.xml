@@ -66,6 +66,8 @@
         <activity android:name=".ui.activity.AboutPageActivity"/>
         <!--邀请好友-->
         <activity android:name=".ui.activity.AddShareUserActivity"/>
+        <!--添加帐薄-->
+        <activity android:name=".ui.activity.AddBookActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

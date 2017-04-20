@@ -37,6 +37,9 @@ public interface AccountDataSource {
     /** 添加一条帐薄数据 */
     void addBook(AccountBook book, Callback callback);
 
+    /** 设置当前帐薄 */
+    void setCurrentBook(User user, long bid, Callback callback);
+
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
         void queryFail(Error e);

@@ -3,6 +3,7 @@ package com.github.airsaid.accountbook.mvp.books;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.data.source.AccountDataSource;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 
@@ -44,4 +45,36 @@ public class AccountBooksPresenter implements AccountBooksContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void setCurrentBook(User user, long bid) {
+        mRepository.setCurrentBook(user, bid, new Callback() {
+            @Override
+            public void requestSuccess() {
+                mView.setCurrentBookSuccess();
+            }
+
+            @Override
+            public void requestFail(Error e) {
+                mView.setCurrentBookFail(e);
+            }
+        });
+    }
+
+    @Override
+    public void addShareBook(User user, long bid) {
+        mRepository.addShareBook(user, bid, new Callback() {
+            @Override
+            public void requestSuccess() {
+                mView.addShareBookSuccess();
+            }
+
+            @Override
+            public void requestFail(Error e) {
+                mView.addShareBookFail(e);
+            }
+        });
+    }
+
+
 }

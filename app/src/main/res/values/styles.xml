@@ -53,6 +53,11 @@
         <item name="android:background">@color/colorDivide</item>
     </style>
 
+    <style name="Divide.Default.Margin">
+        <item name="android:layout_marginLeft">@dimen/view_margin</item>
+        <item name="android:layout_marginRight">@dimen/view_margin</item>
+    </style>
+
     <!--按钮样式-->
     <style name="Button">
         <item name="android:layout_width">match_parent</item>

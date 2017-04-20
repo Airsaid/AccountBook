@@ -19,10 +19,17 @@ public interface AccountBooksContract {
     interface View extends BaseView<Presenter>{
         void queryBooksSuccess(List<AccountBook> books);
         void queryBooksFail(Error e);
+        void setCurrentBookSuccess();
+        void setCurrentBookFail(Error e);
+        void addShareBook();
+        void addShareBookSuccess();
+        void addShareBookFail(Error e);
     }
 
     interface Presenter extends BasePresenter{
         void queryBooks(User user);
+        void setCurrentBook(User user, long bid);
+        void addShareBook(User user, long bid);
     }
 
 }

@@ -13,5 +13,8 @@ public class MsgConstants {
     /** 账目保存成功 */
     public static final int MSG_SAVE_ACCOUNT_SUCCESS = CUSTOM_MSG_BASE << 1;
 
+    /** 设置当前帐薄成功 */
+    public static final int MSG_SET_CUR_BOOK_SUCCESS = CUSTOM_MSG_BASE << 2;
+
 
 }

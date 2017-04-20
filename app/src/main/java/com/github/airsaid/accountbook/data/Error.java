@@ -39,8 +39,9 @@ public class Error{
         if(message != null){
             return message;
         }
-
         switch (getCode()){
+            case 0:
+                return "请求失败了，网络好像不太好呢o(>﹏<)o";
             case 1:
                 return "服务器内部错误或参数错误";
             case 100:
@@ -159,8 +160,9 @@ public class Error{
                 return "短信验证码发送失败";
             case 603:
                 return "无效的短信验证码";
-
         }
+
+
         return "请求失败";
     }
 

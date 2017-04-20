@@ -17,8 +17,8 @@
     <dimen name="text25">25sp</dimen>
     <dimen name="text26">26sp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
-    <dimen name="margin">15dp</dimen>
-    <dimen name="padding">15dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="padding">16dp</dimen>
     <dimen name="view_margin">10dp</dimen>
     <dimen name="view_padding">10dp</dimen>
     <dimen name="divide_height">1dp</dimen>

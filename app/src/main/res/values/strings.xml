@@ -28,6 +28,7 @@
     <string name="title_about">关于大大记账本</string>
     <string name="title_account_books">帐薄</string>
     <string name="title_add_share_user">邀请好友</string>
+    <string name="title_add_book">添加帐薄</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -40,6 +41,8 @@
     <string name="hint_right_code">验证码输入有误</string>
     <string name="hint_right_phone_or_password">请输入正确的手机号或密码</string>
     <string name="hint_verify_phone">手机号未验证，请先验证。</string>
+    <string name="hint_input_book_name">请输入帐薄名称</string>
+    <string name="hint_select_book_scene">请选择帐薄使用场景</string>
     <!--土司-->
     <string name="toast_input_name_or_pwd">请输入用户名或密码</string>
     <string name="toast_login_success">登录成功</string>
@@ -64,6 +67,7 @@
     <string name="toast_add_share_book_fail">加入失败</string>
     <string name="toast_add_share_book_success">加入成功</string>
     <string name="toast_query_book_empty">找不到账簿 ID 对应的账簿啊~</string>
+    <string name="toast_has_add_share_book">已经加入该帐薄记账啦~</string>
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>
@@ -114,7 +118,9 @@
     <string name="copy_book_id">复制账簿ID</string>
     <string name="add_account_book">添加账簿</string>
     <string name="add_share_book">加入记账</string>
-
+    <string name="book_name">帐薄名称</string>
+    <string name="book_scene">帐薄场景</string>
+    <string name="select_book_cover">选择封面</string>
 
 
 </resources>

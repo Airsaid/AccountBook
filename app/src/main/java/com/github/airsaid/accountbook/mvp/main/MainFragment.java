@@ -153,8 +153,10 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     public void onMessageEvent(Message msg) {
         switch (msg.what) {
             case MsgConstants.MSG_SAVE_ACCOUNT_SUCCESS:
+            case MsgConstants.MSG_SET_CUR_BOOK_SUCCESS:
                 onRefresh();
                 break;
+
         }
     }
 

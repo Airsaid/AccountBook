@@ -1,6 +1,7 @@
 package com.github.airsaid.accountbook.data.source;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
@@ -154,7 +155,6 @@ public class AccountRepository implements AccountDataSource {
     public void addShareBook(final User user, long bid, final Callback callback) {
         AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
         query.whereEqualTo(Api.BID, bid);
-        query.whereNotEqualTo(Api.SHARES, user);
         query.getFirstInBackground(new GetCallback<AccountBook>() {
             @Override
             public void done(final AccountBook accountBook, AVException e) {
@@ -164,32 +164,40 @@ public class AccountRepository implements AccountDataSource {
                         error.message = UiUtils.getString(R.string.toast_query_book_empty);
                         callback.requestFail(error);
                     }else{
-                        accountBook.addShare(user);
-                        accountBook.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(AVException e) {
-                                if(e == null){
-                                    AccountBook book = new AccountBook();
-                                    book.setOwner(user);
-                                    book.setName(accountBook.getName());
-                                    book.setScene(accountBook.getScene());
-                                    book.setShare(accountBook.getShares());
-                                    addBook(book, new Callback() {
-                                        @Override
-                                        public void requestSuccess() {
-                                            callback.requestSuccess();
-                                        }
+                        if(accountBook.getShares().contains(user)){
+                            Error error = new Error();
+                            error.message = UiUtils.getString(R.string.toast_has_add_share_book);
+                            callback.requestFail(error);
+                        }else{
+                            accountBook.addShare(user);
+                            accountBook.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(AVException e) {
+                                    if(e == null){
+                                        AccountBook book = new AccountBook();
+                                        book.setOwner(user);
+                                        book.setBid(accountBook.getBid());
+                                        book.setName(accountBook.getName());
+                                        book.setScene(accountBook.getScene());
+                                        book.setShare(accountBook.getShares());
+                                        book.setCover(accountBook.getCover());
+                                        addBook(book, new Callback() {
+                                            @Override
+                                            public void requestSuccess() {
+                                                callback.requestSuccess();
+                                            }
 
-                                        @Override
-                                        public void requestFail(Error e) {
-                                            callback.requestFail(e);
-                                        }
-                                    });
-                                }else{
-                                    callback.requestFail(new Error(e));
+                                            @Override
+                                            public void requestFail(Error e) {
+                                                callback.requestFail(e);
+                                            }
+                                        });
+                                    }else{
+                                        callback.requestFail(new Error(e));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }else{
                     callback.requestFail(new Error(e));
@@ -210,5 +218,36 @@ public class AccountRepository implements AccountDataSource {
                 }
             }
         });
+    }
+
+    @Override
+    public void setCurrentBook(User user, final long bid, final Callback callback) {
+        // 查询当前用户所有帐薄
+        AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
+        query.whereEqualTo(Api.OWNER, user);
+        query.findInBackground(new FindCallback<AccountBook>() {
+            @Override
+            public void done(List<AccountBook> list, AVException e) {
+                if(e == null){
+                    // 设置帐薄 ID 相同帐薄为当前帐薄
+                    for (AccountBook book : list) {
+                        book.setCurrent(book.getBid() == bid);
+                    }
+                    AVObject.saveAllInBackground(list, new SaveCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if(e == null){
+                                callback.requestSuccess();
+                            }else{
+                                callback.requestFail(new Error(e));
+                            }
+                        }
+                    });
+                }else{
+                    callback.requestFail(new Error(e));
+                }
+            }
+        });
+
     }
 }
