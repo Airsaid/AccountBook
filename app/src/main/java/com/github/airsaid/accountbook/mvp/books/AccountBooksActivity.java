@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
-import com.github.airsaid.accountbook.ui.activity.AddBookActivity;
+import com.github.airsaid.accountbook.ui.activity.AddEditBookActivity;
 import com.github.airsaid.accountbook.util.ActivityUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
@@ -54,7 +54,7 @@ public class AccountBooksActivity extends BaseActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_title_add:         // 添加帐薄
-                startActivity(new Intent(mContext, AddBookActivity.class));
+                startActivity(new Intent(mContext, AddEditBookActivity.class));
                 break;
             case R.id.menu_title_add_share:   // 加入记账
                 mFragment.addShareBook();

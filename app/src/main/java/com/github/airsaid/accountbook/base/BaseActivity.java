@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.airsaid.accountbook.R;
@@ -33,6 +34,8 @@ public abstract class BaseActivity extends SlideBackActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // 设置 Activity 屏幕方向
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // 设置不自动弹出软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // 隐藏 ActionBar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         // 设置 TAG

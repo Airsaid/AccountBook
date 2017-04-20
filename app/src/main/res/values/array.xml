@@ -32,4 +32,14 @@
         <item>男</item>
         <item>女</item>
     </array>
+
+    <array name="book_scene_name">
+        <item>日常</item>
+        <item>校园</item>
+        <item>生意</item>
+        <item>家庭</item>
+        <item>旅行</item>
+        <item>装修</item>
+        <item>结婚</item>
+    </array>
 </resources>

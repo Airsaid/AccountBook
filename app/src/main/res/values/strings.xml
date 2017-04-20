@@ -16,9 +16,14 @@
     <string name="dialog_content_clear_cache">确认清除缓存吗？</string>
     <string name="dialog_content_login_out">确认退出登录吗？</string>
     <string name="dialog_title_input_bid">输入帐薄 ID</string>
+    <string name="dialog_title_select_scene">选择场景</string>
+    <string name="dialog_content_delete_book">确认删除该账簿吗？该操作不可恢复，请三思！</string>
+    <string name="dialog_concel_delete_book">我再想想</string>
+    <string name="dialog_affirm_delete_book">删吧，我想好了</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
+    <string name="load_delete">正在删除中&#8230;</string>
     <!--标题名-->
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
@@ -29,6 +34,7 @@
     <string name="title_account_books">帐薄</string>
     <string name="title_add_share_user">邀请好友</string>
     <string name="title_add_book">添加帐薄</string>
+    <string name="title_edit_book">编辑帐薄</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -63,11 +69,18 @@
     <string name="toast_login_out_success">退出成功</string>
     <string name="toast_add_fail_login_reset">添加失败，请重新登录后重试</string>
     <string name="toast_copy_success_send_friend">复制成功，快发送给你的亲友吧~</string>
-    <string name="toast_input_bid_error">帐薄ID输入有误</string>
+    <string name="toast_input_bid_error">帐薄 ID 输入有误</string>
     <string name="toast_add_share_book_fail">加入失败</string>
     <string name="toast_add_share_book_success">加入成功</string>
     <string name="toast_query_book_empty">找不到账簿 ID 对应的账簿啊~</string>
     <string name="toast_has_add_share_book">已经加入该帐薄记账啦~</string>
+    <string name="toast_input_book_name">请输入账簿名称</string>
+    <string name="toast_select_book_scene">请选择账簿场景</string>
+    <string name="toast_select_book_cover">请选择账簿封面</string>
+    <string name="toast_add_success">添加成功</string>
+    <string name="toast_edit_success">修改成功</string>
+    <string name="toast_delete_success">删除成功</string>
+
     <!--other-->
     <string name="rmb">¥</string>
     <string name="login">登录</string>

@@ -24,6 +24,7 @@ import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.ui.activity.AddEditBookActivity;
 import com.github.airsaid.accountbook.ui.activity.AddShareUserActivity;
 import com.github.airsaid.accountbook.util.DimenUtils;
 import com.github.airsaid.accountbook.util.ProgressUtils;
@@ -33,6 +34,8 @@ import com.github.airsaid.accountbook.util.UserUtils;
 import com.github.airsaid.accountbook.widget.recycler.OnSimpleClickListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +76,14 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
         refreshData();
     }
 
+    @Override
+    public void onStart() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        super.onStart();
+    }
+
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new AccountBooksAdapter(R.layout.item_account_books_list, new ArrayList<AccountBook>());
@@ -97,6 +108,25 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
                         startActivity(intent);
                         break;
                 }
+            }
+
+            @Override
+            public void onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                final AccountBook book = (AccountBook) baseQuickAdapter.getData().get(i);
+                String[] items = {"编辑账簿", "删除账簿"};
+                new AlertDialog.Builder(mContext)
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(which == 0){
+                                    Intent intent = new Intent(mContext, AddEditBookActivity.class);
+                                    intent.putExtra(AppConstants.EXTRA_DATA, book);
+                                    startActivity(intent);
+                                }else if(which == 1){
+                                    showDeleteBookDialog(book.getBid());
+                                }
+                            }
+                        }).create().show();
             }
         });
     }
@@ -146,6 +176,34 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
         ToastUtils.show(mContext, e.getMessage());
     }
 
+    @Override
+    public void showDeleteBookDialog(final long bid) {
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title))
+                .setMessage(UiUtils.getString(R.string.dialog_content_delete_book))
+                .setNegativeButton(UiUtils.getString(R.string.dialog_concel_delete_book), null)
+                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm_delete_book), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ProgressUtils.show(mContext, UiUtils.getString(R.string.load_delete));
+                        mPresenter.deleteBook(bid);
+                    }
+                }).create().show();
+    }
+
+    @Override
+    public void deleteBookSuccess() {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_edit_success));
+        refreshData();
+    }
+
+    @Override
+    public void deleteBookFail(Error e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, e.getMessage());
+    }
+
     /**
      * 显示输入帐薄 ID Dialog
      */
@@ -171,5 +229,23 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
                 .create();
         dialog.setView(edtBookId, DimenUtils.dp2px(16), DimenUtils.dp2px(16), DimenUtils.dp2px(16), DimenUtils.dp2px(16));
         dialog.show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Message msg) {
+        switch (msg.what) {
+            case MsgConstants.MSG_ADD_BOOK_SUCCESS:
+            case MsgConstants.MSG_EDIT_BOOK_SUCCESS:
+                refreshData();
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
     }
 }

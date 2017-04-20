@@ -3,6 +3,7 @@ package com.github.airsaid.accountbook.data.source;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
@@ -249,5 +250,65 @@ public class AccountRepository implements AccountDataSource {
             }
         });
 
+    }
+
+    @Override
+    public void editBook(final AccountBook book, final Callback callback) {
+        // 查找该账簿 id　对应的所有账簿
+        AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
+        query.whereEqualTo(Api.BID, book.getBid());
+        query.findInBackground(new FindCallback<AccountBook>() {
+            @Override
+            public void done(List<AccountBook> list, AVException e) {
+                if(e == null){
+                    // 统一修改
+                    for (AccountBook accountBook : list) {
+                        accountBook.setName(book.getName());
+                        accountBook.setScene(book.getScene());
+                        accountBook.setCover(book.getCover());
+                    }
+
+                    AVObject.saveAllInBackground(list, new SaveCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if(e == null){
+                                callback.requestSuccess();
+                            }else{
+                                callback.requestFail(new Error(e));
+                            }
+                        }
+                    });
+                }else{
+                    callback.requestFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteBook(long bid, final Callback callback) {
+        // 查找该账簿 id　对应的所有账簿
+        AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
+        query.whereEqualTo(Api.BID, bid);
+        query.findInBackground(new FindCallback<AccountBook>() {
+            @Override
+            public void done(List<AccountBook> list, AVException e) {
+                if(e == null){
+                    // 统一删除
+                    AVObject.deleteAllInBackground(list, new DeleteCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if(e == null){
+                                callback.requestSuccess();
+                            }else{
+                                callback.requestFail(new Error(e));
+                            }
+                        }
+                    });
+                }else{
+                    callback.requestFail(new Error(e));
+                }
+            }
+        });
     }
 }

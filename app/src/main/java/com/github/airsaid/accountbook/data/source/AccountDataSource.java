@@ -40,6 +40,12 @@ public interface AccountDataSource {
     /** 设置当前帐薄 */
     void setCurrentBook(User user, long bid, Callback callback);
 
+    /** 修改一条帐薄数据 */
+    void editBook(AccountBook book, Callback callback);
+
+    /** 删除指定帐薄 ID 对应的所有账簿数据 */
+    void deleteBook(long bid, Callback callback);
+
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
         void queryFail(Error e);

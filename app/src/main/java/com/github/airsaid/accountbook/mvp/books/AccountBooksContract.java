@@ -24,12 +24,16 @@ public interface AccountBooksContract {
         void addShareBook();
         void addShareBookSuccess();
         void addShareBookFail(Error e);
+        void showDeleteBookDialog(long bid);
+        void deleteBookSuccess();
+        void deleteBookFail(Error e);
     }
 
     interface Presenter extends BasePresenter{
         void queryBooks(User user);
         void setCurrentBook(User user, long bid);
         void addShareBook(User user, long bid);
+        void deleteBook(long bid);
     }
 
 }

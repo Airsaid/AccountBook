@@ -76,5 +76,20 @@ public class AccountBooksPresenter implements AccountBooksContract.Presenter {
         });
     }
 
+    @Override
+    public void deleteBook(long bid) {
+        mRepository.deleteBook(bid, new Callback() {
+            @Override
+            public void requestSuccess() {
+                mView.deleteBookSuccess();
+            }
+
+            @Override
+            public void requestFail(Error e) {
+                mView.deleteBookFail(e);
+            }
+        });
+    }
+
 
 }
