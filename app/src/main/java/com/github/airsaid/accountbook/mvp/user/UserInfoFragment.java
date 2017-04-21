@@ -1,6 +1,7 @@
 package com.github.airsaid.accountbook.mvp.user;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;

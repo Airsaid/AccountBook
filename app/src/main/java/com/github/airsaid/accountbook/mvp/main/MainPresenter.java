@@ -3,6 +3,7 @@ package com.github.airsaid.accountbook.mvp.main;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.data.source.AccountDataSource;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 
@@ -40,6 +41,21 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void queryFail(Error e) {
                 mView.queryFail(e);
+            }
+        });
+    }
+
+    @Override
+    public void deleteAccount(Account account) {
+        mRepository.deleteAccount(account, new Callback() {
+            @Override
+            public void requestSuccess() {
+                mView.deleteSuccess();
+            }
+
+            @Override
+            public void requestFail(Error e) {
+                mView.deleteFail(e);
             }
         });
     }

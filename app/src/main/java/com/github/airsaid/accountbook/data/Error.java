@@ -101,7 +101,7 @@ public class Error{
             case 205:
                 return "找不到电子邮箱地址对应的用户";
             case 206:
-                return "请先登录";
+                return "登录超时，请重新登录后操作。";
             case 207:
                 return "请通过注册创建用户，当前不允许第三方登录。";
             case 208:
@@ -137,7 +137,7 @@ public class Error{
             case 304:
                 return "数据操作错误";
             case 403:
-                return "操作被禁止，您无权执行该操作。";
+                return "用户没有登录，无法修改用户信息。";
             case 429:
                 return "系统繁忙，请稍后再试。";
             case 430:

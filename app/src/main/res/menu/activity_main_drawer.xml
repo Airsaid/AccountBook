@@ -6,10 +6,10 @@
             android:id="@+id/nav_account_books"
             android:icon="@mipmap/ic_nav_account_books"
             android:title="@string/account_books"/>
-        <item
+        <!--<item
             android:id="@+id/nav_count"
             android:icon="@mipmap/ic_nav_count"
-            android:title="@string/count"/>
+            android:title="@string/count"/>-->
     </group>
 
     <item android:title="@string/other">

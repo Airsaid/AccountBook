@@ -1,9 +1,11 @@
 package com.github.airsaid.accountbook.mvp.main;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,9 +22,11 @@ import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.util.DateUtils;
+import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
+import com.github.airsaid.accountbook.widget.recycler.OnSimpleClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -108,6 +112,13 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
         mAdapter.setEmptyView(UiUtils.getEmptyView(mContext, mRecyclerView
                 , UiUtils.getString(R.string.empty_account_data)));
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener(){
+            @Override
+            public void onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Account account = (Account) baseQuickAdapter.getData().get(i);
+                showOperateAccountDialog(account);
+            }
+        });
     }
 
     @Override
@@ -147,6 +158,46 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     @Override
     public void queryFail(Error e) {
         ToastUtils.show(mContext, e.getMessage());
+    }
+
+    @Override
+    public void deleteSuccess() {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_delete_success));
+        onRefresh();
+    }
+
+    @Override
+    public void deleteFail(Error e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, e.getMessage());
+    }
+
+    @Override
+    public void showOperateAccountDialog(final Account account) {
+        String[] items = new String[]{"删除账目"};
+        new AlertDialog.Builder(mContext)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        showDeleteAccountDialog(account);
+                    }
+                }).create().show();
+    }
+
+    @Override
+    public void showDeleteAccountDialog(final Account account) {
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title))
+                .setMessage(UiUtils.getString(R.string.dialog_content_delete_account))
+                .setNegativeButton(UiUtils.getString(R.string.dialog_cancel), null)
+                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ProgressUtils.show(mContext, UiUtils.getString(R.string.load_delete));
+                        mPresenter.deleteAccount(account);
+                    }
+                }).create().show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

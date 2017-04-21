@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.airsaid.accountbook.R;
@@ -25,10 +26,12 @@ import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.source.UserDataSource;
 import com.github.airsaid.accountbook.ui.activity.AddEditBookActivity;
 import com.github.airsaid.accountbook.ui.activity.AddShareUserActivity;
 import com.github.airsaid.accountbook.util.DimenUtils;
 import com.github.airsaid.accountbook.util.ProgressUtils;
+import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
@@ -76,6 +79,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     @Override
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         initAdapter();
         onRefresh();
     }
@@ -99,7 +103,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 // 设置当前帐薄
                 AccountBook book = (AccountBook) baseQuickAdapter.getData().get(i);
-                ProgressUtils.show(mContext);
+                ProgressUtils.show(mContext, UiUtils.getString(R.string.load_switch));
                 mPresenter.setCurrentBook(UserUtils.getUser(), book.getBid());
             }
 
@@ -208,7 +212,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
         new AlertDialog.Builder(mContext)
                 .setTitle(UiUtils.getString(R.string.dialog_title))
                 .setMessage(UiUtils.getString(R.string.dialog_content_delete_book))
-                .setNegativeButton(UiUtils.getString(R.string.dialog_concel_delete_book), null)
+                .setNegativeButton(UiUtils.getString(R.string.dialog_cancel_delete_book), null)
                 .setPositiveButton(UiUtils.getString(R.string.dialog_affirm_delete_book), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -235,26 +239,36 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
      * 显示输入帐薄 ID Dialog
      */
     private void showInputBookIdDialog() {
-        final AppCompatEditText edtBookId = new AppCompatEditText(mContext);
-        edtBookId.setInputType(InputType.TYPE_CLASS_NUMBER);
-        edtBookId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(8)});
-        AlertDialog dialog = new AlertDialog.Builder(mContext)
+        final AppCompatEditText editText = new AppCompatEditText(mContext);
+        editText.setHint(UiUtils.getString(R.string.hint_input_book_id));
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        final AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(UiUtils.getString(R.string.dialog_title_input_bid))
+                .setCancelable(false)
+                .setView(editText, DimenUtils.dp2px(16f), DimenUtils.dp2px(16f), DimenUtils.dp2px(16f), DimenUtils.dp2px(16f))
                 .setNegativeButton(UiUtils.getString(R.string.dialog_cancel), null)
-                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm), new DialogInterface.OnClickListener() {
+                .setPositiveButton(UiUtils.getString(R.string.dialog_add), null)
+                .create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String bid = edtBookId.getText().toString();
+                    public void onClick(View view) {
+                        String bid = editText.getText().toString();
                         if(TextUtils.isEmpty(bid)){
                             ToastUtils.show(mContext, UiUtils.getString(R.string.toast_input_bid_error));
                         }else{
+                            dialog.dismiss();
                             ProgressUtils.show(mContext);
                             mPresenter.addShareBook(UserUtils.getUser(), Long.valueOf(bid));
                         }
                     }
-                })
-                .create();
-        dialog.setView(edtBookId, DimenUtils.dp2px(16), DimenUtils.dp2px(16), DimenUtils.dp2px(16), DimenUtils.dp2px(16));
+                });
+            }
+        });
         dialog.show();
     }
 

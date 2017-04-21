@@ -61,6 +61,20 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
+    public void deleteAccount(Account account, final Callback callback) {
+        account.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e == null){
+                    callback.requestSuccess();
+                }else{
+                    callback.requestFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    @Override
     public void queryAccounts(User user, final String startDate, final String endDate, int page, final QueryAccountListCallback callback) {
         queryDefaultBook(user, new QueryDefaultBookCallback() {
             @Override

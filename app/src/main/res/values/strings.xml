@@ -3,27 +3,36 @@
     <string name="application_initialization_failed">应用初始化失败，请自行配置帐号。</string>
     <string name="navigation_drawer_open">打开导航抽屉</string>
     <string name="navigation_drawer_close">关闭导航抽屉</string>
+    <string name="op_update_pwd">您正在申请更换手机号</string>
     <!--empty-->
     <string name="empty_data">暂无数据</string>
-    <string name="empty_account_data">该月还没有记账呢~</string>
+    <string name="empty_account_data">该月还没有记账呢</string>
     <!--Dialog-->
     <string name="dialog_title">提示</string>
     <string name="dialog_affirm">确认</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_finish">完成</string>
+    <string name="dialog_add">加入</string>
+    <string name="dialog_send_code">发送验证码</string>
     <string name="dialog_title_update_username">修改用户名</string>
     <string name="dialog_title_update_sex">修改性别</string>
     <string name="dialog_content_clear_cache">确认清除缓存吗？</string>
     <string name="dialog_content_login_out">确认退出登录吗？</string>
     <string name="dialog_title_input_bid">输入帐薄 ID</string>
     <string name="dialog_title_select_scene">选择场景</string>
-    <string name="dialog_content_delete_book">确认删除该账簿吗？该操作不可恢复，请三思！</string>
-    <string name="dialog_concel_delete_book">我再想想</string>
+    <string name="dialog_content_delete_book">真的要删除该账簿吗？！删除后该帐薄所相关的账目数据都将删除，请三思！</string>
+    <string name="dialog_cancel_delete_book">我再想想</string>
     <string name="dialog_affirm_delete_book">删吧，我想好了</string>
+    <string name="dialog_content_delete_account">确认删除该账目吗？</string>
+    <string name="dialog_title_update_pwd">修改账户密码</string>
+    <string name="dialog_title_update_phone">修改手机号</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
     <string name="load_delete">正在删除中&#8230;</string>
+    <string name="load_send_code">正在发送验证码&#8230;</string>
+    <string name="load_verify">正在验证中&#8230;</string>
+    <string name="load_switch">正在切换中&#8230;</string>
     <!--标题名-->
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
@@ -48,9 +57,15 @@
     <string name="hint_right_phone_or_password">请输入正确的手机号或密码</string>
     <string name="hint_verify_phone">手机号未验证，请先验证。</string>
     <string name="hint_input_book_name">请输入帐薄名称</string>
+    <string name="hint_input_book_id">请输入帐薄 ID</string>
     <string name="hint_select_book_scene">请选择帐薄使用场景</string>
+    <string name="hint_input_new_pwd">请输入新密码(6&#8211;16位字母数字组合)</string>
+    <string name="hint_input_new_phone">请输入新手机号</string>
     <!--土司-->
+    <string name="toast_right_phone">请输入正确的手机号</string>
+    <string name="toast_right_code">请输入正确的验证码</string>
     <string name="toast_input_name_or_pwd">请输入用户名或密码</string>
+    <string name="toast_right_password">密码输入有误(6&#8211;16位字母数字组合)</string>
     <string name="toast_login_success">登录成功</string>
     <string name="toast_login_fail">登录失败</string>
     <string name="toast_register_success">恭喜您，注册成功~</string>
@@ -59,6 +74,7 @@
     <string name="toast_send_code">验证码已发送</string>
     <string name="toast_verify_phone_success">手机号验证成功</string>
     <string name="toast_update_password_success">密码修改成功</string>
+    <string name="toast_update_phone_success">手机号修改成功</string>
     <string name="toast_save_success">保存成功</string>
     <string name="toast_save_fail">保存失败</string>
     <string name="toast_username_length">请输入1&#8211;16位的用户名</string>
@@ -72,14 +88,15 @@
     <string name="toast_input_bid_error">帐薄 ID 输入有误</string>
     <string name="toast_add_share_book_fail">加入失败</string>
     <string name="toast_add_share_book_success">加入成功</string>
-    <string name="toast_query_book_empty">找不到账簿 ID 对应的账簿啊~</string>
-    <string name="toast_has_add_share_book">已经加入该帐薄记账啦~</string>
+    <string name="toast_query_book_empty">账簿 ID 没有对应的账簿</string>
+    <string name="toast_has_add_share_book">帐薄里已经有你咯(=・ω・=)</string>
     <string name="toast_input_book_name">请输入账簿名称</string>
     <string name="toast_select_book_scene">请选择账簿场景</string>
     <string name="toast_select_book_cover">请选择账簿封面</string>
     <string name="toast_add_success">添加成功</string>
     <string name="toast_edit_success">修改成功</string>
     <string name="toast_delete_success">删除成功</string>
+    <string name="toast_phone_not_equal">新手机号不能和当前手机号相同</string>
 
     <!--other-->
     <string name="rmb">¥</string>

@@ -19,10 +19,15 @@ public class MainContract {
     interface View extends BaseView<Presenter>{
         void querySuccess(List<Account> list);
         void queryFail(Error e);
+        void deleteSuccess();
+        void deleteFail(Error e);
+        void showOperateAccountDialog(Account account);
+        void showDeleteAccountDialog(Account account);
     }
 
     interface Presenter extends BasePresenter{
         void queryAccount(User user, String startDate, String endDate, int page);
+        void deleteAccount(Account account);
     }
 
 }

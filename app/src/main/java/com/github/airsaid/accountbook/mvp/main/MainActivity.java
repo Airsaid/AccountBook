@@ -151,9 +151,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_account_books:// 帐薄
                 startActivity(new Intent(mContext, AccountBooksActivity.class));
                 break;
-            case R.id.nav_count:        // 统计
-
-                break;
+//            case R.id.nav_count:        // 统计
+//                startActivity(new Intent(mContext, CountActivity.class));
+//                break;
             case R.id.nav_feedback:     // 用户反馈
                 FeedbackAgent agent = new FeedbackAgent(mContext);
                 FeedbackThread thread = agent.getDefaultThread();

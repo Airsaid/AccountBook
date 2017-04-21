@@ -19,6 +19,9 @@ public interface AccountDataSource {
     /** 保存账目信息 */
     void saveAccount(User user, Account account, Callback callback);
 
+    /** 删除一条账目数据 */
+    void deleteAccount(Account account, Callback callback);
+
     /** 查找指定日期内的账目信息 */
     void queryAccounts(User user, String startDate, String endDate, int page, QueryAccountListCallback callback);
 

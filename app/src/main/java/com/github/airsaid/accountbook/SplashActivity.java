@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.mvp.login.LoginActivity;
 import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.util.AppUtils;
@@ -50,8 +51,16 @@ public class SplashActivity extends BaseActivity {
                 Intent intent = new Intent();
                 // 判断用户是否已经登录
                 if (UserUtils.checkLogin()) {
+                    User user = UserUtils.getUser();
+                    boolean phoneVerified = user.isMobilePhoneVerified();
                     // 进入首页
-                    intent.setClass(mContext, MainActivity.class);
+                    if(phoneVerified){
+                        // 进入首页
+                        intent.setClass(mContext, MainActivity.class);
+                    }else{
+                        // 进入登录页
+                        intent.setClass(mContext, LoginActivity.class);
+                    }
                 } else {
                     // 进入登录页
                     intent.setClass(mContext, LoginActivity.class);

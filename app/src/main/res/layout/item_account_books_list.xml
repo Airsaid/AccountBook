@@ -67,7 +67,8 @@
             style="@style/Text.White"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@id/txt_name"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/bg_text_cur_book"
             android:text="@string/cur_account_books"
             android:textSize="@dimen/text12"/>
@@ -77,8 +78,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@id/img_cover"
+            android:layout_marginBottom="14dp"
+            android:layout_toEndOf="@id/txt_current"
             android:gravity="end"
             android:orientation="horizontal">
 

@@ -271,7 +271,7 @@ public class AddEditBookActivity extends BaseActivity {
         new AlertDialog.Builder(mContext)
                 .setTitle(UiUtils.getString(R.string.dialog_title))
                 .setMessage(UiUtils.getString(R.string.dialog_content_delete_book))
-                .setNegativeButton(UiUtils.getString(R.string.dialog_concel_delete_book), null)
+                .setNegativeButton(UiUtils.getString(R.string.dialog_cancel_delete_book), null)
                 .setPositiveButton(UiUtils.getString(R.string.dialog_affirm_delete_book), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
