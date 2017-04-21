@@ -22,4 +22,7 @@ public class MsgConstants {
     /** 修改帐薄成功 */
     public static final int MSG_EDIT_BOOK_SUCCESS    = CUSTOM_MSG_BASE << 4;
 
+    /** 删除帐薄成功 */
+    public static final int MSG_DELETE_BOOK_SUCCESS  = CUSTOM_MSG_BASE << 5;
+
 }

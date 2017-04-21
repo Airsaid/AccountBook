@@ -134,6 +134,7 @@
     <string name="book_name">帐薄名称</string>
     <string name="book_scene">帐薄场景</string>
     <string name="select_book_cover">选择封面</string>
+    <string name="delete_book">删除帐薄</string>
 
 
 </resources>

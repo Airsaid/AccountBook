@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,6 +59,8 @@ public class AddEditBookActivity extends BaseActivity {
     TextView mTxtBookScene;
     @BindView(R.id.rlv_cover)
     RecyclerView mRlvCover;
+    @BindView(R.id.btn_delete_book)
+    AppCompatButton mBtnDeleteBook;
 
     private List<BookCover> mCovers = new ArrayList<>();
     private AccountRepository mRepository;
@@ -104,6 +107,8 @@ public class AddEditBookActivity extends BaseActivity {
 
         mEdtBookName.setText(mBook.getName());
         mTxtBookScene.setText(mBook.getScene());
+        if(!mBook.isCurrent())
+            mBtnDeleteBook.setVisibility(View.VISIBLE);
         List<BookCover> covers = mAdapter.getData();
         for (int p = 0; p < covers.size(); p++) {
             BookCover cover = covers.get(p);
@@ -238,18 +243,63 @@ public class AddEditBookActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.llt_select_book_scene)
-    public void onClick() {
-        // 选择场景
-        final String[] scenes = UiUtils.getStringArray(R.array.book_scene_name);
+    @OnClick({R.id.llt_select_book_scene, R.id.btn_delete_book})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.llt_select_book_scene: // 选择场景
+                final String[] scenes = UiUtils.getStringArray(R.array.book_scene_name);
+                new AlertDialog.Builder(mContext)
+                        .setTitle(UiUtils.getString(R.string.dialog_title_select_scene))
+                        .setItems(scenes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String scene = scenes[which];
+                                mTxtBookScene.setText(scene);
+                            }
+                        }).create().show();
+                break;
+            case R.id.btn_delete_book:      // 删除帐薄
+                if(mIsEdit && !mBook.isCurrent()){
+                    showDeleteBookDialog();
+                }
+                break;
+        }
+
+    }
+
+    private void showDeleteBookDialog() {
         new AlertDialog.Builder(mContext)
-                .setTitle(UiUtils.getString(R.string.dialog_title_select_scene))
-                .setItems(scenes, new DialogInterface.OnClickListener() {
+                .setTitle(UiUtils.getString(R.string.dialog_title))
+                .setMessage(UiUtils.getString(R.string.dialog_content_delete_book))
+                .setNegativeButton(UiUtils.getString(R.string.dialog_concel_delete_book), null)
+                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm_delete_book), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String scene = scenes[which];
-                        mTxtBookScene.setText(scene);
+                        deleteBook();
                     }
                 }).create().show();
+    }
+
+    private void deleteBook() {
+        ProgressUtils.show(mContext, UiUtils.getString(R.string.load_delete));
+        mRepository.deleteBook(mBook.getBid(), new Callback() {
+            @Override
+            public void requestSuccess() {
+                ProgressUtils.dismiss();
+                ToastUtils.show(mContext, UiUtils.getString(R.string.toast_delete_success));
+
+                Message msg = new Message();
+                msg.what = MsgConstants.MSG_DELETE_BOOK_SUCCESS;
+                EventBus.getDefault().post(msg);
+
+                finish();
+            }
+
+            @Override
+            public void requestFail(Error e) {
+                ProgressUtils.dismiss();
+                ToastUtils.show(mContext, e.getMessage());
+            }
+        });
     }
 }

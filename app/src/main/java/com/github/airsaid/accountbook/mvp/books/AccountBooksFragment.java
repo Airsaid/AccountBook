@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,8 +49,10 @@ import butterknife.BindView;
  * @date 2017/4/14
  * @desc 帐薄 Fragment
  */
-public class AccountBooksFragment extends BaseFragment implements AccountBooksContract.View {
+public class AccountBooksFragment extends BaseFragment implements AccountBooksContract.View, SwipeRefreshLayout.OnRefreshListener {
 
+    @BindView(R.id.refreshLayout)
+    SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
@@ -72,8 +75,9 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
 
     @Override
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
+        mRefreshLayout.setOnRefreshListener(this);
         initAdapter();
-        refreshData();
+        onRefresh();
     }
 
     @Override
@@ -95,6 +99,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 // 设置当前帐薄
                 AccountBook book = (AccountBook) baseQuickAdapter.getData().get(i);
+                ProgressUtils.show(mContext);
                 mPresenter.setCurrentBook(UserUtils.getUser(), book.getBid());
             }
 
@@ -113,40 +118,37 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
             @Override
             public void onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 final AccountBook book = (AccountBook) baseQuickAdapter.getData().get(i);
-                String[] items = {"编辑账簿", "删除账簿"};
-                new AlertDialog.Builder(mContext)
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if(which == 0){
-                                    Intent intent = new Intent(mContext, AddEditBookActivity.class);
-                                    intent.putExtra(AppConstants.EXTRA_DATA, book);
-                                    startActivity(intent);
-                                }else if(which == 1){
-                                    showDeleteBookDialog(book.getBid());
-                                }
-                            }
-                        }).create().show();
+                showOperateBookDialog(book);
             }
         });
     }
 
-    private void refreshData(){
-        mPresenter.queryBooks(UserUtils.getUser());
+    @Override
+    public void onRefresh() {
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
+                mPresenter.queryBooks(UserUtils.getUser());
+            }
+        });
     }
 
     @Override
     public void queryBooksSuccess(List<AccountBook> books) {
+        mRefreshLayout.setRefreshing(false);
         mAdapter.setNewData(books);
     }
 
     @Override
     public void queryBooksFail(Error e) {
+        mRefreshLayout.setRefreshing(false);
         ToastUtils.show(mContext, e.getMessage());
     }
 
     @Override
     public void setCurrentBookSuccess() {
+        ProgressUtils.dismiss();
         Message msg = new Message();
         msg.what = MsgConstants.MSG_SET_CUR_BOOK_SUCCESS;
         EventBus.getDefault().post(msg);
@@ -155,6 +157,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
 
     @Override
     public void setCurrentBookFail(Error e) {
+        ProgressUtils.dismiss();
         ToastUtils.show(mContext, e.getMessage());
     }
 
@@ -167,13 +170,37 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     public void addShareBookSuccess() {
         ProgressUtils.dismiss();
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_add_share_book_success));
-        refreshData();
+        onRefresh();
     }
 
     @Override
     public void addShareBookFail(Error e) {
         ProgressUtils.dismiss();
         ToastUtils.show(mContext, e.getMessage());
+    }
+
+    @Override
+    public void showOperateBookDialog(final AccountBook book) {
+        // 判断是否是当前帐薄，是则不可删除
+        String[] items;
+        if(book.isCurrent()){
+            items = new String[]{"编辑账簿"};
+        }else{
+            items = new String[]{"编辑账簿", "删除账簿"};
+        }
+        new AlertDialog.Builder(mContext)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which == 0){
+                            Intent intent = new Intent(mContext, AddEditBookActivity.class);
+                            intent.putExtra(AppConstants.EXTRA_DATA, book);
+                            startActivity(intent);
+                        }else if(which == 1){
+                            showDeleteBookDialog(book.getBid());
+                        }
+                    }
+                }).create().show();
     }
 
     @Override
@@ -195,7 +222,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     public void deleteBookSuccess() {
         ProgressUtils.dismiss();
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_edit_success));
-        refreshData();
+        onRefresh();
     }
 
     @Override
@@ -236,7 +263,8 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
         switch (msg.what) {
             case MsgConstants.MSG_ADD_BOOK_SUCCESS:
             case MsgConstants.MSG_EDIT_BOOK_SUCCESS:
-                refreshData();
+            case MsgConstants.MSG_DELETE_BOOK_SUCCESS:
+                onRefresh();
                 break;
         }
     }

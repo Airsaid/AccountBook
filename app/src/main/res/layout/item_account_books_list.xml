@@ -45,16 +45,6 @@
             tools:text="日常帐薄"/>
 
         <TextView
-            android:id="@+id/txt_current"
-            style="@style/Text.White"
-            android:layout_alignTop="@id/txt_name"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/txt_name"
-            android:background="@drawable/bg_text_cur_book"
-            android:text="@string/cur_account_books"
-            android:textSize="@dimen/text12"/>
-
-        <TextView
             android:id="@+id/txt_total_cost"
             style="@style/Text.Maple"
             android:layout_alignStart="@id/txt_name"
@@ -71,6 +61,16 @@
             android:layout_marginTop="10dp"
             android:textSize="@dimen/text16"
             tools:text="总收入：10000.00"/>
+
+        <TextView
+            android:id="@+id/txt_current"
+            style="@style/Text.White"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@id/txt_name"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_text_cur_book"
+            android:text="@string/cur_account_books"
+            android:textSize="@dimen/text12"/>
 
         <LinearLayout
             android:layout_width="match_parent"

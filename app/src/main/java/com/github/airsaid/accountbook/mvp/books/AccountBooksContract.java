@@ -24,6 +24,7 @@ public interface AccountBooksContract {
         void addShareBook();
         void addShareBookSuccess();
         void addShareBookFail(Error e);
+        void showOperateBookDialog(AccountBook book);
         void showDeleteBookDialog(long bid);
         void deleteBookSuccess();
         void deleteBookFail(Error e);
