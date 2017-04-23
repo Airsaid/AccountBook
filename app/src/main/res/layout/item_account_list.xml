@@ -19,47 +19,70 @@
 
         <ImageView
             android:id="@+id/img_type"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/app_name"
-            tools:src="@mipmap/ic_cost_type_0"/>
+            android:layout_marginEnd="@dimen/view_margin"
+            tools:src="@mipmap/ic_type_cost"/>
 
         <TextView
             android:id="@+id/txt_money"
             style="@style/Text.Red"
+            android:layout_alignTop="@id/img_type"
             android:layout_toEndOf="@id/img_type"
             android:textSize="@dimen/text20"
-            tools:text="¥ 50"/>
+            tools:text="-50 ¥"/>
 
         <TextView
             android:id="@+id/txt_type"
             style="@style/Text.White"
-            android:layout_marginStart="10dp"
+            android:layout_alignTop="@id/txt_money"
+            android:layout_marginStart="@dimen/view_margin"
             android:layout_toEndOf="@id/txt_money"
             android:background="@drawable/bg_text_type_main"
             android:gravity="center"
-            android:textSize="@dimen/text14"
             tools:text="分类"/>
 
         <TextView
+            android:id="@+id/txt_date"
+            style="@style/Text.Grayish"
+            android:layout_alignParentEnd="true"
+            android:textSize="@dimen/text12"
+            tools:text="2017-04-07"/>
+
+        <TextView
             android:id="@+id/txt_note"
-            style="@style/Text.Brown"
-            android:layout_alignStart="@id/txt_money"
+            style="@style/Text.Maple"
+            android:layout_alignLeft="@id/txt_money"
             android:layout_below="@id/txt_money"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/view_margin"
             android:ellipsize="end"
             android:maxLines="1"
             tools:text="我是备注"/>
 
-        <TextView
-            android:id="@+id/txt_date"
-            style="@style/Text.Maple"
-            android:layout_alignBottom="@id/img_type"
-            android:layout_alignStart="@id/txt_money"
-            android:layout_marginTop="10dp"
-            tools:text="2017-04-07"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/txt_note"
+            android:layout_marginTop="@dimen/view_margin"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                tools:src="@mipmap/ic_def_icon"/>
+
+            <TextView
+                android:id="@+id/txt_username"
+                style="@style/Text.Brown"
+                android:visibility="gone"
+                android:textSize="@dimen/text12"
+                tools:text="我是昵称"/>
+        </LinearLayout>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

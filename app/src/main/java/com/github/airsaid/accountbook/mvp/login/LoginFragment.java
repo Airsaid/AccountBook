@@ -80,6 +80,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String phone = charSequence.toString();
                 if (!RegexUtils.checkPhone(phone)) {
+                    mTilPhone.setErrorEnabled(true);
                     mTilPhone.setError(UiUtils.getString(R.string.hint_right_phone));
                 } else {
                     mTilPhone.setErrorEnabled(false);
@@ -169,7 +170,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                                 mPresenter.requestPhoneVerify(phone);
                             }
 
-                            mVerifyPhoneDialog = new VerifyPhoneDialog();
+                            mVerifyPhoneDialog = new VerifyPhoneDialog(mContext);
                             mVerifyPhoneDialog.show(getChildFragmentManager(), "dialog");
                             mVerifyPhoneDialog.setOnVerifyPhoneCallback(new VerifyPhoneDialog.OnVerifyPhoneCallback() {
                                 @Override

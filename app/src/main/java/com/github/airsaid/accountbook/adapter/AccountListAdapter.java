@@ -4,15 +4,20 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVFile;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.data.Account;
+import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
+import com.github.airsaid.accountbook.util.ImageLoader;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,6 +34,7 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
 
     private final AbsoluteSizeSpan mSizeMinSpan;
     private List<Account> data;
+    private boolean isShowAvatar = false; // 是否显示头像
 
     public AccountListAdapter(List<Account> data) {
         super(data);
@@ -50,11 +56,34 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
                 // 设置分类
                 .setVisible(R.id.txt_type, !TextUtils.isEmpty(item.getCType()))
                 .setText(R.id.txt_type, item.getCType())
-                // 设置备注
-                .setVisible(R.id.txt_note, !TextUtils.isEmpty(item.getNote()))
-                .setText(R.id.txt_note, item.getNote())
                 // 设置日期
                 .setText(R.id.txt_date, DateUtils.getDateText(item.getDate(), DateUtils.FORMAT));
+
+        // 设置备注
+        TextView txtNote = helper.getView(R.id.txt_note);
+        String note = item.getNote();
+        if(TextUtils.isEmpty(note)){
+            txtNote.setVisibility(View.INVISIBLE);
+        }else{
+            txtNote.setVisibility(View.VISIBLE);
+            txtNote.setText(note);
+        }
+
+        // 设置记账用户信息
+        ImageView imgAvatar = helper.getView(R.id.img_avatar);
+        User owenr = item.getOwenr();
+        if(owenr != null && isShowAvatar){
+            // 设置头像
+            imgAvatar.setVisibility(View.VISIBLE);
+            AVFile avatar = owenr.getAvatar();
+            if(avatar != null){
+                ImageLoader.getIns(mContext).loadIcon(avatar.getUrl(), imgAvatar);
+            }else{
+                imgAvatar.setImageResource(R.mipmap.ic_def_icon);
+            }
+        }else{
+            imgAvatar.setVisibility(View.GONE);
+        }
 
         if(item.getItemType() == Account.TYPE_DATE){
             // 设置当天日期
@@ -129,5 +158,12 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
         }
         totalCost.setText(String.valueOf(costTotalMoney));
         totalIncome.setText(String.valueOf(incomeTotalMoney));
+    }
+
+    /**
+     * 设置是否显示头像
+     */
+    public void setIsShowAvatar(boolean isShowAvatar) {
+        this.isShowAvatar = isShowAvatar;
     }
 }

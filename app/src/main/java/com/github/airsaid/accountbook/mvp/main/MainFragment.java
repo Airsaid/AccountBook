@@ -156,6 +156,12 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     }
 
     @Override
+    public void shareUsers(int count) {
+        // 当共享人数大于 1 时才去显示头像
+        mAdapter.setIsShowAvatar(count > 1);
+    }
+
+    @Override
     public void queryFail(Error e) {
         ToastUtils.show(mContext, e.getMessage());
     }

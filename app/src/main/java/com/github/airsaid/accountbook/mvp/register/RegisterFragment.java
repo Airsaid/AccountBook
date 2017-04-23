@@ -111,7 +111,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     @Override
     public void showRegisterSuccess() {
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_send_code));
-        mVerifyPhoneDialog = new VerifyPhoneDialog();
+        mVerifyPhoneDialog = new VerifyPhoneDialog(mContext);
         mVerifyPhoneDialog.show(getChildFragmentManager(), "dialog");
         mVerifyPhoneDialog.setOnVerifyPhoneCallback(new VerifyPhoneDialog.OnVerifyPhoneCallback() {
             @Override

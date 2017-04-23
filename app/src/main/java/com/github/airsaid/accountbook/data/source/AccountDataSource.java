@@ -51,6 +51,7 @@ public interface AccountDataSource {
 
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
+        void shareUsers(int count);
         void queryFail(Error e);
     }
 

@@ -29,13 +29,14 @@ import java.util.List;
 public class AccountRepository implements AccountDataSource {
 
     @Override
-    public void saveAccount(User user, final Account account, final Callback callback) {
+    public void saveAccount(final User user, final Account account, final Callback callback) {
         queryDefaultBook(user, new QueryDefaultBookCallback() {
             @Override
             public void querySuccess(AccountBook book) {
                 if(book != null){
                     long bid = book.getBid();
                     account.setBid(bid);
+                    account.setOwenr(user);
                     account.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {
@@ -80,6 +81,7 @@ public class AccountRepository implements AccountDataSource {
             @Override
             public void querySuccess(AccountBook book) {
                 long bid = book.getBid();
+                final List<User> shares = book.getShares();
                 AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
                 startDateQuery.whereEqualTo(Api.BID, bid);
                 startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
@@ -92,11 +94,13 @@ public class AccountRepository implements AccountDataSource {
 
                 AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
                 query.orderByDescending(Api.DATE);// 按时间，降序排列
+                query.include(Api.OWNER);
                 query.findInBackground(new FindCallback<Account>() {
                     @Override
                     public void done(List<Account> list, AVException e) {
                         if(e == null){
                             callback.querySuccess(list);
+                            callback.shareUsers(shares.size());
                         }else{
                             callback.queryFail(new Error(e));
                         }

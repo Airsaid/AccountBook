@@ -37,6 +37,16 @@ public class Account extends AVObject implements MultiItemEntity {
         super(in);
     }
 
+    /** 设置记账人 */
+    public void setOwenr(User user){
+        put(Api.OWNER, user);
+    }
+
+    /** 获取记账人 */
+    public User getOwenr(){
+        return getAVUser(Api.OWNER, User.class);
+    }
+
     /** 设置账目类型 支出：1 收入：2 */
     public void setType(int type){
         put(Api.TYPE, type);

@@ -18,6 +18,7 @@ public class MainContract {
 
     interface View extends BaseView<Presenter>{
         void querySuccess(List<Account> list);
+        void shareUsers(int count);
         void queryFail(Error e);
         void deleteSuccess();
         void deleteFail(Error e);

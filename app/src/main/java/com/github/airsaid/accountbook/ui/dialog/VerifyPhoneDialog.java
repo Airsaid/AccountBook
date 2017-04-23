@@ -1,12 +1,15 @@
 package com.github.airsaid.accountbook.ui.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,14 +24,14 @@ import com.github.airsaid.accountbook.util.UiUtils;
  * @date 2017/3/17
  * @desc 验证手机号的 Dialog
  */
+@SuppressLint("ValidFragment")
 public class VerifyPhoneDialog extends AppCompatDialogFragment{
 
     private View mContentView;
     private EditText mEdtCode;
 
-    public VerifyPhoneDialog() {
-        super();
-        mContentView = UiUtils.inflate(R.layout.dialog_verify_phone);
+    public VerifyPhoneDialog(Context context) {
+        mContentView = LayoutInflater.from(context).inflate(R.layout.dialog_verify_phone, null);
         TextInputLayout tilCode = (TextInputLayout) mContentView.findViewById(R.id.til_code);
         if (tilCode.getEditText() == null) return;
         mEdtCode = tilCode.getEditText();

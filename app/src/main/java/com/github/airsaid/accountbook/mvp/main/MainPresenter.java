@@ -39,6 +39,11 @@ public class MainPresenter implements MainContract.Presenter {
             }
 
             @Override
+            public void shareUsers(int count) {
+                mView.shareUsers(count);
+            }
+
+            @Override
             public void queryFail(Error e) {
                 mView.queryFail(e);
             }

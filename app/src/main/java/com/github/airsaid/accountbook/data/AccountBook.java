@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVUser;
 import com.github.airsaid.accountbook.constants.Api;
 
 import java.util.List;
@@ -40,13 +39,13 @@ public class AccountBook extends AVObject {
     }
 
     /** 设置帐薄所属用户 */
-    public void setOwner(AVUser user){
+    public void setOwner(User user){
         put(Api.OWNER, user);
     }
 
     /** 获取帐薄所属用户 */
-    public AVUser getOwner(){
-        return getAVUser(Api.OWNER);
+    public User getOwner(){
+        return getAVUser(Api.OWNER, User.class);
     }
 
     /** 设置帐薄名称 */
