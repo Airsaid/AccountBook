@@ -1,5 +1,10 @@
 # AccountBook
-一个采用 MVP 架构的记账本 APP，目前正在开发中。
+一个采用 MVP 架构的记账本 APP，目前正在完善中。
+
+# Download
+
+ [应用宝](http://sj.qq.com/myapp/detail.htm?apkName=com.github.airsaid.accountbook)
+
 
 # TODO
 - [x] 多人共享账簿下账目信息中增加显示是谁记账。
