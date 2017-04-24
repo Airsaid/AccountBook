@@ -8,7 +8,12 @@ import android.widget.TextView;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.data.AboutApp;
+import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.source.CommonDataSource;
+import com.github.airsaid.accountbook.data.source.CommonRepository;
 import com.github.airsaid.accountbook.util.AppUtils;
+import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
 import butterknife.BindView;
@@ -26,6 +31,10 @@ public class AboutPageActivity extends BaseActivity {
     TextView mTxtSlogan;
     @BindView(R.id.txt_version)
     TextView mTxtVersion;
+    @BindView(R.id.txt_content)
+    TextView mTxtContent;
+
+    private CommonRepository mRepository;
 
     @Override
     public int getLayoutRes() {
@@ -35,12 +44,29 @@ public class AboutPageActivity extends BaseActivity {
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         initToolbar(UiUtils.getString(R.string.title_about));
+        mRepository = new CommonRepository();
         setData();
     }
 
     private void setData() {
         mTxtSlogan.setText(UiUtils.getString(R.string.app_name));
         mTxtVersion.setText("V".concat(AppUtils.getAppVersionName()));
+
+        ProgressUtils.show(mContext);
+        mRepository.aboutApp(new CommonDataSource.GetAboutAppInfoCallback() {
+            @Override
+            public void getSuccess(AboutApp about) {
+                ProgressUtils.dismiss();
+                if(about != null){
+                    mTxtContent.setText(UiUtils.show(about.getContent()));
+                }
+            }
+
+            @Override
+            public void getFail(Error e) {
+                ProgressUtils.dismiss();
+            }
+        });
     }
 
     @OnClick(R.id.cav_developer)

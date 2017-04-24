@@ -18,6 +18,7 @@ public class Api {
     /*   数据库表名   */
     public static final String TAB_BOOK     = "AccountBook";
     public static final String TAB_ACCOUNT  = "Account";
+    public static final String TAB_ABOUT    = "About";
 
     /*   数据库字段名   */
     public static final String BID          = "bid";
@@ -27,18 +28,16 @@ public class Api {
     public static final String SCENE        = "scene";
     public static final String IS_CURRENT	= "isCurrent";
     public static final String SHARES	    = "shares";
-
-
     public static final String TYPE         = "type";
     public static final String CTYPE        = "cType";
     public static final String MONEY        = "money";
     public static final String DATE         = "date";
     public static final String NOTE         = "note";
-    public static final String UID          = "uid";
     public static final String AGE          = "age";
     public static final String SEX          = "sex";
     public static final String AVATAR       = "avatar";
-    public static final String CREATED_AT   = "createdAt";
+    public static final String CONTENT      = "content";
+
 
 
 }

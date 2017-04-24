@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.data.AboutApp;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.util.ToastUtils;
@@ -38,6 +39,7 @@ public class BaseApplication extends Application{
     private void registSubClass() {
         AVObject.registerSubclass(AccountBook.class);
         AVObject.registerSubclass(Account.class);
+        AVObject.registerSubclass(AboutApp.class);
     }
 
     /**

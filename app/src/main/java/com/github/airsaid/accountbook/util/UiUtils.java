@@ -257,4 +257,9 @@ public class UiUtils {
         }
     }
 
+    /** 显示不带 null 的字符 */
+    public static String show(String text){
+        return text != null ? text : "";
+    }
+
 }

@@ -78,8 +78,8 @@
                 app:contentPadding="@dimen/padding">
 
                 <TextView
-                    style="@style/Text.Brown"
-                    android:text="@string/about_content"/>
+                    android:id="@+id/txt_content"
+                    style="@style/Text.Brown"/>
 
             </android.support.v7.widget.CardView>
 
