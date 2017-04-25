@@ -19,12 +19,14 @@ import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.AccountTypeAdapter;
 import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.constants.AppConfig;
+import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountType;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.util.AnimUtils;
 import com.github.airsaid.accountbook.util.ArithUtils;
+import com.github.airsaid.accountbook.util.DateUtils;
 import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
@@ -70,8 +72,12 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     private AccountTypeAdapter mTypeAdapter;
     private Account mAccount;
 
-    public static AccountFragment newInstance() {
-        return new AccountFragment();
+    private boolean mIsEcho = false; // 是否是编辑账目
+
+    public static AccountFragment newInstance(Bundle args) {
+        AccountFragment fragment = new AccountFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -83,6 +89,15 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
         initAdapter();
         initData();
+
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            mAccount = bundle.getParcelable(AppConstants.EXTRA_DATA);
+            if(mAccount != null){
+                // 回显数据
+                echoData();
+            }
+        }
     }
 
     /**
@@ -140,8 +155,37 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
             mTypes.add(type);
         }
         mTypeAdapter.setNewData(mTypes);
-        // 设置默认分类选中
-        setAccountType(0);
+        // 判断不回显时才去设置默认分类选中
+        if(!mIsEcho)
+            setAccountType(0);
+    }
+
+    /**
+     * 回显数据
+     */
+    private void echoData() {
+        if(mAccount == null) return;
+
+        // 回显支出、收入分类
+        mIsEcho = true;
+        AccountActivity act = ((AccountActivity)getActivity());
+        act.mType = mAccount.getType();
+        act.setCostType();
+        // 回显小分类
+        String cType = mAccount.getCType();
+        mTxtType.setText(cType);
+        for (AccountType type : mTypeAdapter.getData()) {
+            if(type.type.equals(cType)){
+                UiUtils.setCompoundDrawables(mTxtType, type.drawable, null, null, null);
+            }
+        }
+        // 回显金额
+        mTxtMoney.setText(mAccount.getMoney());
+        // 回显日期
+        mTxtDate.setText(mAccount.getDateFormat(DateUtils.FORMAT_MONTH_DAY));
+        // 回显备注
+        mEdtNote.setText(mAccount.getNote());
+        mIsEcho = false;
     }
 
     /**
@@ -260,7 +304,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     private void setSelectData(Calendar calendar) {
         Date date = calendar.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.CHINA);
+        SimpleDateFormat format = new SimpleDateFormat(DateUtils.FORMAT_MONTH_DAY, Locale.CHINA);
         String time = format.format(date);
         mTxtDate.setText(time);
         mAccount.setDate(date);

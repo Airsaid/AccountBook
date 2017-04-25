@@ -64,7 +64,7 @@ public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
 
     private void initAdapter() {
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext)
-                .size(DimenUtils.dp2px(15))
+                .size(DimenUtils.dp2px(10))
                 .color(R.color.transparent)
                 .showLastDivider()
                 .build());
@@ -76,7 +76,6 @@ public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener(){
-
             @Override
             public void onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 Msg msg = (Msg) baseQuickAdapter.getData().get(i);

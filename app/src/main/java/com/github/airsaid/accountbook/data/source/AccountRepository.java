@@ -192,8 +192,7 @@ public class AccountRepository implements AccountDataSource {
                         }else{
                             // 判断是否申请过
                             AVQuery<Msg> queryMsgOwner = AVQuery.getQuery(Msg.class);
-                            queryMsgOwner.whereEqualTo(Api.OWNER, user);
-
+                            queryMsgOwner.whereEqualTo(Api.OWNER, accountBook.getOwner());
                             AVQuery<Msg> queryMsgBook = AVQuery.getQuery(Msg.class);
                             queryMsgBook.whereEqualTo(Api.APPLY_BOOK, accountBook);
                             AVQuery<Msg> queryMsg = AVQuery.and(Arrays.asList(queryMsgOwner, queryMsgBook));

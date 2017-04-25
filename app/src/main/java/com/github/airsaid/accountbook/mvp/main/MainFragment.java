@@ -1,6 +1,7 @@
 package com.github.airsaid.accountbook.mvp.main;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.util.DateUtils;
 import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
@@ -181,12 +183,20 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
 
     @Override
     public void showOperateAccountDialog(final Account account) {
-        String[] items = new String[]{"删除账目"};
+        final String[] items = new String[]{UiUtils.getString(R.string.dialog_item_edit_account)
+                , UiUtils.getString(R.string.dialog_item_delete_account)};
         new AlertDialog.Builder(mContext)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        showDeleteAccountDialog(account);
+                        String item = items[i];
+                        if(item.equals(UiUtils.getString(R.string.dialog_item_edit_account))){// 编辑账目
+                            Intent intent = new Intent(mContext, AccountActivity.class);
+                            intent.putExtra(AppConstants.EXTRA_DATA, account);
+                            startActivity(intent);
+                        }else if(item.equals(UiUtils.getString(R.string.dialog_item_delete_account))){// 删除账目
+                            showDeleteAccountDialog(account);
+                        }
                     }
                 }).create().show();
     }

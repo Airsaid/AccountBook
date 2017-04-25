@@ -29,6 +29,8 @@
     <string name="dialog_title_update_phone">修改手机号</string>
     <string name="dialog_item_refuse_apply">拒绝申请</string>
     <string name="dialog_item_delete_msg">删除消息</string>
+    <string name="dialog_item_edit_account">编辑账目</string>
+    <string name="dialog_item_delete_account">删除账目</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -161,11 +163,12 @@
     <string name="select_book_cover">选择封面</string>
     <string name="delete_book">删除帐薄</string>
     <string name="agree">同意</string>
-    <string name="apply_book_sign">对方申请加入帐薄：</string>
-    <string name="msg_agree_book_apply">对方同意了您的加入记账申请，您已经成功加入了 "%1$s" 帐薄。</string>
-    <string name="msg_refuse_book_apply">对方拒绝了您加入 "%1$s" 帐薄的申请。</string>
+    <string name="apply_book_sign">对方申请加入「%1$s」帐薄。</string>
+    <string name="msg_agree_book_apply">对方同意了您的加入记账申请，您已经成功加入了「%1$s」帐薄。</string>
+    <string name="msg_refuse_book_apply">很抱歉，对方拒绝了您加入账簿（账簿 ID：%1$s）的申请。</string>
     <string name="booK_has_delete">该帐薄已删除</string>
     <string name="delete_msg">删除消息</string>
+    <string name="system_message">系统消息</string>
 
 
 </resources>

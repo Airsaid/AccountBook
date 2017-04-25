@@ -29,10 +29,11 @@ public class MsgAdapter extends BaseQuickAdapter<Msg, BaseViewHolder>{
 
     @Override
     protected void convert(BaseViewHolder helper, Msg item) {
+        ImageView imgAvatar = helper.getView(R.id.img_avatar);
+
         // 判断消息类型
         if(item.getType() == AppConfig.TYPE_MSG_APPLY_BOOK){// 申请加入帐薄
             // 设置头像
-            ImageView imgAvatar = helper.getView(R.id.img_avatar);
             User applyUser = item.getApplyUser();
             AVFile avatar = applyUser.getAvatar();
             if(avatar != null){
@@ -44,17 +45,23 @@ public class MsgAdapter extends BaseQuickAdapter<Msg, BaseViewHolder>{
             helper.setText(R.id.txt_username, applyUser.getUsername());
             // 设置帐薄名
             AccountBook applyBook = item.getApplyBook();
+            String applyBookSign = UiUtils.getString(R.string.apply_book_sign);
             if(applyBook != null){
                 helper.setText(R.id.btn_agree, UiUtils.getString(R.string.agree))
-                        .setText(R.id.txt_book, UiUtils.getString(R.string.apply_book_sign).concat(applyBook.getName()));
+                        .setText(R.id.txt_book, String.format(applyBookSign, applyBook.getName()));
             }else{
                 helper.setText(R.id.btn_agree, UiUtils.getString(R.string.delete_msg))
-                        .setText(R.id.txt_book, UiUtils.getString(R.string.apply_book_sign).concat(UiUtils.getString(R.string.booK_has_delete)));
+                        .setText(R.id.txt_book, String.format(applyBookSign, UiUtils.getString(R.string.booK_has_delete)));
             }
 
             // 添加点击事件
-            helper.addOnClickListener(R.id.btn_agree);
+            helper.setVisible(R.id.btn_agree, true)
+                    .addOnClickListener(R.id.btn_agree);
+        }else{
+            imgAvatar.setImageResource(R.mipmap.ic_sys_msg);
+            helper.setText(R.id.txt_username, UiUtils.getString(R.string.system_message))
+                    .setText(R.id.txt_book, UiUtils.show(item.getContent()))
+                    .setVisible(R.id.btn_agree, false);
         }
-
     }
 }

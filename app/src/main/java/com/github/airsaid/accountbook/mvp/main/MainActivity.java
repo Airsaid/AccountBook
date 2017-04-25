@@ -19,9 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVFile;
-import com.avos.avoscloud.feedback.Comment;
 import com.avos.avoscloud.feedback.FeedbackAgent;
-import com.avos.avoscloud.feedback.FeedbackThread;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.MainFragmentPagerAdapter;
 import com.github.airsaid.accountbook.base.BaseActivity;
@@ -40,7 +38,6 @@ import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -203,13 +200,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                break;
             case R.id.nav_feedback:     // 用户反馈
                 FeedbackAgent agent = new FeedbackAgent(mContext);
-                FeedbackThread thread = agent.getDefaultThread();
+               /* FeedbackThread thread = agent.getDefaultThread();
                 List<Comment> commentsList = thread.getCommentsList();
                 if(commentsList == null || commentsList.isEmpty()){
                     Comment devComment = new Comment(UiUtils.getString(R.string.avoscloud_feedback_dev_start)
                             , Comment.CommentType.DEV);
                     thread.add(devComment);
-                }
+                }*/
                 agent.startDefaultThreadActivity();
                 break;
             case R.id.nav_setting:      // 设置

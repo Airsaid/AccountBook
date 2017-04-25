@@ -49,6 +49,7 @@ public class CommonRepository implements CommonDataSource {
         query.whereEqualTo(Api.OWNER, user);
         query.include(Api.APPLY_USER);
         query.include(Api.APPLY_BOOK);
+        query.orderByDescending(Api.CREATE_AT);// 按创建时间，降序排列
         query.findInBackground(new FindCallback<Msg>() {
             @Override
             public void done(List<Msg> list, AVException e) {
@@ -68,11 +69,11 @@ public class CommonRepository implements CommonDataSource {
 
     @Override
     public void agreeAddBook(final Msg msg, final Callback callback) {
-        final AccountBook accountBook = msg.getApplyBook();
-        final User user = msg.getApplyUser();
+        final AccountBook applyBook = msg.getApplyBook();
+        final User applyUser = msg.getApplyUser();
 
         // 健壮性判断
-        if (accountBook.getShares().contains(user)) {
+        if (applyBook.getShares().contains(applyUser)) {
             Error error = new Error();
             error.message = UiUtils.getString(R.string.toast_has_agree);
             callback.requestFail(error);
@@ -80,19 +81,19 @@ public class CommonRepository implements CommonDataSource {
         }
 
         // 共享用户中加入该用户
-        accountBook.addShare(user);
-        accountBook.saveInBackground(new SaveCallback() {
+        applyBook.addShare(applyUser);
+        applyBook.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
                 if (e == null) {
                     // 在该用户中创建一个帐薄，其中除了所属人为该用户外，其他都同要加入的帐薄数据。
                     AccountBook book = new AccountBook();
-                    book.setOwner(user);
-                    book.setBid(accountBook.getBid());
-                    book.setName(accountBook.getName());
-                    book.setScene(accountBook.getScene());
-                    book.setShare(accountBook.getShares());
-                    book.setCover(accountBook.getCover());
+                    book.setOwner(applyUser);
+                    book.setBid(applyBook.getBid());
+                    book.setName(applyBook.getName());
+                    book.setScene(applyBook.getScene());
+                    book.setShare(applyBook.getShares());
+                    book.setCover(applyBook.getCover());
                     AccountRepository repository = new AccountRepository();
                     repository.addBook(book, new Callback() {
                         @Override
@@ -103,10 +104,10 @@ public class CommonRepository implements CommonDataSource {
                                 public void requestSuccess() {
                                     // 创建通知消息
                                     Msg message = new Msg();
-                                    message.setOwner(user);
+                                    message.setOwner(applyUser);
                                     message.setType(AppConfig.TYPE_MSG_SYSTEM);
                                     String content = UiUtils.getString(R.string.msg_agree_book_apply);
-                                    content = String.format(content, accountBook.getName());
+                                    content = String.format(content, applyBook.getName());
                                     message.setContent(content);
                                     saveMessage(message, new Callback() {
                                         @Override
@@ -149,9 +150,9 @@ public class CommonRepository implements CommonDataSource {
         message.setOwner(applyUser);
         message.setType(AppConfig.TYPE_MSG_SYSTEM);
         String content = UiUtils.getString(R.string.msg_refuse_book_apply);
-        content = String.format(content, applyBook != null ? applyBook.getName() : UiUtils.getString(R.string.booK_has_delete));
+        content = String.format(content, applyBook != null ? applyBook.getBid() : UiUtils.getString(R.string.booK_has_delete));
         message.setContent(content);
-        saveMessage(msg, new Callback() {
+        saveMessage(message, new Callback() {
             @Override
             public void requestSuccess() {
                 // 删除该申请消息

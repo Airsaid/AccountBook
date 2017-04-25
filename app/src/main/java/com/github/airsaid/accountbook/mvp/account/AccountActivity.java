@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
 import com.github.airsaid.accountbook.constants.AppConfig;
+import com.github.airsaid.accountbook.constants.AppConstants;
+import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
 import com.github.airsaid.accountbook.util.AnimUtils;
@@ -41,7 +43,7 @@ public class AccountActivity extends BaseActivity {
     private AccountFragment mFragment;
 
     // 记账类型，默认支出
-    private int mType = AppConfig.TYPE_COST;
+    public int mType = AppConfig.TYPE_COST;
 
     @Override
     public int getLayoutRes() {
@@ -58,7 +60,13 @@ public class AccountActivity extends BaseActivity {
         mFragment = (AccountFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (mFragment == null) {
             // Create the fragment
-            mFragment = AccountFragment.newInstance();
+            Account account = getIntent().getParcelableExtra(AppConstants.EXTRA_DATA);
+            Bundle bundle = null;
+            if(account != null){
+                bundle = new Bundle();
+                bundle.putParcelable(AppConstants.EXTRA_DATA, account);
+            }
+            mFragment = AccountFragment.newInstance(bundle);
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), mFragment, R.id.contentFrame);
         }
@@ -122,7 +130,7 @@ public class AccountActivity extends BaseActivity {
         }
     }
 
-    private void setCostType(){
+    public void setCostType(){
         // 判断收入还是支出
         switch (mType){
             case AppConfig.TYPE_COST:
