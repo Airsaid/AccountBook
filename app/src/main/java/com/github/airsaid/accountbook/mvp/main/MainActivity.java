@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,12 +25,17 @@ import com.avos.avoscloud.feedback.FeedbackThread;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.MainFragmentPagerAdapter;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
+import com.github.airsaid.accountbook.data.source.CommonDataSource;
+import com.github.airsaid.accountbook.data.source.CommonRepository;
 import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.mvp.books.AccountBooksActivity;
 import com.github.airsaid.accountbook.mvp.user.UserInfoActivity;
+import com.github.airsaid.accountbook.ui.activity.MsgActivity;
 import com.github.airsaid.accountbook.ui.activity.SettingActivity;
 import com.github.airsaid.accountbook.util.ImageLoader;
+import com.github.airsaid.accountbook.util.MenuBadgeUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
@@ -61,6 +67,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView mTxtUsername;
 
     private String[] mTitles;
+    private MenuItem mMenuItem;
+    private CommonRepository mCommonRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onResume() {
         super.onResume();
         setUserInfo();
+        queryUnReadMsg();
     }
 
     @Override
@@ -93,6 +102,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initView();
         initTitles();
         initAdapter();
+
+        mCommonRepository = new CommonRepository();
     }
 
     private void initView() {
@@ -131,6 +142,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mViewPager.setCurrentItem(month);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        mMenuItem = menu.findItem(R.id.menu_title_msg);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_title_msg:         // 消息
+                startActivity(new Intent(mContext, MsgActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 查询未读消息
+     */
+    private void queryUnReadMsg(){
+        mCommonRepository.queryUnReadMsg(UserUtils.getUser(), new CommonDataSource.QueryUnReadMsgCallback() {
+            @Override
+            public void querySuccess(int count) {
+                if(mMenuItem != null){
+                    MenuBadgeUtils.update(mContext, mMenuItem, R.mipmap.ic_msg_read, count);
+                }
+            }
+
+            @Override
+            public void queryFail(Error e) {}
+        });
+    }
+
+    /**
+     * 设置用户信息
+     */
     private void setUserInfo(){
         User user = UserUtils.getUser();
         if(user != null){

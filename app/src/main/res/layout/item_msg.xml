@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/padding">
+
+    <ImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/view_margin"
+        android:src="@mipmap/ic_default_icon"/>
+
+    <TextView
+        android:id="@+id/txt_username"
+        style="@style/Text.Brown"
+        android:layout_toEndOf="@id/img_avatar"
+        android:textSize="@dimen/text16"
+        tools:text="昵称"/>
+
+    <TextView
+        android:id="@+id/txt_book"
+        style="@style/Text.Maple"
+        android:layout_alignStart="@id/txt_username"
+        android:layout_below="@id/txt_username"
+        android:layout_marginEnd="@dimen/view_margin"
+        android:layout_marginTop="@dimen/view_margin"
+        android:layout_toStartOf="@+id/btn_agree"
+        android:lineSpacingExtra="2dp"
+        tools:text="对方申请加入帐薄：日常帐薄"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_agree"
+        style="@style/Button.Default.Small"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="@string/agree"/>
+
+</RelativeLayout>

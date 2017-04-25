@@ -7,12 +7,13 @@
     <!--empty-->
     <string name="empty_data">暂无数据</string>
     <string name="empty_account_data">该月还没有记账呢</string>
+    <string name="empty_msg_data">暂无消息数据喔~</string>
     <!--Dialog-->
     <string name="dialog_title">提示</string>
     <string name="dialog_affirm">确认</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_finish">完成</string>
-    <string name="dialog_add">加入</string>
+    <string name="dialog_add">申请加入</string>
     <string name="dialog_send_code">发送验证码</string>
     <string name="dialog_title_update_username">修改用户名</string>
     <string name="dialog_title_update_sex">修改性别</string>
@@ -26,6 +27,8 @@
     <string name="dialog_content_delete_account">确认删除该账目吗？</string>
     <string name="dialog_title_update_pwd">修改账户密码</string>
     <string name="dialog_title_update_phone">修改手机号</string>
+    <string name="dialog_item_refuse_apply">拒绝申请</string>
+    <string name="dialog_item_delete_msg">删除消息</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -44,6 +47,7 @@
     <string name="title_add_share_user">邀请好友</string>
     <string name="title_add_book">添加帐薄</string>
     <string name="title_edit_book">编辑帐薄</string>
+    <string name="title_msg">消息</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -88,6 +92,8 @@
     <string name="toast_input_bid_error">帐薄 ID 输入有误</string>
     <string name="toast_add_share_book_fail">加入失败</string>
     <string name="toast_add_share_book_success">加入成功</string>
+    <string name="toast_apply_success">申请成功！请等待对方审核~</string>
+    <string name="toast_has_apply_book">已申请加入，请等待对方审核~</string>
     <string name="toast_query_book_empty">账簿 ID 没有对应的账簿</string>
     <string name="toast_has_add_share_book">帐薄里已经有你咯(=・ω・=)</string>
     <string name="toast_input_book_name">请输入账簿名称</string>
@@ -97,6 +103,9 @@
     <string name="toast_edit_success">修改成功</string>
     <string name="toast_delete_success">删除成功</string>
     <string name="toast_phone_not_equal">新手机号不能和当前手机号相同</string>
+    <string name="toast_agree_success">操作成功，你们可以开始一起记账了~</string>
+    <string name="toast_operate_success">操作成功</string>
+    <string name="toast_has_agree">对方已加入该帐薄~</string>
 
     <!--other-->
     <string name="rmb">¥</string>
@@ -151,6 +160,12 @@
     <string name="book_scene">帐薄场景</string>
     <string name="select_book_cover">选择封面</string>
     <string name="delete_book">删除帐薄</string>
+    <string name="agree">同意</string>
+    <string name="apply_book_sign">对方申请加入帐薄：</string>
+    <string name="msg_agree_book_apply">对方同意了您的加入记账申请，您已经成功加入了 "%1$s" 帐薄。</string>
+    <string name="msg_refuse_book_apply">对方拒绝了您加入 "%1$s" 帐薄的申请。</string>
+    <string name="booK_has_delete">该帐薄已删除</string>
+    <string name="delete_msg">删除消息</string>
 
 
 </resources>

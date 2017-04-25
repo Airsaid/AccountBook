@@ -45,15 +45,17 @@ public class AppConfig {
      */
     public static final int CACHE_SIZE = 104857600;// 100MB
 
-    /**
-     * 支出分类
-     */
+    /** 支出分类 */
     public static final int TYPE_COST = 1;
 
-    /**
-     * 收入分类
-     */
+    /** 收入分类 */
     public static final int TYPE_INCOME = 2;
+
+    /** 申请帐薄消息类型 */
+    public static final int TYPE_MSG_APPLY_BOOK = 1;
+
+    /** 系统提示消息类型 */
+    public static final int TYPE_MSG_SYSTEM = 2;
 
     /** 分页条目 */
     public static final int LIMIT = 12;

@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,12 +25,10 @@ import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
-import com.github.airsaid.accountbook.data.source.UserDataSource;
 import com.github.airsaid.accountbook.ui.activity.AddEditBookActivity;
 import com.github.airsaid.accountbook.ui.activity.AddShareUserActivity;
 import com.github.airsaid.accountbook.util.DimenUtils;
 import com.github.airsaid.accountbook.util.ProgressUtils;
-import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
@@ -173,7 +170,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     @Override
     public void addShareBookSuccess() {
         ProgressUtils.dismiss();
-        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_add_share_book_success));
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_apply_success));
         onRefresh();
     }
 

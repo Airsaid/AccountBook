@@ -19,8 +19,10 @@ public class Api {
     public static final String TAB_BOOK     = "AccountBook";
     public static final String TAB_ACCOUNT  = "Account";
     public static final String TAB_ABOUT    = "About";
+    public static final String TAB_MSG      = "Message";
 
     /*   数据库字段名   */
+    public static final String ID           = "id";
     public static final String BID          = "bid";
     public static final String OWNER        = "owner";
     public static final String NAME         = "name";
@@ -37,6 +39,10 @@ public class Api {
     public static final String SEX          = "sex";
     public static final String AVATAR       = "avatar";
     public static final String CONTENT      = "content";
+    public static final String APPLY_USER   = "applyUser";
+    public static final String APPLY_BOOK   = "applyBook";
+    public static final String IS_READ      = "isRead";
+
 
 
 

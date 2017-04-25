@@ -68,6 +68,8 @@
         <activity android:name=".ui.activity.AddShareUserActivity"/>
         <!--添加帐薄-->
         <activity android:name=".ui.activity.AddEditBookActivity"/>
+        <!--消息-->
+        <activity android:name=".ui.activity.MsgActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

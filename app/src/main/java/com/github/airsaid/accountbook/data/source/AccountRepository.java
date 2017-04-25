@@ -9,9 +9,11 @@ import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.constants.Api;
+import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.Msg;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.util.DateUtils;
@@ -188,29 +190,39 @@ public class AccountRepository implements AccountDataSource {
                             error.message = UiUtils.getString(R.string.toast_has_add_share_book);
                             callback.requestFail(error);
                         }else{
-                            accountBook.addShare(user);
-                            accountBook.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(AVException e) {
-                                    if(e == null){
-                                        AccountBook book = new AccountBook();
-                                        book.setOwner(user);
-                                        book.setBid(accountBook.getBid());
-                                        book.setName(accountBook.getName());
-                                        book.setScene(accountBook.getScene());
-                                        book.setShare(accountBook.getShares());
-                                        book.setCover(accountBook.getCover());
-                                        addBook(book, new Callback() {
-                                            @Override
-                                            public void requestSuccess() {
-                                                callback.requestSuccess();
-                                            }
+                            // 判断是否申请过
+                            AVQuery<Msg> queryMsgOwner = AVQuery.getQuery(Msg.class);
+                            queryMsgOwner.whereEqualTo(Api.OWNER, user);
 
-                                            @Override
-                                            public void requestFail(Error e) {
-                                                callback.requestFail(e);
-                                            }
-                                        });
+                            AVQuery<Msg> queryMsgBook = AVQuery.getQuery(Msg.class);
+                            queryMsgBook.whereEqualTo(Api.APPLY_BOOK, accountBook);
+                            AVQuery<Msg> queryMsg = AVQuery.and(Arrays.asList(queryMsgOwner, queryMsgBook));
+                            queryMsg.findInBackground(new FindCallback<Msg>() {
+                                @Override
+                                public void done(List<Msg> list, AVException e) {
+                                    if(e == null){
+                                        if(list != null && list.size() > 0){
+                                            Error error = new Error();
+                                            error.message = UiUtils.getString(R.string.toast_has_apply_book);
+                                            callback.requestFail(error);
+                                        }else{
+                                            // 添加一条消息
+                                            Msg msg = new Msg();
+                                            msg.setApplyUser(user);// 设置申请人为当前用户
+                                            msg.setApplyBook(accountBook);// 设置申请帐薄为帐薄 id 对应帐薄
+                                            msg.setOwner(accountBook.getOwner());// 设置消息所属人为帐薄所属人
+                                            msg.setType(AppConfig.TYPE_MSG_APPLY_BOOK);
+                                            msg.saveInBackground(new SaveCallback() {
+                                                @Override
+                                                public void done(AVException e) {
+                                                    if(e == null){
+                                                        callback.requestSuccess();
+                                                    }else{
+                                                        callback.requestFail(new Error(e));
+                                                    }
+                                                }
+                                            });
+                                        }
                                     }else{
                                         callback.requestFail(new Error(e));
                                     }
