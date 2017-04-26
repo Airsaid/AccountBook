@@ -2,11 +2,11 @@
 一个采用 MVP 架构的记账本 APP，目前正在完善中。
 
 # Preview
- ![image](https://github.com/Airsaid/AccountBook/blob/master/image/Screenshot1.png =100x100)
- ![image](https://github.com/Airsaid/AccountBook/blob/master/image/Screenshot2.png =100x100)
- ![image](https://github.com/Airsaid/AccountBook/blob/master/image/Screenshot3.png =100x100)
- ![image](https://github.com/Airsaid/AccountBook/blob/master/image/Screenshot4.png =100x100)
- ![image](https://github.com/Airsaid/AccountBook/blob/master/image/Screenshot5.png =100x100)
+ ![image](https://github.com/Airsaid/AccountBook/blob/master/image/preview1.png)
+ ![image](https://github.com/Airsaid/AccountBook/blob/master/image/preview2.png)
+ ![image](https://github.com/Airsaid/AccountBook/blob/master/image/preview3.png)
+ ![image](https://github.com/Airsaid/AccountBook/blob/master/image/preview4.png)
+ ![image](https://github.com/Airsaid/AccountBook/blob/master/image/preview5.png)
 
 
 # Download
