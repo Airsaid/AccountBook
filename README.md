@@ -33,6 +33,7 @@
 - [ ] 增加自定义分类功能。
 - [ ] 对应用进行瘦身。
 - [ ] 增加统计功能。
+- [ ] 引入 Bugly。
 
 ## Thanks
 - [可萌记账](http://sj.qq.com/myapp/detail.htm?apkName=net.ffrj.pinkwallet)
@@ -44,7 +45,23 @@
 
 ## About me
 
-- **QQ 群：** 5504502
-- **Blog：**[http://blog.csdn.net/airsai](http://blog.csdn.net/airsai)
+- **QQ 群：** 5707887
+- **Blog：**[http://blog.csdn.net/airsaid](http://blog.csdn.net/airsaid)
 - **Email：** airsaid1024@gmail.com
 
+## License
+```
+Copyright (C) 2016 Bin Jing
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
