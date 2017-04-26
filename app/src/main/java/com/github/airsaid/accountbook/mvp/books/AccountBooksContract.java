@@ -25,7 +25,10 @@ public interface AccountBooksContract {
         void addShareBookSuccess();
         void addShareBookFail(Error e);
         void showOperateBookDialog(AccountBook book);
+        void showExitBookDialog(AccountBook book);
         void showDeleteBookDialog(long bid);
+        void exitBookSuccess();
+        void exitBookFail(Error e);
         void deleteBookSuccess();
         void deleteBookFail(Error e);
     }
@@ -34,6 +37,7 @@ public interface AccountBooksContract {
         void queryBooks(User user);
         void setCurrentBook(User user, long bid);
         void addShareBook(User user, long bid);
+        void exitBook(User user, AccountBook book);
         void deleteBook(long bid);
     }
 

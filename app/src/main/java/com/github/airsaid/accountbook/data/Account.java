@@ -38,12 +38,12 @@ public class Account extends AVObject implements MultiItemEntity {
     }
 
     /** 设置记账人 */
-    public void setOwenr(User user){
+    public void setOwner(User user){
         put(Api.OWNER, user);
     }
 
     /** 获取记账人 */
-    public User getOwenr(){
+    public User getOwner(){
         return getAVUser(Api.OWNER, User.class);
     }
 

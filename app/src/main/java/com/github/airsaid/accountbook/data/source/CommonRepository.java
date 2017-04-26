@@ -49,7 +49,7 @@ public class CommonRepository implements CommonDataSource {
         query.whereEqualTo(Api.OWNER, user);
         query.include(Api.APPLY_USER);
         query.include(Api.APPLY_BOOK);
-        query.orderByDescending(Api.CREATE_AT);// 按创建时间，降序排列
+        query.orderByDescending(Api.CREATED_AT);// 按创建时间，降序排列
         query.findInBackground(new FindCallback<Msg>() {
             @Override
             public void done(List<Msg> list, AVException e) {

@@ -44,6 +44,8 @@ public class AccountActivity extends BaseActivity {
 
     // 记账类型，默认支出
     public int mType = AppConfig.TYPE_COST;
+    // 是否是编辑帐薄
+    private boolean mIsEdit = false;
 
     @Override
     public int getLayoutRes() {
@@ -52,6 +54,14 @@ public class AccountActivity extends BaseActivity {
 
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
+        Account account = getIntent().getParcelableExtra(AppConstants.EXTRA_DATA);
+        Bundle bundle = null;
+        if(account != null){
+            mIsEdit = true;
+            bundle = new Bundle();
+            bundle.putParcelable(AppConstants.EXTRA_DATA, account);
+        }
+
         showAnim();
         Toolbar toolbar = initToolbar(null);
         toolbar.setNavigationIcon(R.mipmap.ic_title_close);
@@ -60,12 +70,6 @@ public class AccountActivity extends BaseActivity {
         mFragment = (AccountFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (mFragment == null) {
             // Create the fragment
-            Account account = getIntent().getParcelableExtra(AppConstants.EXTRA_DATA);
-            Bundle bundle = null;
-            if(account != null){
-                bundle = new Bundle();
-                bundle.putParcelable(AppConstants.EXTRA_DATA, account);
-            }
             mFragment = AccountFragment.newInstance(bundle);
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), mFragment, R.id.contentFrame);
@@ -76,6 +80,8 @@ public class AccountActivity extends BaseActivity {
     }
 
     private void showAnim() {
+        if(mIsEdit) return;
+
         TransitionsHeleper.getInstance().setShowMethod(new ColorShowMethod(R.color.white, R.color.colorPrimary) {
             @Override
             public void loadCopyView(InfoBean bean, ImageView copyView) {

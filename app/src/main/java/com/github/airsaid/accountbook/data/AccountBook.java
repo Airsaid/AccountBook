@@ -95,7 +95,7 @@ public class AccountBook extends AVObject {
 
     /** 设置共享用户 */
     public void setShare(List<User> users){
-        addAll(Api.SHARES, users);
+        put(Api.SHARES, users);
     }
 
     /** 获取所有共享用户 */

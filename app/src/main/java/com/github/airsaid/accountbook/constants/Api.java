@@ -42,8 +42,7 @@ public class Api {
     public static final String APPLY_USER   = "applyUser";
     public static final String APPLY_BOOK   = "applyBook";
     public static final String IS_READ      = "isRead";
-    public static final String CREATE_AT    = "createAt";
-    public static final String UPDATE_AT    = "updateAt";
+    public static final String CREATED_AT   = "createdAt";
 
 
 

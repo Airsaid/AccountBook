@@ -171,7 +171,6 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     public void addShareBookSuccess() {
         ProgressUtils.dismiss();
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_apply_success));
-        onRefresh();
     }
 
     @Override
@@ -182,24 +181,52 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
 
     @Override
     public void showOperateBookDialog(final AccountBook book) {
+        final String editBookStr = UiUtils.getString(R.string.dialog_item_edit_book);
+        final String exitBookStr = UiUtils.getString(R.string.dialog_item_exit_book);
+        final String deleteBookStr = UiUtils.getString(R.string.dialog_item_delete_book);
         // 判断是否是当前帐薄，是则不可删除
-        String[] items;
+        final String[] items;
         if(book.isCurrent()){
-            items = new String[]{"编辑账簿"};
+            items = new String[]{editBookStr};
         }else{
-            items = new String[]{"编辑账簿", "删除账簿"};
+            // 判断是否有其他共享用户
+            if(book.getShares().size() <= 1){
+                // 没有，可编辑、删除帐薄
+                items = new String[]{editBookStr, deleteBookStr};
+            }else{
+                // 有，可编辑、退出帐薄
+                items = new String[]{editBookStr, exitBookStr};
+            }
         }
         new AlertDialog.Builder(mContext)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(which == 0){
+                        String item = items[which];
+                        if(item.equals(editBookStr)){
                             Intent intent = new Intent(mContext, AddEditBookActivity.class);
                             intent.putExtra(AppConstants.EXTRA_DATA, book);
                             startActivity(intent);
-                        }else if(which == 1){
+                        }else if(item.equals(exitBookStr)){
+                            showExitBookDialog(book);
+                        }else if(item.equals(deleteBookStr)){
                             showDeleteBookDialog(book.getBid());
                         }
+                    }
+                }).create().show();
+    }
+
+    @Override
+    public void showExitBookDialog(final AccountBook book) {
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title))
+                .setMessage(UiUtils.getString(R.string.dialog_content_exit_book))
+                .setNegativeButton(UiUtils.getString(R.string.dialog_cancel), null)
+                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ProgressUtils.show(mContext);
+                        mPresenter.exitBook(UserUtils.getUser(), book);
                     }
                 }).create().show();
     }
@@ -217,6 +244,19 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
                         mPresenter.deleteBook(bid);
                     }
                 }).create().show();
+    }
+
+    @Override
+    public void exitBookSuccess() {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_exit_success));
+        onRefresh();
+    }
+
+    @Override
+    public void exitBookFail(Error e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show(mContext, e.getMessage());
     }
 
     @Override

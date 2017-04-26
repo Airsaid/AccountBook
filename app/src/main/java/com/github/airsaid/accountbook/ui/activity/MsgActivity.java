@@ -57,6 +57,7 @@ public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         initToolbar(UiUtils.getString(R.string.title_msg));
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRepository = new CommonRepository();
         initAdapter();
         onRefresh();
@@ -72,7 +73,7 @@ public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
         mAdapter = new MsgAdapter(R.layout.item_msg, new ArrayList<Msg>());
         mAdapter.setEmptyView(UiUtils.getEmptyView(mContext, mRecyclerView
                 , UiUtils.getString(R.string.empty_msg_data)));
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener(){

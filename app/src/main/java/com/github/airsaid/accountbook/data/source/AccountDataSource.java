@@ -49,6 +49,9 @@ public interface AccountDataSource {
     /** 删除指定帐薄 ID 对应的所有账簿数据 */
     void deleteBook(long bid, Callback callback);
 
+    /** 退出帐薄 */
+    void exitBook(User user, AccountBook book, Callback callback);
+
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
         void shareUsers(int count);

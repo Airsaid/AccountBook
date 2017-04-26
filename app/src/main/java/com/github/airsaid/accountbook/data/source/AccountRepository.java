@@ -38,7 +38,7 @@ public class AccountRepository implements AccountDataSource {
                 if(book != null){
                     long bid = book.getBid();
                     account.setBid(bid);
-                    account.setOwenr(user);
+                    account.setOwner(user);
                     account.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {
@@ -340,5 +340,49 @@ public class AccountRepository implements AccountDataSource {
             }
         });
     }
+
+    @Override
+    public void exitBook(final User user, final AccountBook book, final Callback callback) {
+        // 查找要退出帐薄 id 所有对应帐薄数据
+        AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
+        query.whereEqualTo(Api.BID, book.getBid());
+        query.include(Api.SHARES);
+        query.findInBackground(new FindCallback<AccountBook>() {
+            @Override
+            public void done(List<AccountBook> list, AVException e) {
+                if(e == null){
+                    // 在所有帐薄的共享用户中移除当前用户
+                    for (AccountBook book : list) {
+                        List<User> shares = book.getShares();
+                        shares.remove(user);
+                        book.setShare(shares);
+                    }
+                    AVObject.saveAllInBackground(list, new SaveCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if(e == null){
+                                book.deleteInBackground(new DeleteCallback() {
+                                    @Override
+                                    public void done(AVException e) {
+                                        if(e == null){
+                                            callback.requestSuccess();
+                                        }else{
+                                            callback.requestFail(new Error(e));
+                                        }
+                                    }
+                                });
+                            }else{
+                                callback.requestFail(new Error(e));
+                            }
+                        }
+                    });
+                }else{
+                    callback.requestFail(new Error(e));
+                }
+            }
+        });
+    }
+
+
 
 }

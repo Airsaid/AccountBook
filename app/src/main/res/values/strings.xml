@@ -22,6 +22,7 @@
     <string name="dialog_title_input_bid">输入帐薄 ID</string>
     <string name="dialog_title_select_scene">选择场景</string>
     <string name="dialog_content_delete_book">真的要删除该账簿吗？！删除后该帐薄所相关的账目数据都将删除，请三思！</string>
+    <string name="dialog_content_exit_book">确认退出该帐薄吗？</string>
     <string name="dialog_cancel_delete_book">我再想想</string>
     <string name="dialog_affirm_delete_book">删吧，我想好了</string>
     <string name="dialog_content_delete_account">确认删除该账目吗？</string>
@@ -31,6 +32,9 @@
     <string name="dialog_item_delete_msg">删除消息</string>
     <string name="dialog_item_edit_account">编辑账目</string>
     <string name="dialog_item_delete_account">删除账目</string>
+    <string name="dialog_item_edit_book">编辑帐薄</string>
+    <string name="dialog_item_delete_book">删除账薄</string>
+    <string name="dialog_item_exit_book">退出账薄</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -103,6 +107,7 @@
     <string name="toast_select_book_cover">请选择账簿封面</string>
     <string name="toast_add_success">添加成功</string>
     <string name="toast_edit_success">修改成功</string>
+    <string name="toast_exit_success">退出成功</string>
     <string name="toast_delete_success">删除成功</string>
     <string name="toast_phone_not_equal">新手机号不能和当前手机号相同</string>
     <string name="toast_agree_success">操作成功，你们可以开始一起记账了~</string>

@@ -71,11 +71,11 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
 
         // 设置记账用户信息
         ImageView imgAvatar = helper.getView(R.id.img_avatar);
-        User owenr = item.getOwenr();
-        if(owenr != null && isShowAvatar){
+        User owner = item.getOwner();
+        if(owner != null && isShowAvatar){
             // 设置头像
             imgAvatar.setVisibility(View.VISIBLE);
-            AVFile avatar = owenr.getAvatar();
+            AVFile avatar = owner.getAvatar();
             if(avatar != null){
                 ImageLoader.getIns(mContext).loadIcon(avatar.getUrl(), imgAvatar);
             }else{

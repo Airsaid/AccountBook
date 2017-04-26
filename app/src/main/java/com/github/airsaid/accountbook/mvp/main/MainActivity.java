@@ -200,13 +200,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                break;
             case R.id.nav_feedback:     // 用户反馈
                 FeedbackAgent agent = new FeedbackAgent(mContext);
-               /* FeedbackThread thread = agent.getDefaultThread();
-                List<Comment> commentsList = thread.getCommentsList();
-                if(commentsList == null || commentsList.isEmpty()){
-                    Comment devComment = new Comment(UiUtils.getString(R.string.avoscloud_feedback_dev_start)
-                            , Comment.CommentType.DEV);
-                    thread.add(devComment);
-                }*/
                 agent.startDefaultThreadActivity();
                 break;
             case R.id.nav_setting:      // 设置

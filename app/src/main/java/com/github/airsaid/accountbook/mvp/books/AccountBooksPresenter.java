@@ -77,6 +77,21 @@ public class AccountBooksPresenter implements AccountBooksContract.Presenter {
     }
 
     @Override
+    public void exitBook(User user, AccountBook book) {
+        mRepository.exitBook(user, book, new Callback() {
+            @Override
+            public void requestSuccess() {
+                mView.exitBookSuccess();
+            }
+
+            @Override
+            public void requestFail(Error e) {
+                mView.exitBookFail(e);
+            }
+        });
+    }
+
+    @Override
     public void deleteBook(long bid) {
         mRepository.deleteBook(bid, new Callback() {
             @Override
