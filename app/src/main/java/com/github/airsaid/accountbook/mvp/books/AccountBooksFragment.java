@@ -262,7 +262,7 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     @Override
     public void deleteBookSuccess() {
         ProgressUtils.dismiss();
-        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_edit_success));
+        ToastUtils.show(mContext, UiUtils.getString(R.string.toast_delete_success));
         onRefresh();
     }
 
