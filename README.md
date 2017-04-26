@@ -13,7 +13,7 @@
  ![image](https://github.com/Airsaid/AccountBook/blob/master/image/qr.png)
 
 网址下载：
- [点我下载](http://pre.im/K36l)
+ [点我下载](http://pre.im/account)
 
 ## Version
 
