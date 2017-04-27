@@ -63,7 +63,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView mTxtPhone;
     private TextView mTxtUsername;
 
-    private String[] mTitles;
     private MenuItem mMenuItem;
     private CommonRepository mCommonRepository;
 
@@ -97,7 +96,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mNavView.setNavigationItemSelectedListener(this);
 
         initView();
-        initTitles();
         initAdapter();
 
         mCommonRepository = new CommonRepository();
@@ -112,29 +110,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     /**
-     * 初始化 Tab 标题数据
+     * 初始化 ViewPager 的 Adapter
      */
-    private void initTitles(){
-        mTitles = new String[12];
+    private void initAdapter(){
+        // 初始化标题、Fragment
+        String[] titles = new String[12];
         Calendar c = Calendar.getInstance(Locale.CHINA);
         int year = c.get(Calendar.YEAR);
         for (int i = 1; i <= 12; i++) {
             String month = i < 10 ? "0".concat(String.valueOf(i)) : String.valueOf(i);
-            mTitles[i-1]  = year + "年" + month + "月";
+            titles[i-1]  =  year + "年" + month + "月";
         }
-    }
-
-    /**
-     * 初始化 ViewPager 的 Adapter
-     */
-    private void initAdapter(){
+        // 初始化 ViewPager
         MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(
-                getSupportFragmentManager(), mTitles);
+                getSupportFragmentManager(), titles);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         // 默认当前月份
-        Calendar c = Calendar.getInstance(Locale.CHINA);
         int month = c.get(Calendar.MONTH);
         mViewPager.setCurrentItem(month);
     }

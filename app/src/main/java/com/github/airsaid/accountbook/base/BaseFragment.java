@@ -27,6 +27,7 @@ public abstract class BaseFragment extends Fragment {
     private Toolbar mToolbar;
     private Activity mActivity;
     protected Context mContext;
+    protected static String TAG;
     private AppCompatActivity mCompatActivity;
     protected LayoutInflater mLayoutInflater;
 
@@ -38,6 +39,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TAG = this.getClass().getSimpleName();
         mActivity = getActivity();
         mContext = mActivity;
         mCompatActivity = (AppCompatActivity) mActivity;

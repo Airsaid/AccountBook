@@ -72,7 +72,8 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     private AccountTypeAdapter mTypeAdapter;
     private Account mAccount;
 
-    private boolean mIsEcho = false; // 是否是编辑账目
+    private boolean mIsEcho = false; // 是否是回显数据
+    private boolean mIsEdit = false; // 是否是编辑账目
 
     public static AccountFragment newInstance(Bundle args) {
         AccountFragment fragment = new AccountFragment();
@@ -94,6 +95,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         if(bundle != null){
             mAccount = bundle.getParcelable(AppConstants.EXTRA_DATA);
             if(mAccount != null){
+                mIsEdit = true;
                 // 回显数据
                 echoData();
             }
@@ -218,7 +220,12 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         }else{
             mAccount.setMoney(money);
             mAccount.setNote(note);
-            mPresenter.saveAccount(UserUtils.getUser(), mAccount);
+            if(!mIsEdit){
+                mPresenter.saveAccount(UserUtils.getUser(), mAccount);
+            }else{
+                mPresenter.saveAccount(mAccount.getOwner(), mAccount);
+            }
+
         }
     }
 

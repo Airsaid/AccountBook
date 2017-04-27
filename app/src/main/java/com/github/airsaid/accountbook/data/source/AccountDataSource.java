@@ -25,11 +25,14 @@ public interface AccountDataSource {
     /** 查找指定日期内的账目信息 */
     void queryAccounts(User user, String startDate, String endDate, int page, QueryAccountListCallback callback);
 
+    /** 查找指定日期内默认帐薄内账目总收入、支出 */
+    void queryDefBookTotalMoney(User user, String startDate, String endDate, QueryBookTotalMoneyCallback callback);
+
     /** 查询默认帐薄 */
     void queryDefaultBook(User user, QueryDefaultBookCallback callback);
 
     /** 创建默认帐薄 */
-    void createDefaultBook(User user, Callback callback);
+    void createDefaultBook(User user, CreateBookCallback callback);
 
     /** 查询指定用户下所有的帐薄 */
     void queryBooks(User user, QueryBooksCallback callback);
@@ -52,9 +55,22 @@ public interface AccountDataSource {
     /** 退出帐薄 */
     void exitBook(User user, AccountBook book, Callback callback);
 
+    /** 查询帐薄 id 对应帐薄下所有账目的总支出、收入 */
+    void queryBookTotalMoney(long bid, QueryBookTotalMoneyCallback callback);
+
+    interface CreateBookCallback{
+        void createSuccess(AccountBook book);
+        void createFail(Error e);
+    }
+
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
         void shareUsers(int count);
+        void queryFail(Error e);
+    }
+
+    interface QueryBookTotalMoneyCallback{
+        void querySuccess(double totalCost, double totalIncome);
         void queryFail(Error e);
     }
 

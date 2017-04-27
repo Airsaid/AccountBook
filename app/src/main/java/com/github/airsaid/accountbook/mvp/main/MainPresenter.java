@@ -51,6 +51,21 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void queryAccountTotalMoney(User user, String startDate, String endDate) {
+        mRepository.queryDefBookTotalMoney(user, startDate, endDate, new AccountDataSource.QueryBookTotalMoneyCallback() {
+            @Override
+            public void querySuccess(double totalCost, double totalIncome) {
+                mView.queryTotalMoneySuccess(totalCost, totalIncome);
+            }
+
+            @Override
+            public void queryFail(Error e) {
+                mView.queryTotalMoneyFail(e);
+            }
+        });
+    }
+
+    @Override
     public void deleteAccount(Account account) {
         mRepository.deleteAccount(account, new Callback() {
             @Override

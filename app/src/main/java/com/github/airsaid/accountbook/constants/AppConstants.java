@@ -19,6 +19,7 @@ public class AppConstants {
 
     // SharedPreferences key Name
     public static String KEY_IS_FIRST_LOGIN = "is_first_login";
+    public static String KEY_BID            = "bid";
 
 
     public static String EXTRA_POSITION     = "position";

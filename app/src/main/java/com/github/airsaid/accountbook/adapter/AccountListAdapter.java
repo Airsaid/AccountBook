@@ -101,7 +101,7 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
     }
 
     /**
-     * 获取当天的收入、支出金额。
+     * 获取当天的收入、支出金额
      */
     private String getDayMoney(List<Account> list, Date date){
         double totalCostMoney = 0;
@@ -127,7 +127,7 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
     }
 
     /**
-     * 设置条目类型，根据是否是同一天来区别展示是否带时间条目。
+     * 设置条目类型，根据是否是同一天来区别展示是否带时间条目
      */
     public List<Account> setItemType(List<Account> list){
         String preDay = "";
@@ -143,27 +143,10 @@ public class AccountListAdapter extends BaseMultiItemQuickAdapter<Account, BaseV
     }
 
     /**
-     * 设置当月总支出、收入数据。
-     */
-    public void setTotalData(TextView totalCost, TextView totalIncome) {
-        double costTotalMoney = 0;
-        double incomeTotalMoney = 0;
-        for (Account account : data) {
-            double money = Double.parseDouble(account.getMoney());
-            if(AppConfig.TYPE_COST == account.getType()){
-                costTotalMoney = ArithUtils.add(costTotalMoney, money);
-            }else{
-                incomeTotalMoney = ArithUtils.add(incomeTotalMoney, money);
-            }
-        }
-        totalCost.setText(String.valueOf(costTotalMoney));
-        totalIncome.setText(String.valueOf(incomeTotalMoney));
-    }
-
-    /**
      * 设置是否显示头像
      */
     public void setIsShowAvatar(boolean isShowAvatar) {
         this.isShowAvatar = isShowAvatar;
     }
+
 }

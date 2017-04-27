@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
+import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.constants.Api;
+import com.github.airsaid.accountbook.util.UiUtils;
 
 import java.util.List;
 
@@ -27,6 +29,11 @@ public class AccountBook extends AVObject {
     public AccountBook(Parcel in){
         super(in);
     }
+
+    /** 该帐薄下所有账目总支出 */
+    public double totalCost = 0.00;
+    /** 该帐薄下所有账目总收入 */
+    public double totalIncome = 0.00;
 
     /** 设置帐薄 id */
     public void setBid(long bid){
@@ -101,5 +108,15 @@ public class AccountBook extends AVObject {
     /** 获取所有共享用户 */
     public List<User> getShares(){
         return getList(Api.SHARES, User.class);
+    }
+
+    /** 获取帐薄下所有账目总支出 */
+    public String getTotalCost(){
+        return UiUtils.getString(R.string.total_cost_sign).concat(String.valueOf(totalCost));
+    }
+
+    /** 获取帐薄下所有账目总收入 */
+    public String getTotalIncome(){
+        return UiUtils.getString(R.string.total_income_sign).concat(String.valueOf(totalIncome));
     }
 }

@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.AccountListAdapter;
 import com.github.airsaid.accountbook.base.BaseFragment;
+import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
@@ -45,7 +46,7 @@ import butterknife.BindView;
  * @date 2017/4/6
  * @desc 首页 Fragment
  */
-public class MainFragment extends BaseFragment implements MainContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class MainFragment extends BaseFragment implements MainContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -100,19 +101,14 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
 
     private void initAdapter() {
         mRefreshLayout.setOnRefreshListener(this);
-        mRefreshLayout.setColorSchemeColors(UiUtils.getColor(R.color.colorAccent));
-
-       /* mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext)
-                .size(DimenUtils.dp2px(10f))
-                .color(R.color.transparent)
-                .showLastDivider()
-                .build());*/
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new AccountListAdapter(new ArrayList<Account>());
         mAdapter.setHeaderView(mHeadView);
         mAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         mAdapter.setEmptyView(UiUtils.getEmptyView(mContext, mRecyclerView
                 , UiUtils.getString(R.string.empty_account_data)));
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener(){
             @Override
@@ -143,18 +139,30 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
         });
     }
 
+    @Override
+    public void onLoadMoreRequested() {
+        mPage ++;
+        requestData();
+    }
+
     /**
-     * 请求数据。
+     * 请求数据
      */
     private void requestData() {
         mPresenter.queryAccount(UserUtils.getUser(), mStartDate, mEndDate, mPage);
+        mPresenter.queryAccountTotalMoney(UserUtils.getUser(), mStartDate, mEndDate);
     }
 
     @Override
     public void querySuccess(List<Account> list) {
         mRefreshLayout.setRefreshing(false);
-        mAdapter.setNewData(mAdapter.setItemType(list));
-        mAdapter.setTotalData(mTxtTotalCost, mTxtTotalIncome);
+        if(mPage <= 1){
+            mAdapter.setNewData(mAdapter.setItemType(list));
+        }else{
+            mAdapter.addData(mAdapter.setItemType(list));
+            mAdapter.loadMoreComplete();
+            mAdapter.loadMoreEnd(list.size() < AppConfig.LIMIT);
+        }
     }
 
     @Override
@@ -166,6 +174,18 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     @Override
     public void queryFail(Error e) {
         ToastUtils.show(mContext, e.getMessage());
+    }
+
+    @Override
+    public void queryTotalMoneySuccess(double totalCost, double totalIncome) {
+        mTxtTotalCost.setText(String.valueOf(totalCost));
+        mTxtTotalIncome.setText(String.valueOf(totalIncome));
+    }
+
+    @Override
+    public void queryTotalMoneyFail(Error e) {
+        mTxtTotalCost.setText(UiUtils.getString(R.string.money_normal));
+        mTxtTotalIncome.setText(UiUtils.getString(R.string.money_normal));
     }
 
     @Override
@@ -223,7 +243,6 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
             case MsgConstants.MSG_SET_CUR_BOOK_SUCCESS:
                 onRefresh();
                 break;
-
         }
     }
 

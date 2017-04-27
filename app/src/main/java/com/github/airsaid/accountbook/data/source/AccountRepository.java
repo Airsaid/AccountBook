@@ -16,7 +16,9 @@ import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.Msg;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.i.Callback;
+import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
+import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
 import java.util.Arrays;
@@ -32,35 +34,33 @@ public class AccountRepository implements AccountDataSource {
 
     @Override
     public void saveAccount(final User user, final Account account, final Callback callback) {
-        queryDefaultBook(user, new QueryDefaultBookCallback() {
-            @Override
-            public void querySuccess(AccountBook book) {
-                if(book != null){
-                    long bid = book.getBid();
-                    account.setBid(bid);
-                    account.setOwner(user);
-                    account.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(AVException e) {
-                            if(e == null){
-                                callback.requestSuccess();
-                            }else{
-                                callback.requestFail(new Error(e));
-                            }
-                        }
-                    });
-                }else{
-                    Error error = new Error();
-                    error.message = UiUtils.getString(R.string.toast_add_fail_login_reset);
-                    callback.requestFail(error);
+        long bid = SPUtils.getDefBookBid();
+        if(bid != 0){
+            account.setBid(bid);
+            account.setOwner(user);
+            account.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    if (e == null) {
+                        callback.requestSuccess();
+                    } else {
+                        callback.requestFail(new Error(e));
+                    }
                 }
-            }
+            });
+        }else{
+            queryDefaultBook(user, new QueryDefaultBookCallback() {
+                @Override
+                public void querySuccess(AccountBook book) {
+                    saveAccount(user, account, callback);
+                }
 
-            @Override
-            public void queryFail(Error e) {
-                callback.requestFail(e);
-            }
-        });
+                @Override
+                public void queryFail(Error e) {
+                    callback.requestFail(e);
+                }
+            });
+        }
     }
 
     @Override
@@ -68,9 +68,9 @@ public class AccountRepository implements AccountDataSource {
         account.deleteInBackground(new DeleteCallback() {
             @Override
             public void done(AVException e) {
-                if(e == null){
+                if (e == null) {
                     callback.requestSuccess();
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
@@ -78,7 +78,7 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
-    public void queryAccounts(User user, final String startDate, final String endDate, int page, final QueryAccountListCallback callback) {
+    public void queryAccounts(User user, final String startDate, final String endDate, final int page, final QueryAccountListCallback callback) {
         queryDefaultBook(user, new QueryDefaultBookCallback() {
             @Override
             public void querySuccess(AccountBook book) {
@@ -97,13 +97,15 @@ public class AccountRepository implements AccountDataSource {
                 AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
                 query.orderByDescending(Api.DATE);// 按时间，降序排列
                 query.include(Api.OWNER);
+                query.limit(AppConfig.LIMIT);
+                query.skip((page - 1) * AppConfig.LIMIT);
                 query.findInBackground(new FindCallback<Account>() {
                     @Override
                     public void done(List<Account> list, AVException e) {
-                        if(e == null){
+                        if (e == null) {
                             callback.querySuccess(list);
                             callback.shareUsers(shares.size());
-                        }else{
+                        } else {
                             callback.queryFail(new Error(e));
                         }
                     }
@@ -118,16 +120,88 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
-    public void queryDefaultBook(User user, final AccountDataSource.QueryDefaultBookCallback callback) {
+    public void queryDefBookTotalMoney(final User user, final String startDate, final String endDate, final QueryBookTotalMoneyCallback callback) {
+        long bid = SPUtils.getDefBookBid();
+        if (bid != 0) {
+            AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+            startDateQuery.whereEqualTo(Api.BID, bid);
+            startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
+                    DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
+
+            AVQuery<Account> endDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+            endDateQuery.whereEqualTo(Api.BID, bid);
+            endDateQuery.whereLessThan(Api.DATE,
+                    DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));
+
+            AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
+            query.include(Api.OWNER);
+            query.findInBackground(new FindCallback<Account>() {
+                @Override
+                public void done(List<Account> list, AVException e) {
+                    if (e == null) {
+                        double costTotalMoney = 0;
+                        double incomeTotalMoney = 0;
+                        for (Account account : list) {
+                            double money = Double.parseDouble(account.getMoney());
+                            if (AppConfig.TYPE_COST == account.getType()) {
+                                costTotalMoney = ArithUtils.add(costTotalMoney, money);
+                            } else {
+                                incomeTotalMoney = ArithUtils.add(incomeTotalMoney, money);
+                            }
+                        }
+                        callback.querySuccess(costTotalMoney, incomeTotalMoney);
+                    } else {
+                        callback.queryFail(new Error(e));
+                    }
+                }
+            });
+        }else{
+            // 设置默认帐薄 id
+            queryDefaultBook(user, new QueryDefaultBookCallback() {
+                @Override
+                public void querySuccess(AccountBook book) {
+                    queryDefBookTotalMoney(user, startDate, endDate, callback);
+                }
+
+                @Override
+                public void queryFail(Error e) {
+                    callback.queryFail(e);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void queryDefaultBook(final User user, final AccountDataSource.QueryDefaultBookCallback callback) {
         AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
         query.whereEqualTo(Api.OWNER, user);
         query.whereEqualTo(Api.IS_CURRENT, true);
         query.findInBackground(new FindCallback<AccountBook>() {
             @Override
             public void done(List<AccountBook> list, AVException e) {
-                if(e == null){
-                    callback.querySuccess(list != null && list.size() > 0 ? list.get(0) : null);
-                }else{
+                if (e == null) {
+                    // 判断是否有默认帐薄
+                    if(list != null && list.size() > 0){
+                        // 设置默认帐薄 id，并回调默认帐薄数据
+                        AccountBook book = list.get(0);
+                        long bid = book.getBid();
+                        SPUtils.setDefBookBid(bid);
+                        callback.querySuccess(book);
+                    }else{
+                        // 创建默认帐薄
+                        createDefaultBook(user, new CreateBookCallback() {
+                            @Override
+                            public void createSuccess(AccountBook book) {
+                                callback.querySuccess(book);
+                            }
+
+                            @Override
+                            public void createFail(Error e) {
+                                callback.queryFail(e);
+                            }
+                        });
+                    }
+                } else {
                     callback.queryFail(new Error(e));
                 }
             }
@@ -135,8 +209,8 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
-    public void createDefaultBook(User user, final Callback callback) {
-        AccountBook book = new AccountBook();
+    public void createDefaultBook(User user, final CreateBookCallback callback) {
+        final AccountBook book = new AccountBook();
         book.setOwner(user);
         book.setCurrent(true);
         book.setName(UiUtils.getString(R.string.def_book_name));
@@ -146,26 +220,45 @@ public class AccountRepository implements AccountDataSource {
         book.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                if(e == null){
-                    callback.requestSuccess();
-                }else{
-                    callback.requestFail(new Error(e));
+                if (e == null) {
+                    long bid = book.getBid();
+                    SPUtils.setDefBookBid(bid);
+                    callback.createSuccess(book);
+                } else {
+                    callback.createFail(new Error(e));
                 }
             }
         });
     }
 
     @Override
-    public void queryBooks(User user, final QueryBooksCallback callback) {
+    public void queryBooks(final User user, final QueryBooksCallback callback) {
         AVQuery<AccountBook> query = AVQuery.getQuery(AccountBook.class);
         query.whereEqualTo(Api.OWNER, user);
         query.include(Api.SHARES);
         query.findInBackground(new FindCallback<AccountBook>() {
             @Override
-            public void done(List<AccountBook> list, AVException e) {
-                if(e == null){
-                    callback.querySuccess(list);
-                }else{
+            public void done(final List<AccountBook> list, AVException e) {
+                if (e == null) {
+                    // 查询每个帐薄的总支出、收入
+                    for (int i = 0; i < list.size(); i++) {
+                        final int finalI = i;
+                        final AccountBook book = list.get(i);
+                        queryBookTotalMoney(book.getBid(), new QueryBookTotalMoneyCallback() {
+                            @Override
+                            public void querySuccess(double totalCost, double totalIncome) {
+                                book.totalCost = totalCost;
+                                book.totalIncome = totalIncome;
+                                if(finalI == list.size() - 1){
+                                    callback.querySuccess(list);
+                                }
+                            }
+
+                            @Override
+                            public void queryFail(Error e) {}
+                        });
+                    }
+                } else {
                     callback.queryFail(new Error(e));
                 }
             }
@@ -179,17 +272,17 @@ public class AccountRepository implements AccountDataSource {
         query.getFirstInBackground(new GetCallback<AccountBook>() {
             @Override
             public void done(final AccountBook accountBook, AVException e) {
-                if(e == null){
-                    if(accountBook == null){
+                if (e == null) {
+                    if (accountBook == null) {
                         Error error = new Error();
                         error.message = UiUtils.getString(R.string.toast_query_book_empty);
                         callback.requestFail(error);
-                    }else{
-                        if(accountBook.getShares().contains(user)){
+                    } else {
+                        if (accountBook.getShares().contains(user)) {
                             Error error = new Error();
                             error.message = UiUtils.getString(R.string.toast_has_add_share_book);
                             callback.requestFail(error);
-                        }else{
+                        } else {
                             // 判断是否申请过
                             AVQuery<Msg> queryMsgOwner = AVQuery.getQuery(Msg.class);
                             queryMsgOwner.whereEqualTo(Api.OWNER, accountBook.getOwner());
@@ -199,12 +292,12 @@ public class AccountRepository implements AccountDataSource {
                             queryMsg.findInBackground(new FindCallback<Msg>() {
                                 @Override
                                 public void done(List<Msg> list, AVException e) {
-                                    if(e == null){
-                                        if(list != null && list.size() > 0){
+                                    if (e == null) {
+                                        if (list != null && list.size() > 0) {
                                             Error error = new Error();
                                             error.message = UiUtils.getString(R.string.toast_has_apply_book);
                                             callback.requestFail(error);
-                                        }else{
+                                        } else {
                                             // 添加一条消息
                                             Msg msg = new Msg();
                                             msg.setApplyUser(user);// 设置申请人为当前用户
@@ -214,22 +307,22 @@ public class AccountRepository implements AccountDataSource {
                                             msg.saveInBackground(new SaveCallback() {
                                                 @Override
                                                 public void done(AVException e) {
-                                                    if(e == null){
+                                                    if (e == null) {
                                                         callback.requestSuccess();
-                                                    }else{
+                                                    } else {
                                                         callback.requestFail(new Error(e));
                                                     }
                                                 }
                                             });
                                         }
-                                    }else{
+                                    } else {
                                         callback.requestFail(new Error(e));
                                     }
                                 }
                             });
                         }
                     }
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
@@ -241,9 +334,9 @@ public class AccountRepository implements AccountDataSource {
         book.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                if(e == null){
+                if (e == null) {
                     callback.requestSuccess();
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
@@ -258,22 +351,28 @@ public class AccountRepository implements AccountDataSource {
         query.findInBackground(new FindCallback<AccountBook>() {
             @Override
             public void done(List<AccountBook> list, AVException e) {
-                if(e == null){
+                if (e == null) {
                     // 设置帐薄 ID 相同帐薄为当前帐薄
                     for (AccountBook book : list) {
-                        book.setCurrent(book.getBid() == bid);
+                        if(book.getBid() == bid){
+                            long bid = book.getBid();
+                            SPUtils.setDefBookBid(bid);
+                            book.setCurrent(true);
+                        }else{
+                            book.setCurrent(false);
+                        }
                     }
                     AVObject.saveAllInBackground(list, new SaveCallback() {
                         @Override
                         public void done(AVException e) {
-                            if(e == null){
+                            if (e == null) {
                                 callback.requestSuccess();
-                            }else{
+                            } else {
                                 callback.requestFail(new Error(e));
                             }
                         }
                     });
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
@@ -289,7 +388,7 @@ public class AccountRepository implements AccountDataSource {
         query.findInBackground(new FindCallback<AccountBook>() {
             @Override
             public void done(List<AccountBook> list, AVException e) {
-                if(e == null){
+                if (e == null) {
                     // 统一修改
                     for (AccountBook accountBook : list) {
                         accountBook.setName(book.getName());
@@ -300,14 +399,14 @@ public class AccountRepository implements AccountDataSource {
                     AVObject.saveAllInBackground(list, new SaveCallback() {
                         @Override
                         public void done(AVException e) {
-                            if(e == null){
+                            if (e == null) {
                                 callback.requestSuccess();
-                            }else{
+                            } else {
                                 callback.requestFail(new Error(e));
                             }
                         }
                     });
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
@@ -322,19 +421,19 @@ public class AccountRepository implements AccountDataSource {
         query.findInBackground(new FindCallback<AccountBook>() {
             @Override
             public void done(List<AccountBook> list, AVException e) {
-                if(e == null){
+                if (e == null) {
                     // 统一删除
                     AVObject.deleteAllInBackground(list, new DeleteCallback() {
                         @Override
                         public void done(AVException e) {
-                            if(e == null){
+                            if (e == null) {
                                 callback.requestSuccess();
-                            }else{
+                            } else {
                                 callback.requestFail(new Error(e));
                             }
                         }
                     });
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
@@ -350,7 +449,7 @@ public class AccountRepository implements AccountDataSource {
         query.findInBackground(new FindCallback<AccountBook>() {
             @Override
             public void done(List<AccountBook> list, AVException e) {
-                if(e == null){
+                if (e == null) {
                     // 在所有帐薄的共享用户中移除当前用户
                     for (AccountBook book : list) {
                         List<User> shares = book.getShares();
@@ -360,29 +459,53 @@ public class AccountRepository implements AccountDataSource {
                     AVObject.saveAllInBackground(list, new SaveCallback() {
                         @Override
                         public void done(AVException e) {
-                            if(e == null){
+                            if (e == null) {
                                 book.deleteInBackground(new DeleteCallback() {
                                     @Override
                                     public void done(AVException e) {
-                                        if(e == null){
+                                        if (e == null) {
                                             callback.requestSuccess();
-                                        }else{
+                                        } else {
                                             callback.requestFail(new Error(e));
                                         }
                                     }
                                 });
-                            }else{
+                            } else {
                                 callback.requestFail(new Error(e));
                             }
                         }
                     });
-                }else{
+                } else {
                     callback.requestFail(new Error(e));
                 }
             }
         });
     }
 
-
+    @Override
+    public void queryBookTotalMoney(long bid, final QueryBookTotalMoneyCallback callback) {
+        AVQuery<Account> query = new AVQuery<>(Api.TAB_ACCOUNT);
+        query.whereEqualTo(Api.BID, bid);
+        query.findInBackground(new FindCallback<Account>() {
+            @Override
+            public void done(List<Account> list, AVException e) {
+                if (e == null) {
+                    double costTotalMoney = 0;
+                    double incomeTotalMoney = 0;
+                    for (Account account : list) {
+                        double money = Double.parseDouble(account.getMoney());
+                        if (AppConfig.TYPE_COST == account.getType()) {
+                            costTotalMoney = ArithUtils.add(costTotalMoney, money);
+                        } else {
+                            incomeTotalMoney = ArithUtils.add(incomeTotalMoney, money);
+                        }
+                    }
+                    callback.querySuccess(costTotalMoney, incomeTotalMoney);
+                } else {
+                    callback.queryFail(new Error(e));
+                }
+            }
+        });
+    }
 
 }

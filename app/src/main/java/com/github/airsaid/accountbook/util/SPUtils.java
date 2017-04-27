@@ -3,6 +3,8 @@ package com.github.airsaid.accountbook.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.github.airsaid.accountbook.constants.AppConstants;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -149,5 +151,19 @@ public class SPUtils {
             }
             editor.commit();
         }
+    }
+
+    /**
+     * 设置默认帐薄 id
+     */
+    public static void setDefBookBid(Long bid){
+        setSP(UiUtils.getContext(), AppConstants.KEY_BID, bid);
+    }
+
+    /**
+     * 获取默认帐薄 id
+     */
+    public static Long getDefBookBid(){
+        return (Long) getSP(UiUtils.getContext(), AppConstants.KEY_BID, 0l);
     }
 }

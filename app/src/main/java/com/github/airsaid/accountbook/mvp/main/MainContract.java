@@ -20,6 +20,8 @@ public class MainContract {
         void querySuccess(List<Account> list);
         void shareUsers(int count);
         void queryFail(Error e);
+        void queryTotalMoneySuccess(double totalCost, double totalIncome);
+        void queryTotalMoneyFail(Error e);
         void deleteSuccess();
         void deleteFail(Error e);
         void showOperateAccountDialog(Account account);
@@ -28,6 +30,7 @@ public class MainContract {
 
     interface Presenter extends BasePresenter{
         void queryAccount(User user, String startDate, String endDate, int page);
+        void queryAccountTotalMoney(User user, String startDate, String endDate);
         void deleteAccount(Account account);
     }
 
