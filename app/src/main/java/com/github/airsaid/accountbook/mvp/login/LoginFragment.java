@@ -29,6 +29,7 @@ import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -120,6 +121,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     @Override
     public void showLoginSuccess() {
         final User user = UserUtils.getUser();
+        CrashReport.setUserId(user.getObjectId());
         final AccountRepository repository = new AccountRepository();
         repository.queryDefaultBook(user, new AccountDataSource.QueryDefaultBookCallback() {
             @Override

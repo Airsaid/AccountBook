@@ -18,9 +18,11 @@ import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
+import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -241,16 +243,18 @@ public class AccountRepository implements AccountDataSource {
             public void done(final List<AccountBook> list, AVException e) {
                 if (e == null) {
                     // 查询每个帐薄的总支出、收入
-                    for (int i = 0; i < list.size(); i++) {
-                        final int finalI = i;
-                        final AccountBook book = list.get(i);
+                    final List<Integer> items = new ArrayList<>();
+                    for (final AccountBook book : list) {
                         queryBookTotalMoney(book.getBid(), new QueryBookTotalMoneyCallback() {
                             @Override
                             public void querySuccess(double totalCost, double totalIncome) {
-                                book.totalCost = totalCost;
-                                book.totalIncome = totalIncome;
-                                if(finalI == list.size() - 1){
-                                    callback.querySuccess(list);
+                                synchronized (items){
+                                    items.add(0);
+                                    book.totalCost = totalCost;
+                                    book.totalIncome = totalIncome;
+                                    if(list.size() == items.size()){
+                                        callback.querySuccess(list);
+                                    }
                                 }
                             }
 

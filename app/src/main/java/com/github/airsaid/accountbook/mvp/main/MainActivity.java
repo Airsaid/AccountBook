@@ -36,6 +36,7 @@ import com.github.airsaid.accountbook.util.ImageLoader;
 import com.github.airsaid.accountbook.util.MenuBadgeUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Calendar;
 import java.util.Locale;

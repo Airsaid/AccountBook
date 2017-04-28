@@ -7,13 +7,13 @@ import android.content.pm.PackageManager;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
-import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.BuildConfig;
 import com.github.airsaid.accountbook.data.AboutApp;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Msg;
-import com.github.airsaid.accountbook.util.ToastUtils;
-import com.github.airsaid.accountbook.util.UiUtils;
+import com.github.airsaid.accountbook.util.LogUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * @author Airsaid
@@ -30,8 +30,10 @@ public class BaseApplication extends Application{
         super.onCreate();
         mContext = getApplicationContext();
 
+        LogUtils.e("test", "is debug：" + BuildConfig.DEBUG);
         registSubClass();
         initLeancloud();
+        initCrashReport();
     }
 
     /**
@@ -60,10 +62,23 @@ public class BaseApplication extends Application{
             // 初始化参数依次为 this, AppId, AppKey
             AVOSCloud.initialize(this, leancloudAppid, leancloudAppkey);
             // 开启调试日志，放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
-            AVOSCloud.setDebugLogEnabled(true);
+            AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            ToastUtils.show(mContext, UiUtils.getString(R.string.app_name));
+        }
+    }
+
+    /**
+     * 初始化 Bugly
+     */
+    private void initCrashReport() {
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(),
+                    PackageManager.GET_META_DATA);
+            String appId = appInfo.metaData.getString("BUGLY_APPID");
+            CrashReport.initCrashReport(getContext(), appId, BuildConfig.DEBUG);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

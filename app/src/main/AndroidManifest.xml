@@ -14,6 +14,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!--相机拍照-->
     <uses-permission android:name="android.permission.CAMERA"/>
+    <!--读取日志-->
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".base.BaseApplication"
@@ -31,13 +33,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="LEANCLOUD_APPID"
             android:value="${leancloud_appid}"/>
         <meta-data
             android:name="LEANCLOUD_APPKEY"
             android:value="${leancloud_appkey}"/>
+        <meta-data
+            android:name="BUGLY_APPID"
+            android:value="${bugly_appid}" />
         <!--用户反馈组件-->
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"/>
         <!--主页-->
