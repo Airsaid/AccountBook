@@ -173,6 +173,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
 
     @Override
     public void queryFail(Error e) {
+        mRefreshLayout.setRefreshing(false);
         ToastUtils.show(mContext, e.getMessage());
     }
 

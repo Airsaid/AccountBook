@@ -27,6 +27,7 @@ import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.util.AnimUtils;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
+import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.RegexUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
@@ -220,6 +221,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         }else{
             mAccount.setMoney(money);
             mAccount.setNote(note);
+            ProgressUtils.show(mContext);
             if(!mIsEdit){
                 mPresenter.saveAccount(UserUtils.getUser(), mAccount);
             }else{
@@ -231,6 +233,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
 
     @Override
     public void saveSuccess() {
+        ProgressUtils.dismiss();
         Message msg = new Message();
         msg.what = MsgConstants.MSG_SAVE_ACCOUNT_SUCCESS;
         EventBus.getDefault().post(msg);
@@ -241,6 +244,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
 
     @Override
     public void saveFail(Error e) {
+        ProgressUtils.dismiss();
         ToastUtils.show(mContext, e.getMessage());
     }
 

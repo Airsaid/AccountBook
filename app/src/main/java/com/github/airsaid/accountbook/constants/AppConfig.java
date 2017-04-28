@@ -45,6 +45,9 @@ public class AppConfig {
      */
     public static final int CACHE_SIZE = 104857600;// 100MB
 
+    /** 缓存时间 */
+    public static final int CACHE_DATE = 60 * 60 * 24;// 一天总秒数
+
     /** 支出分类 */
     public static final int TYPE_COST = 1;
 

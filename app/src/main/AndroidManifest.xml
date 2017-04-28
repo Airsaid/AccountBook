@@ -42,6 +42,10 @@
         <meta-data
             android:name="BUGLY_APPID"
             android:value="${bugly_appid}" />
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
         <!--用户反馈组件-->
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"/>
         <!--主页-->
@@ -76,12 +80,12 @@
         <activity android:name=".ui.activity.MsgActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/provider_paths"/>
         </provider>
     </application>
 

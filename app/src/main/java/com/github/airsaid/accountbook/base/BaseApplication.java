@@ -13,7 +13,7 @@ import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Msg;
 import com.github.airsaid.accountbook.util.LogUtils;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.bugly.Bugly;
 
 /**
  * @author Airsaid
@@ -76,7 +76,7 @@ public class BaseApplication extends Application{
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(),
                     PackageManager.GET_META_DATA);
             String appId = appInfo.metaData.getString("BUGLY_APPID");
-            CrashReport.initCrashReport(getContext(), appId, BuildConfig.DEBUG);
+            Bugly.init(getContext(), appId, BuildConfig.DEBUG);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
