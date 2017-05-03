@@ -14,13 +14,13 @@ import com.github.airsaid.accountbook.data.User;
 public interface LoginContract {
 
     interface View extends BaseView<Presenter>{
-        void setLoadingIndicator(boolean active);
         void showLoginSuccess();
         void showLoginFail(Error e);
         void showSendVerifyCodeSuccess();
         void showSendVerifyCodeFail(Error e);
         void showVerifyPhoneSuccess();
         void showVerifyPhoneFail(Error e);
+        void createDefaultType(String uid);
     }
 
     interface Presenter extends BasePresenter{

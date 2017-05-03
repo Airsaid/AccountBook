@@ -24,6 +24,7 @@ public class AppConstants {
 
     public static String EXTRA_POSITION     = "position";
     public static String EXTRA_DATA         = "data";
+    public static String EXTRA_TYPE         = "type";
 
 
 }

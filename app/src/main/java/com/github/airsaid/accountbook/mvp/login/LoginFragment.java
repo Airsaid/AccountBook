@@ -15,9 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.github.airsaid.accountbook.R;
+import com.github.airsaid.accountbook.base.BaseApplication;
 import com.github.airsaid.accountbook.base.BaseFragment;
+import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.data.AccountBook;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.Type;
+import com.github.airsaid.accountbook.data.TypeDao;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.source.AccountDataSource;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
@@ -30,6 +34,8 @@ import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 import com.tencent.bugly.crashreport.CrashReport;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -110,28 +116,23 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        if (active) {
-            ProgressUtils.show(mContext);
-        } else {
-            ProgressUtils.dismiss();
-        }
-    }
-
-    @Override
     public void showLoginSuccess() {
         final User user = UserUtils.getUser();
-        CrashReport.setUserId(user.getObjectId());
+        String objectId = user.getObjectId();
+        createDefaultType(objectId);
+        CrashReport.setUserId(objectId);
         final AccountRepository repository = new AccountRepository();
         repository.queryDefaultBook(user, new AccountDataSource.QueryDefaultBookCallback() {
             @Override
             public void querySuccess(AccountBook book) {
+                ProgressUtils.dismiss();
                 ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_success));
                 UiUtils.enterHomePage(mContext);
             }
 
             @Override
             public void queryFail(Error e) {
+                ProgressUtils.dismiss();
                 ToastUtils.show(mContext, UiUtils.getString(R.string.toast_login_fail));
             }
         });
@@ -139,6 +140,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
 
     @Override
     public void showLoginFail(Error e) {
+        ProgressUtils.dismiss();
         // 判断手机号是否未验证
         if(215 == e.code){
             // 提示用户验证手机
@@ -150,6 +152,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                             if(!RegexUtils.checkPhone(phone)){
                                 ToastUtils.show(mContext, UiUtils.getString(R.string.hint_right_phone));
                             }else{
+                                ProgressUtils.show(mContext);
                                 mPresenter.requestPhoneVerify(phone);
                             }
 
@@ -158,6 +161,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
                             mVerifyPhoneDialog.setOnVerifyPhoneCallback(new VerifyPhoneDialog.OnVerifyPhoneCallback() {
                                 @Override
                                 public void onVerifySuccess(String code) {
+                                    ProgressUtils.show(mContext);
                                     mPresenter.verifyPhone(code);
                                 }
 
@@ -175,23 +179,61 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
 
     @Override
     public void showSendVerifyCodeSuccess() {
+        ProgressUtils.dismiss();
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_send_code));
     }
 
     @Override
     public void showSendVerifyCodeFail(Error e) {
+        ProgressUtils.dismiss();
         ToastUtils.show(mContext, e.getMessage());
     }
 
     @Override
     public void showVerifyPhoneSuccess() {
+        ProgressUtils.dismiss();
         ToastUtils.show(mContext, UiUtils.getString(R.string.toast_verify_phone_success));
         mVerifyPhoneDialog.dismiss();
     }
 
     @Override
     public void showVerifyPhoneFail(Error e) {
+        ProgressUtils.dismiss();
         ToastUtils.show(mContext, e.getMessage());
+    }
+
+    /**
+     * 创建默认的支出、收入分类。
+     */
+    @Override
+    public void createDefaultType(String uid) {
+        // 判断是否已经创建过
+        TypeDao dao = BaseApplication.getInstance().getSession().getTypeDao();
+        List<Type> list = dao.queryBuilder().where(TypeDao.Properties.Uid.eq(uid)).list();
+        // 没有创建时创建默认分类数据
+        if(list == null || list.size() <= 0){
+            saveTypeData(uid, dao, AppConfig.TYPE_COST);
+            saveTypeData(uid, dao, AppConfig.TYPE_INCOME);
+        }
+    }
+
+    private void saveTypeData(String uid, TypeDao dao, int type){
+        String[] types;
+        if(type == AppConfig.TYPE_COST){
+            types = getResources().getStringArray(R.array.account_cost_type);
+        }else{
+            types = getResources().getStringArray(R.array.account_income_type);
+        }
+        for (int i = 0; i < types.length; i++) {
+            Type t = new Type();
+            t.setUid(uid);
+            t.setIndex(i);
+            t.setType(type);
+            t.setName(types[i]);
+            t.setImage(type == AppConfig.TYPE_COST ? "ic_cost_type_".concat(String.valueOf(i))
+                    : "ic_income_type_".concat(String.valueOf(i)));
+            dao.insert(t);
+        }
     }
 
     @Override
@@ -222,6 +264,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
         user.password = password;
         if (mPresenter.checkUserInfo(user)) {
             if(!mTilPhone.isErrorEnabled() && !mTilPassword.isErrorEnabled()){
+                ProgressUtils.show(mContext, UiUtils.getString(R.string.load_login));
                 mPresenter.login(user);
             }else{
                 ToastUtils.show(mContext, UiUtils.getString(R.string.hint_right_phone_or_password));

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -46,7 +48,7 @@ android {
         }
     }
 
-    //为了解决部分第三方库重复打包了META-INF的问题
+    // 为了解决部分第三方库重复打包了META-INF的问题
     packagingOptions{
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
@@ -56,9 +58,6 @@ android {
         abortOnError false
     }
 
-
-    apply plugin: 'com.android.application'
-    apply plugin: 'com.neenbedankt.android-apt'
 }
 
 dependencies {
@@ -93,5 +92,7 @@ dependencies {
     // 腾讯 Bugly
     compile 'com.tencent.bugly:crashreport_upgrade:1.2.5'
     compile 'com.tencent.bugly:nativecrashreport:3.1.2'
+    // greenDAO 数据库框架
+    compile 'org.greenrobot:greendao:3.2.2'
 
 }

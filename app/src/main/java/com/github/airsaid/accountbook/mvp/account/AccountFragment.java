@@ -1,6 +1,8 @@
 package com.github.airsaid.accountbook.mvp.account;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -17,13 +19,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.AccountTypeAdapter;
+import com.github.airsaid.accountbook.base.BaseApplication;
 import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
-import com.github.airsaid.accountbook.data.AccountType;
 import com.github.airsaid.accountbook.data.Error;
+import com.github.airsaid.accountbook.data.Type;
+import com.github.airsaid.accountbook.data.TypeDao;
+import com.github.airsaid.accountbook.ui.activity.TypeEditActivity;
 import com.github.airsaid.accountbook.util.AnimUtils;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
@@ -69,7 +74,8 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     private AccountContract.Presenter mPresenter;
 
     // 记账类型数据
-    private List<AccountType> mTypes = new ArrayList<>();
+    private List<Type> mCostTypes = new ArrayList<>();
+    private List<Type> mIncomeTypes = new ArrayList<>();
     private AccountTypeAdapter mTypeAdapter;
     private Account mAccount;
 
@@ -108,12 +114,18 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 5));
-        mTypeAdapter = new AccountTypeAdapter(R.layout.item_account_type, mTypes);
+        mTypeAdapter = new AccountTypeAdapter(R.layout.item_account_type, mCostTypes);
         mRecyclerView.setAdapter(mTypeAdapter);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                setAccountType(position);
+                if(position == adapter.getData().size() - 1){// 自定义
+                    Intent intent = new Intent(mContext, TypeEditActivity.class);
+                    intent.putExtra(AppConstants.EXTRA_TYPE, mAccount.getType());
+                    startActivity(intent);
+                }else{
+                    setAccountType(position);
+                }
             }
         });
     }
@@ -130,37 +142,26 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         // 设置默认日期
         Calendar calendar = Calendar.getInstance();
         setSelectData(calendar);
+        // 默认设置支出分类
+        setTypeData(mCostTypes);
     }
 
     /**
      * 初始化分类数据
      */
     private void initTypeData() {
-        mTypes.clear();
-        String[] types;
-        if(mAccount.getType() == AppConfig.TYPE_COST){
-            types = getResources().getStringArray(R.array.account_cost_type);
-        }else{
-            types = getResources().getStringArray(R.array.account_income_type);
-        }
-        for (int i = 0; i < types.length; i++) {
-            AccountType type = new AccountType();
-            int resId;
-            if(mAccount.getType() == AppConfig.TYPE_COST){
-                resId = getResources().getIdentifier("ic_cost_type_".concat(String.valueOf(i)), "mipmap"
-                        , getActivity().getPackageName());
-            }else{
-                resId = getResources().getIdentifier("ic_income_type_".concat(String.valueOf(i)), "mipmap"
-                        , getActivity().getPackageName());
-            }
-            type.drawable = UiUtils.getDrawable(resId);
-            type.type = types[i];
-            mTypes.add(type);
-        }
-        mTypeAdapter.setNewData(mTypes);
-        // 判断不回显时才去设置默认分类选中
-        if(!mIsEcho)
-            setAccountType(0);
+        mCostTypes.clear();
+        mIncomeTypes.clear();
+        TypeDao dao = BaseApplication.getInstance().getSession().getTypeDao();
+        mCostTypes = dao.queryBuilder()
+                .where(TypeDao.Properties.Uid.eq(UserUtils.getUid()), TypeDao.Properties.Type.eq(AppConfig.TYPE_COST))
+                .orderAsc(TypeDao.Properties.Index)
+                .list();
+
+        mIncomeTypes = dao.queryBuilder()
+                .where(TypeDao.Properties.Uid.eq(UserUtils.getUid()), TypeDao.Properties.Type.eq(AppConfig.TYPE_INCOME))
+                .orderAsc(TypeDao.Properties.Index)
+                .list();
     }
 
     /**
@@ -177,9 +178,11 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         // 回显小分类
         String cType = mAccount.getCType();
         mTxtType.setText(cType);
-        for (AccountType type : mTypeAdapter.getData()) {
-            if(type.type.equals(cType)){
-                UiUtils.setCompoundDrawables(mTxtType, type.drawable, null, null, null);
+        for (Type type : mTypeAdapter.getData()) {
+            if(type.getName().equals(cType)){
+                Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getImage()));
+                UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
+                break;
             }
         }
         // 回显金额
@@ -192,14 +195,25 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     }
 
     /**
+     * 设置分类数据
+     */
+    private void setTypeData(List<Type> data){
+        mTypeAdapter.setNewData(data);
+        // 判断不回显时才去设置默认分类选中
+        if(!mIsEcho)
+            setAccountType(0);
+    }
+
+    /**
      * 设置消费或收入分类
      * @param position 选中的位置
      */
     private void setAccountType(int position) {
-        AccountType type = mTypeAdapter.getData().get(position);
-        UiUtils.setCompoundDrawables(mTxtType, type.drawable, null, null, null);
-        mTxtType.setText(type.type);
-        mAccount.setCType(type.type);
+        Type type = mTypeAdapter.getData().get(position);
+        Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getImage()));
+        UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
+        mTxtType.setText(type.getName());
+        mAccount.setCType(type.getName());
     }
 
     @Override
@@ -227,7 +241,6 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
             }else{
                 mPresenter.saveAccount(mAccount.getOwner(), mAccount);
             }
-
         }
     }
 
@@ -254,7 +267,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     @Override
     public void selectCost() {
         mAccount.setType(AppConfig.TYPE_COST);
-        initTypeData();
+        setTypeData(mCostTypes);
         mTxtMoney.setTextColor(UiUtils.getColor(R.color.textPink));
     }
 
@@ -264,7 +277,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     @Override
     public void selectIncome() {
         mAccount.setType(AppConfig.TYPE_INCOME);
-        initTypeData();
+        setTypeData(mIncomeTypes);
         mTxtMoney.setTextColor(UiUtils.getColor(R.color.textLightBlue));
     }
 

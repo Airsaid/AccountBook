@@ -33,6 +33,15 @@ public class UserUtils {
     }
 
     /**
+     * 获取当前登录用户 id。
+     * @return String 用户 id
+     */
+    public static String getUid(){
+        User user = AVUser.getCurrentUser(User.class);
+        return user != null ? user.getObjectId() : "";
+    }
+
+    /**
      * 根据类型获取性别字符串。
      * @param sex 性别类型，0：未设置、1：男、2：女。
      * @return

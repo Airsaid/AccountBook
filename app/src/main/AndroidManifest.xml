@@ -78,6 +78,8 @@
         <activity android:name=".ui.activity.AddEditBookActivity"/>
         <!--消息-->
         <activity android:name=".ui.activity.MsgActivity"/>
+        <!--编辑分类-->
+        <activity android:name=".ui.activity.TypeEditActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

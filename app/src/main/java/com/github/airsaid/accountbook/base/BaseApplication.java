@@ -11,9 +11,12 @@ import com.github.airsaid.accountbook.BuildConfig;
 import com.github.airsaid.accountbook.data.AboutApp;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.AccountBook;
+import com.github.airsaid.accountbook.data.DaoMaster;
+import com.github.airsaid.accountbook.data.DaoSession;
 import com.github.airsaid.accountbook.data.Msg;
-import com.github.airsaid.accountbook.util.LogUtils;
 import com.tencent.bugly.Bugly;
+
+import org.greenrobot.greendao.database.Database;
 
 /**
  * @author Airsaid
@@ -23,17 +26,44 @@ import com.tencent.bugly.Bugly;
  */
 public class BaseApplication extends Application{
 
+    private static BaseApplication mInstance;
     private static Context mContext;
+    private DaoSession mSession;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-
-        LogUtils.e("test", "is debug：" + BuildConfig.DEBUG);
+        mInstance = this;
+        initGreenDao();
         registSubClass();
         initLeancloud();
         initCrashReport();
+    }
+
+    /**
+     * 获取 Application 实例
+     * @return BaseApplication
+     */
+    public static BaseApplication getInstance(){
+        return mInstance;
+    }
+
+    /**
+     * 初始化 greenDAO
+     */
+    private void initGreenDao() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "account-db");
+        Database db = helper.getWritableDb();
+        mSession = new DaoMaster(db).newSession();
+    }
+
+    /**
+     * 获取 DaoSession 对象
+     * @return DaoSession
+     */
+    public DaoSession getSession(){
+        return mSession;
     }
 
     /**

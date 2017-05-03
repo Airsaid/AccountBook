@@ -42,6 +42,7 @@
     <string name="load_send_code">正在发送验证码&#8230;</string>
     <string name="load_verify">正在验证中&#8230;</string>
     <string name="load_switch">正在切换中&#8230;</string>
+    <string name="load_login">正在登录中&#8230;</string>
     <!--标题名-->
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
@@ -54,6 +55,8 @@
     <string name="title_add_book">添加帐薄</string>
     <string name="title_edit_book">编辑帐薄</string>
     <string name="title_msg">消息</string>
+    <string name="title_edit_cost_type">编辑支出分类</string>
+    <string name="title_edit_income_type">编辑收入分类</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -176,5 +179,6 @@
     <string name="system_message">系统消息</string>
     <string name="total_cost_sign">总支出：</string>
     <string name="total_income_sign">总收入：</string>
+    <string name="custom">自定义</string>
 
 </resources>

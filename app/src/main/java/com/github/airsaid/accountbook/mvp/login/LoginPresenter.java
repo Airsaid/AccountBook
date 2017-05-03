@@ -26,17 +26,14 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login(User user) {
-        mView.setLoadingIndicator(true);
         mRepository.login(user, new UserDataSource.LoginCallback() {
             @Override
             public void loginSuccess() {
-                mView.setLoadingIndicator(false);
                 mView.showLoginSuccess();
             }
 
             @Override
             public void loginFail(Error e) {
-                mView.setLoadingIndicator(false);
                 mView.showLoginFail(e);
             }
         });
@@ -44,17 +41,14 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void requestPhoneVerify(String phone) {
-        mView.setLoadingIndicator(true);
         mRepository.requestPhoneVerify(phone, new UserDataSource.SendVerifyCodeCallback() {
             @Override
             public void sendVerifyCodeSuccess() {
-                mView.setLoadingIndicator(false);
                 mView.showSendVerifyCodeSuccess();
             }
 
             @Override
             public void sendVerifyCodeFail(Error e) {
-                mView.setLoadingIndicator(false);
                 mView.showSendVerifyCodeFail(e);
             }
         });
@@ -62,17 +56,14 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void verifyPhone(String code) {
-        mView.setLoadingIndicator(true);
         mRepository.verifyPhone(code, new UserDataSource.VerifyPhoneCallback() {
             @Override
             public void verifySuccess() {
-                mView.setLoadingIndicator(false);
                 mView.showVerifyPhoneSuccess();
             }
 
             @Override
             public void verifyFail(Error e) {
-                mView.setLoadingIndicator(false);
                 mView.showVerifyPhoneFail(e);
             }
         });

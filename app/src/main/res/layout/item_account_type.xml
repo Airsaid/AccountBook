@@ -17,6 +17,7 @@
         android:drawablePadding="@dimen/view_padding"
         android:drawableTop="@mipmap/ic_cost_type_0"
         android:ellipsize="end"
+        android:gravity="center_horizontal"
         android:maxLines="1"
         tools:text="@string/app_name"/>
 
