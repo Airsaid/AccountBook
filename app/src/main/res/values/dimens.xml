@@ -24,5 +24,6 @@
     <dimen name="divide_height">1dp</dimen>
     <dimen name="elevation_height">2dp</dimen>
     <dimen name="about_page_header_height">230dp</dimen>
+    <dimen name="type_image_height">35dp</dimen>
 
 </resources>

@@ -230,7 +230,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View, V
             t.setIndex(i);
             t.setType(type);
             t.setName(types[i]);
-            t.setImage(type == AppConfig.TYPE_COST ? "ic_cost_type_".concat(String.valueOf(i))
+            t.setIcon(type == AppConfig.TYPE_COST ? "ic_cost_type_".concat(String.valueOf(i))
                     : "ic_income_type_".concat(String.valueOf(i)));
             dao.insert(t);
         }

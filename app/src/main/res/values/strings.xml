@@ -57,6 +57,8 @@
     <string name="title_msg">消息</string>
     <string name="title_edit_cost_type">编辑支出分类</string>
     <string name="title_edit_income_type">编辑收入分类</string>
+    <string name="title_add_type">添加分类</string>
+    <string name="title_edit_type">编辑分类</string>
     <!--Hint-->
     <string name="hint_empty">输入的内容不能为空</string>
     <string name="hint_phone">请输入手机号</string>
@@ -74,6 +76,7 @@
     <string name="hint_select_book_scene">请选择帐薄使用场景</string>
     <string name="hint_input_new_pwd">请输入新密码(6&#8211;16位字母数字组合)</string>
     <string name="hint_input_new_phone">请输入新手机号</string>
+    <string name="hint_input_type_name">请输入分类名称</string>
     <!--土司-->
     <string name="toast_right_phone">请输入正确的手机号</string>
     <string name="toast_right_code">请输入正确的验证码</string>
@@ -116,6 +119,8 @@
     <string name="toast_agree_success">操作成功，你们可以开始一起记账了~</string>
     <string name="toast_operate_success">操作成功</string>
     <string name="toast_has_agree">对方已加入该帐薄~</string>
+    <string name="toast_input_type_name">请输入分类名称</string>
+    <string name="toast_select_type_icon">请选择分类图标</string>
 
     <!--other-->
     <string name="rmb">¥</string>
@@ -180,5 +185,7 @@
     <string name="total_cost_sign">总支出：</string>
     <string name="total_income_sign">总收入：</string>
     <string name="custom">自定义</string>
+    <string name="type_name">分类名称</string>
+    <string name="select_type_image">选择分类图标</string>
 
 </resources>

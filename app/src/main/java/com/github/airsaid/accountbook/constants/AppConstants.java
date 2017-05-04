@@ -10,9 +10,9 @@ public class AppConstants {
 
     public static final String CONTENT_TYPE_FILE = "multipart/form-data";
 
-    public static final String CONTENT_TYPE_JPG = "image/jpg";
+    public static final String CONTENT_TYPE_JPG = "icon/jpg";
 
-    public static final String CONTENT_TYPE_PNG = "image/png";
+    public static final String CONTENT_TYPE_PNG = "icon/png";
 
     public static final String CONTENT_TYPE_TEXT = "text/plain";
 
@@ -22,6 +22,7 @@ public class AppConstants {
     public static String KEY_BID            = "bid";
 
 
+    public static String EXTRA_ACCOUNT_TYPE = "account_type";
     public static String EXTRA_POSITION     = "position";
     public static String EXTRA_DATA         = "data";
     public static String EXTRA_TYPE         = "type";

@@ -1,8 +1,11 @@
 package com.github.airsaid.accountbook.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * @author Airsaid
@@ -11,7 +14,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * @desc 支出、收入分类。
  */
 @Entity
-public class Type {
+public class Type implements Parcelable {
 
     @Id
     /** 分类 id */
@@ -25,21 +28,42 @@ public class Type {
     /** 分类名称 */
     private String name;
     /** 分类图片名称 */
-    private String image;
+    private String icon;
 
-    @Generated(hash = 560857445)
+    protected Type(Parcel in) {
+        id = in.readLong();
+        uid = in.readString();
+        type = in.readInt();
+        index = in.readInt();
+        name = in.readString();
+        icon = in.readString();
+    }
+    @Generated(hash = 623657528)
     public Type(Long id, String uid, int type, int index, String name,
-            String image) {
+            String icon) {
         this.id = id;
         this.uid = uid;
         this.type = type;
         this.index = index;
         this.name = name;
-        this.image = image;
+        this.icon = icon;
     }
     @Generated(hash = 1782799822)
     public Type() {
     }
+
+    public static final Creator<Type> CREATOR = new Creator<Type>() {
+        @Override
+        public Type createFromParcel(Parcel in) {
+            return new Type(in);
+        }
+
+        @Override
+        public Type[] newArray(int size) {
+            return new Type[size];
+        }
+    };
+
     public Long getId() {
         return this.id;
     }
@@ -70,10 +94,25 @@ public class Type {
     public void setName(String name) {
         this.name = name;
     }
-    public String getImage() {
-        return this.image;
+    public String getIcon() {
+        return this.icon;
     }
-    public void setImage(String image) {
-        this.image = image;
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(uid);
+        parcel.writeInt(type);
+        parcel.writeInt(index);
+        parcel.writeString(name);
+        parcel.writeString(icon);
     }
 }

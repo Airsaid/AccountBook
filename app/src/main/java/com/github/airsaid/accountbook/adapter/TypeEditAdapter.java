@@ -23,6 +23,6 @@ public class TypeEditAdapter extends BaseItemDraggableAdapter<Type, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, Type item) {
         helper.setText(R.id.txt_name, item.getName())
-                .setImageResource(R.id.img_type,  UiUtils.getImageResIdByName(item.getImage()));
+                .setImageResource(R.id.img_type,  UiUtils.getImageResIdByName(item.getIcon()));
     }
 }

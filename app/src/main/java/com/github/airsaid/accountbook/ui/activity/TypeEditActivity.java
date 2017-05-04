@@ -1,12 +1,17 @@
 package com.github.airsaid.accountbook.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
@@ -18,9 +23,9 @@ import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.Type;
 import com.github.airsaid.accountbook.data.TypeDao;
-import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
+import com.github.airsaid.accountbook.widget.recycler.OnSimpleClickListener;
 
 import java.util.List;
 
@@ -34,11 +39,16 @@ import butterknife.BindView;
  */
 public class TypeEditActivity extends BaseActivity {
 
+    public static final int CODE_ADD_TYPE = 1;
+    public static final int CODE_EDIT_TYPE = 2;
+
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    private List<Type> mTypes;
     private TypeEditAdapter mAdapter;
+    private List<Type> mTypes;
+    private TypeDao mDao;
+    private int mType;
 
     @Override
     public int getLayoutRes() {
@@ -47,29 +57,29 @@ public class TypeEditActivity extends BaseActivity {
 
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
-        int type = getIntent().getIntExtra(AppConstants.EXTRA_TYPE, AppConfig.TYPE_COST);
-        if (type == AppConfig.TYPE_COST) {
+        mType = getIntent().getIntExtra(AppConstants.EXTRA_ACCOUNT_TYPE, -1);
+        if (mType == AppConfig.TYPE_COST) {
             initToolbar(UiUtils.getString(R.string.title_edit_cost_type));
-        } else if (type == AppConfig.TYPE_INCOME) {
+        } else if (mType == AppConfig.TYPE_INCOME) {
             initToolbar(UiUtils.getString(R.string.title_edit_income_type));
         } else {
             finish();
         }
-        initData(type);
+        initData();
         initAdapter();
+        isDisableSwipe();
     }
 
     /**
      * 根据分类获取对应数据
-     *
-     * @param type 支出、收入分类
      */
-    private void initData(int type) {
-        TypeDao dao = BaseApplication.getInstance().getSession().getTypeDao();
-        mTypes = dao.queryBuilder()
-                .where(TypeDao.Properties.Uid.eq(UserUtils.getUid()), TypeDao.Properties.Type.eq(type))
+    private List<Type> initData() {
+        mDao = BaseApplication.getInstance().getSession().getTypeDao();
+        mTypes = mDao.queryBuilder()
+                .where(TypeDao.Properties.Uid.eq(UserUtils.getUid()), TypeDao.Properties.Type.eq(mType))
                 .orderAsc(TypeDao.Properties.Index)
                 .list();
+        return mTypes;
     }
 
     private void initAdapter() {
@@ -85,49 +95,113 @@ public class TypeEditActivity extends BaseActivity {
         mAdapter.enableDragItem(itemTouchHelper);
         mAdapter.setOnItemDragListener(onItemDragListener);
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener(){
+            @Override
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                Type data = (Type) baseQuickAdapter.getData().get(i);
+                // 编辑分类
+                Intent intent = new Intent(mContext, AddEditTypeActivity.class);
+                intent.putExtra(AppConstants.EXTRA_ACCOUNT_TYPE, mType);
+                intent.putExtra(AppConstants.EXTRA_DATA, data);
+                startActivityForResult(intent, CODE_EDIT_TYPE);
+            }
+        });
+    }
+
+    /**
+     * 根据是否是最后一条数据而禁用侧滑
+     */
+    private void isDisableSwipe(){
+        if(mAdapter == null) return;
+
+        if(mAdapter.getData().size() - 1 > 1){
+            mAdapter.enableSwipeItem();
+        }else{
+            mAdapter.disableSwipeItem();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_edit_type_add, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_title_add:
+                Intent intent = new Intent(mContext, AddEditTypeActivity.class);
+                intent.putExtra(AppConstants.EXTRA_ACCOUNT_TYPE, mType);
+                startActivityForResult(intent, CODE_ADD_TYPE);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
-
         @Override
         public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-            LogUtils.e("test", "onItemDragStart");
         }
 
         @Override
         public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target, int to) {
-            LogUtils.e("test", "onItemDragMoving");
         }
 
         @Override
         public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-            for (int i = pos; i < mAdapter.getData().size(); i++) {
-                Type type = mAdapter.getData().get(i);
+            // 拖动完毕后更新角标位置
+            List<Type> data = mAdapter.getData();
+            for(int i = pos; i < data.size(); i++){
+                Type type = data.get(i);
+                type.setIndex(i);
+                mDao.update(type);
             }
-            LogUtils.e("test", "onItemDragEnd pos: " + pos);
         }
     };
 
     OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
         @Override
         public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-            LogUtils.e("test", "onItemSwipeStart");
         }
 
         @Override
         public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-            LogUtils.e("test", "clearView");
         }
 
         @Override
         public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-            LogUtils.e("test", "onItemSwiped");
+            List<Type> data = mAdapter.getData();
+            if(data.size() - 1 > 1){
+                // 删除对应分类
+                Type type = data.get(pos);
+                mDao.delete(type);
+            }
+            isDisableSwipe();
         }
 
         @Override
         public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-            LogUtils.e("test", "onItemSwipeMoving");
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            switch (requestCode){
+                case CODE_ADD_TYPE:     // 添加分类
+                case CODE_EDIT_TYPE:    // 编辑分类
+                    mAdapter.setNewData(initData());
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void finish() {
+        setResult(RESULT_OK);
+        super.finish();
+    }
 }

@@ -77,6 +77,16 @@ public class Account extends AVObject implements MultiItemEntity {
         return getString(Api.CTYPE);
     }
 
+    /** 设置支出、收入类型图标 */
+    public void setTypeIcon(String typeIcon){
+        put(Api.TYPE_ICON, typeIcon);
+    }
+
+    /** 获取支出、收入类型图标 */
+    public String getTypeIcon(){
+        return getString(Api.TYPE_ICON);
+    }
+
     /** 设置支出、收入日期 */
     public void setDate(Date date){
         put(Api.DATE, date);

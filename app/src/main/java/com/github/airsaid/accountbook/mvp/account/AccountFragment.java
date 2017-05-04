@@ -1,5 +1,6 @@
 package com.github.airsaid.accountbook.mvp.account;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -59,6 +60,8 @@ import butterknife.OnClick;
  * @desc
  */
 public class AccountFragment extends BaseFragment implements AccountContract.View , DecimalPickerHandler {
+
+    public static final int REQUEST_CODE_TYPE = 1;
 
     @BindView(R.id.txt_type)
     TextView mTxtType;
@@ -121,8 +124,8 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(position == adapter.getData().size() - 1){// 自定义
                     Intent intent = new Intent(mContext, TypeEditActivity.class);
-                    intent.putExtra(AppConstants.EXTRA_TYPE, mAccount.getType());
-                    startActivity(intent);
+                    intent.putExtra(AppConstants.EXTRA_ACCOUNT_TYPE, mAccount.getType());
+                    startActivityForResult(intent, REQUEST_CODE_TYPE);
                 }else{
                     setAccountType(position);
                 }
@@ -143,7 +146,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         Calendar calendar = Calendar.getInstance();
         setSelectData(calendar);
         // 默认设置支出分类
-        setTypeData(mCostTypes);
+        setTypeData();
     }
 
     /**
@@ -180,7 +183,7 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         mTxtType.setText(cType);
         for (Type type : mTypeAdapter.getData()) {
             if(type.getName().equals(cType)){
-                Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getImage()));
+                Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getIcon()));
                 UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
                 break;
             }
@@ -197,8 +200,14 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
     /**
      * 设置分类数据
      */
-    private void setTypeData(List<Type> data){
-        mTypeAdapter.setNewData(data);
+    private void setTypeData(){
+        if(mAccount == null) return;
+
+        if(mAccount.getType() == AppConfig.TYPE_COST){
+            mTypeAdapter.setNewData(mCostTypes);
+        }else{
+            mTypeAdapter.setNewData(mIncomeTypes);
+        }
         // 判断不回显时才去设置默认分类选中
         if(!mIsEcho)
             setAccountType(0);
@@ -210,10 +219,11 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     private void setAccountType(int position) {
         Type type = mTypeAdapter.getData().get(position);
-        Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getImage()));
+        Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getIcon()));
         UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
         mTxtType.setText(type.getName());
         mAccount.setCType(type.getName());
+        mAccount.setTypeIcon(type.getIcon());
     }
 
     @Override
@@ -266,9 +276,9 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     @Override
     public void selectCost() {
-        mAccount.setType(AppConfig.TYPE_COST);
-        setTypeData(mCostTypes);
         mTxtMoney.setTextColor(UiUtils.getColor(R.color.textPink));
+        mAccount.setType(AppConfig.TYPE_COST);
+        setTypeData();
     }
 
     /**
@@ -276,9 +286,9 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
      */
     @Override
     public void selectIncome() {
-        mAccount.setType(AppConfig.TYPE_INCOME);
-        setTypeData(mIncomeTypes);
         mTxtMoney.setTextColor(UiUtils.getColor(R.color.textLightBlue));
+        mAccount.setType(AppConfig.TYPE_INCOME);
+        setTypeData();
     }
 
     /**
@@ -346,4 +356,17 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case REQUEST_CODE_TYPE:
+                    // 重新获取分类数据并设置
+                    initTypeData();
+                    setTypeData();
+                    break;
+            }
+        }
+    }
 }

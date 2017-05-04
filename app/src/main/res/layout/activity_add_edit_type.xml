@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBackground"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/view_padding"
+        tools:targetApi="lollipop">
+
+        <TextView
+            style="@style/Text.Maple"
+            android:text="@string/type_name"
+            android:textSize="@dimen/text16"/>
+
+        <TextView
+            android:id="@+id/txt_size"
+            style="@style/Text.Grayish"
+            android:textSize="@dimen/text14"
+            tools:text="(0/10)"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="end"
+            android:hint="@string/hint_input_type_name"
+            android:maxLength="10"
+            android:padding="@dimen/view_padding"
+            android:textSize="@dimen/text16"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
+
+        <TextView
+            style="@style/Text.Brown"
+            android:layout_marginTop="@dimen/view_margin"
+            android:text="@string/select_type_image"
+            android:textSize="@dimen/text16"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/view_margin"/>
+    </LinearLayout>
+</LinearLayout>

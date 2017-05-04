@@ -28,17 +28,17 @@ public class AccountTypeAdapter extends BaseQuickAdapter<Type, BaseViewHolder>{
     protected void convert(BaseViewHolder helper, Type item) {
         TextView txtType = helper.getView(R.id.txt_type);
         txtType.setText(item.getName());
-        Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(item.getImage()));
+        Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(item.getIcon()));
         UiUtils.setCompoundDrawables(txtType, null, image, null, null);
     }
 
     @Override
     public void setNewData(@Nullable List<Type> data) {
         if(data != null && data.size() > 0 &&
-                !data.get(data.size()-1).getImage().equals("ic_cost_type_custom")){
+                !data.get(data.size()-1).getIcon().equals("ic_cost_type_custom")){
             Type type = new Type();
             type.setName(UiUtils.getString(R.string.custom));
-            type.setImage("ic_cost_type_custom");
+            type.setIcon("ic_cost_type_custom");
             type.setIndex(data.size());
             data.add(type);
         }

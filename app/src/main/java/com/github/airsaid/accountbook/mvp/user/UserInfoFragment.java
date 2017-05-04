@@ -1,7 +1,6 @@
 package com.github.airsaid.accountbook.mvp.user;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -26,7 +25,7 @@ import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 import com.github.airsaid.accountbook.widget.CommonItemLayout;
 import com.luck.picture.lib.model.FunctionConfig;
-import com.luck.picture.lib.model.LocalMediaLoader;
+import com.luck.picture.lib.model.FunctionOptions;
 import com.luck.picture.lib.model.PictureConfig;
 import com.yalantis.ucrop.entity.LocalMedia;
 
@@ -118,22 +117,15 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
      */
     @Override
     public void showUpdateIcon() {
-        FunctionConfig config = new FunctionConfig();
-        config.setType(LocalMediaLoader.TYPE_IMAGE);
-        config.setCompress(true);
-        config.setMaxSelectNum(1);
-        config.setSelectMode(2);
-        config.setShowCamera(true);
-        config.setEnablePreview(true);
-        config.setEnableCrop(true);
-        config.setCopyMode(FunctionConfig.CROP_MODEL_DEFAULT);
-        config.setPreviewColor(UiUtils.getColor(R.color.textWhite));
-        config.setCompleteColor(UiUtils.getColor(R.color.textWhite));
-        config.setBottomBgColor(UiUtils.getColor(R.color.colorAccent));
-        config.setPreviewBottomBgColor(UiUtils.getColor(R.color.colorAccent));
-        PictureConfig.init(config);
-        // 启动相册并设置回调函数
-        PictureConfig.getPictureConfig().openPhoto(mContext, new PictureConfig.OnSelectResultCallback() {
+        FunctionOptions options = new FunctionOptions.Builder()
+                .setType(FunctionConfig.TYPE_IMAGE)
+                .setSelectMode(2)
+                .setEnableCrop(true)
+                .setCircularCut(true)
+                .setBottomBgColor(UiUtils.getColor(R.color.colorAccent))
+                .create();
+
+        PictureConfig.getInstance().init(options).openPhoto(getActivity(), new PictureConfig.OnSelectResultCallback() {
             @Override
             public void onSelectSuccess(List<LocalMedia> list) {
                 String path = "";

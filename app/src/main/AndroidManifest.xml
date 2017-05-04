@@ -80,6 +80,8 @@
         <activity android:name=".ui.activity.MsgActivity"/>
         <!--编辑分类-->
         <activity android:name=".ui.activity.TypeEditActivity"/>
+        <!--添加/编辑分类-->
+        <activity android:name=".ui.activity.AddEditTypeActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -88,6 +90,15 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
+        </provider>
+        <provider
+            android:name=".util.MyFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 

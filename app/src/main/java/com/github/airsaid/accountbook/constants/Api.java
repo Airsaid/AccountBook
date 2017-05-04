@@ -32,6 +32,7 @@ public class Api {
     public static final String SHARES	    = "shares";
     public static final String TYPE         = "type";
     public static final String CTYPE        = "cType";
+    public static final String TYPE_ICON    = "typeIcon";
     public static final String MONEY        = "money";
     public static final String DATE         = "date";
     public static final String NOTE         = "note";

@@ -3,14 +3,14 @@
 
 ## Preview
 
-<img src="/image/preview1.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview2.png" alt="screenshot" title="screenshot" width="270" height="486" />
-<img src="/image/preview3.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview4.png" alt="screenshot" title="screenshot" width="270" height="486" />
-<img src="/image/preview5.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview6.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/icon/preview1.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/icon/preview2.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/icon/preview3.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/icon/preview4.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/icon/preview5.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/icon/preview6.png" alt="screenshot" title="screenshot" width="270" height="486" />
 
 ## Download
 
 扫码下载：
- ![image](https://github.com/Airsaid/AccountBook/blob/master/image/qr.png)
+ ![icon](https://github.com/Airsaid/AccountBook/blob/master/icon/qr.png)
 
 网址下载：
  [点我下载](http://pre.im/account)
