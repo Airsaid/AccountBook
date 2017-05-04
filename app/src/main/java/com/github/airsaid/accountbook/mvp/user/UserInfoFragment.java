@@ -3,6 +3,7 @@ package com.github.airsaid.accountbook.mvp.user;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
@@ -119,31 +120,28 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
     public void showUpdateIcon() {
         FunctionOptions options = new FunctionOptions.Builder()
                 .setType(FunctionConfig.TYPE_IMAGE)
-                .setSelectMode(2)
+                .setSelectMode(FunctionConfig.MODE_SINGLE)
                 .setEnableCrop(true)
                 .setCircularCut(true)
-                .setBottomBgColor(UiUtils.getColor(R.color.colorAccent))
+                .setThemeStyle(ContextCompat.getColor(mContext, R.color.colorPrimary))
                 .create();
 
         PictureConfig.getInstance().init(options).openPhoto(getActivity(), new PictureConfig.OnSelectResultCallback() {
             @Override
             public void onSelectSuccess(List<LocalMedia> list) {
-                String path = "";
-                if(list != null && list.size() > 0){
-                    LocalMedia media = list.get(0);
-                    // 判断是否压缩过
-                    if(media.isCompressed()){
-                        // 压缩过，取压缩图：media.getCompressPath();
-                        path = media.getCompressPath();
-                    }else{
-                        // 取原图：media.getPath();
-                        path = media.getPath();
-                        // 判断是否裁剪
-                        if(media.getCutPath() != null){
-                            // 取裁剪图
-                            path = media.getCutPath();
-                        }
-                    }
+                if(list == null || list.size() < 1) return;
+
+                String path;
+                LocalMedia media = list.get(0);
+                if (media.isCut() && !media.isCompressed()) {
+                    // 裁剪过
+                    path = media.getCutPath();
+                } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
+                    // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
+                    path = media.getCompressPath();
+                } else {
+                    // 原图地址
+                    path = media.getPath();
                 }
 
                 try {
