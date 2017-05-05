@@ -1,6 +1,8 @@
 package com.github.airsaid.accountbook;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,10 +12,12 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.mvp.login.LoginActivity;
 import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.util.AppUtils;
+import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
 import butterknife.BindView;
@@ -40,7 +44,7 @@ public class SplashActivity extends BaseActivity {
         // 设置新回复通知
         FeedbackAgent agent = new FeedbackAgent(mContext);
         agent.sync();
-
+        // 设置版本号
         Typeface typeface = Typeface.createFromAsset(getAssets(), "wwfoot.ttf");
         mTxtAppName.setTypeface(typeface);
         setVersion();
@@ -49,8 +53,8 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 Intent intent = new Intent();
-                // 判断用户是否已经登录
-                if (UserUtils.checkLogin()) {
+                // 判断用户是否更新了应用和登录
+                if (!isUpdateApp() && UserUtils.checkLogin()) {
                     User user = UserUtils.getUser();
                     boolean phoneVerified = user.isMobilePhoneVerified();
                     // 进入首页
@@ -80,5 +84,29 @@ public class SplashActivity extends BaseActivity {
         mTxtVersion.startAnimation(anim);
         anim.setDuration(2000);
         anim.start();
+    }
+
+    /**
+     * 判断 App 是否更新过。
+     * 主要是决解用户登录后重新覆盖安装 App，不会重新走登录问题。
+     */
+    private boolean isUpdateApp(){
+        try {
+            PackageManager manager = getPackageManager();
+            PackageInfo info = manager.getPackageInfo(AppUtils.getPackageName()
+                    , PackageManager.GET_CONFIGURATIONS);
+            long oldLastUpdateTime = (long) SPUtils.getSP(mContext, AppConstants.KEY_LAST_UPDATE_TIME, 0l);
+            long lastUpdateTime = info.lastUpdateTime;// 应用最后一次更新时间
+            // 判断应用是否更新过
+            if(lastUpdateTime == oldLastUpdateTime){
+                return false;
+            }else{
+                SPUtils.setSP(mContext, AppConstants.KEY_LAST_UPDATE_TIME, lastUpdateTime);
+                return true;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

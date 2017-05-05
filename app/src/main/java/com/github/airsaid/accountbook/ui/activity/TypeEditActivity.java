@@ -1,9 +1,11 @@
 package com.github.airsaid.accountbook.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -23,6 +25,7 @@ import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.Type;
 import com.github.airsaid.accountbook.data.TypeDao;
+import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 import com.github.airsaid.accountbook.widget.recycler.OnSimpleClickListener;
@@ -65,9 +68,8 @@ public class TypeEditActivity extends BaseActivity {
         } else {
             finish();
         }
-        initData();
         initAdapter();
-        isDisableSwipe();
+        mAdapter.setNewData(initData());
     }
 
     /**
@@ -109,19 +111,6 @@ public class TypeEditActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 根据是否是最后一条数据而禁用侧滑
-     */
-    private void isDisableSwipe(){
-        if(mAdapter == null) return;
-
-        if(mAdapter.getData().size() - 1 > 1){
-            mAdapter.enableSwipeItem();
-        }else{
-            mAdapter.disableSwipeItem();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_edit_type_add, menu);
@@ -151,13 +140,7 @@ public class TypeEditActivity extends BaseActivity {
 
         @Override
         public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-            // 拖动完毕后更新角标位置
-            List<Type> data = mAdapter.getData();
-            for(int i = pos; i < data.size(); i++){
-                Type type = data.get(i);
-                type.setIndex(i);
-                mDao.update(type);
-            }
+            updateIndex(pos);
         }
     };
 
@@ -173,18 +156,55 @@ public class TypeEditActivity extends BaseActivity {
         @Override
         public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
             List<Type> data = mAdapter.getData();
-            if(data.size() - 1 > 1){
-                // 删除对应分类
+            if(data.size() > 1){
                 Type type = data.get(pos);
-                mDao.delete(type);
+                deleteType(type);
             }
-            isDisableSwipe();
         }
 
         @Override
-        public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+        public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder
+                , float dX, float dY, boolean isCurrentlyActive) {
         }
     };
+
+    /**
+     * 根据位置索引更新分类对应索引
+     * @param pos 索引
+     */
+    private void updateIndex(int pos) {
+        List<Type> data = mAdapter.getData();
+        for(int i = pos; i < data.size(); i++){
+            Type type = data.get(i);
+            type.setIndex(i);
+            mDao.update(type);
+        }
+    }
+
+    /**
+     * 删除分类
+     * @param type 要删除的分类
+     */
+    private void deleteType(final Type type) {
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title))
+                .setMessage(UiUtils.getString(R.string.dialog_delete_type))
+                .setNegativeButton(UiUtils.getString(R.string.dialog_cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mAdapter.setNewData(initData());
+                    }
+                })
+                .setPositiveButton(UiUtils.getString(R.string.dialog_affirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mDao.delete(type);
+                        mAdapter.isDisableSwipe(initData());
+                    }
+                })
+                .create()
+                .show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

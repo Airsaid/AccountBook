@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -181,11 +182,19 @@ public class AccountFragment extends BaseFragment implements AccountContract.Vie
         // 回显小分类
         String cType = mAccount.getCType();
         mTxtType.setText(cType);
-        for (Type type : mTypeAdapter.getData()) {
-            if(type.getName().equals(cType)){
-                Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getIcon()));
-                UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
-                break;
+        // 回显分类图标
+        String typeIcon = mAccount.getTypeIcon();
+        if(!TextUtils.isEmpty(typeIcon)){
+            Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(typeIcon));
+            UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
+        }else{
+            // 由于旧版本账目信息中并无 typeIcon 字段，所以这里要兼容旧版本
+            for (Type type : mTypeAdapter.getData()) {
+                if(type.getName().equals(cType)){
+                    Drawable image = UiUtils.getDrawable(UiUtils.getImageResIdByName(type.getIcon()));
+                    UiUtils.setCompoundDrawables(mTxtType, image, null, null, null);
+                    break;
+                }
             }
         }
         // 回显金额

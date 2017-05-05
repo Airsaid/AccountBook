@@ -83,6 +83,17 @@ public class DateUtils {
     }
 
     /**
+     * 将时间戳，格式化为指定日期格式的日期字符串。
+     * @param time      时间戳
+     * @param format    日期格式
+     * @return 根据指定日期格式格式话后的字符串，如：2017-04-07
+     */
+    public static String getDateText(long time, String format){
+        SimpleDateFormat f = new SimpleDateFormat(format != null ? format : FORMAT, Locale.CHINA);
+        return f.format(time);
+    }
+
+    /**
      * 获取带星期的日期。
      * @param date     日期对象
      * @param format   日期格式

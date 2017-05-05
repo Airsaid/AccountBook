@@ -32,11 +32,11 @@ import com.github.airsaid.accountbook.mvp.books.AccountBooksActivity;
 import com.github.airsaid.accountbook.mvp.user.UserInfoActivity;
 import com.github.airsaid.accountbook.ui.activity.MsgActivity;
 import com.github.airsaid.accountbook.ui.activity.SettingActivity;
+import com.github.airsaid.accountbook.util.ExitAppHelper;
 import com.github.airsaid.accountbook.util.ImageLoader;
 import com.github.airsaid.accountbook.util.MenuBadgeUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private MenuItem mMenuItem;
     private CommonRepository mCommonRepository;
+    private ExitAppHelper mExitAppHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initAdapter();
 
         mCommonRepository = new CommonRepository();
+        mExitAppHelper = new ExitAppHelper(mContext);
     }
 
     private void initView() {
@@ -214,7 +216,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(mExitAppHelper.click()){
+                super.onBackPressed();
+            }
         }
     }
 
