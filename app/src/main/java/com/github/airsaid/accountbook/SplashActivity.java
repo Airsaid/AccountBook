@@ -1,8 +1,7 @@
 package com.github.airsaid.accountbook;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,8 +16,11 @@ import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.mvp.login.LoginActivity;
 import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.util.AppUtils;
+import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -91,21 +93,10 @@ public class SplashActivity extends BaseActivity {
      * 主要是决解用户登录后重新覆盖安装 App，不会重新走登录问题。
      */
     private boolean isUpdateApp(){
-        try {
-            PackageManager manager = getPackageManager();
-            PackageInfo info = manager.getPackageInfo(AppUtils.getPackageName()
-                    , PackageManager.GET_CONFIGURATIONS);
-            long oldLastUpdateTime = (long) SPUtils.getSP(mContext, AppConstants.KEY_LAST_UPDATE_TIME, 0l);
-            long lastUpdateTime = info.lastUpdateTime;// 应用最后一次更新时间
-            // 判断应用是否更新过
-            if(lastUpdateTime == oldLastUpdateTime){
-                return false;
-            }else{
-                SPUtils.setSP(mContext, AppConstants.KEY_LAST_UPDATE_TIME, lastUpdateTime);
-                return true;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        long oldLastUpdateTime = (long) SPUtils.getSP(mContext, AppConstants.KEY_LAST_UPDATE_TIME, 0l);
+        long lastUpdateTime = AppUtils.getLastUpdateTime();
+        if(lastUpdateTime != oldLastUpdateTime){ // 更新过
+            return true;
         }
         return false;
     }

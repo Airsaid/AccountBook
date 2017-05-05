@@ -44,5 +44,18 @@ public class AppUtils {
         return versionName;
     }
 
-
+    /**
+     * 获取当前应用最后一次更新的时间
+     * @return 时间戳
+     */
+    public static long getLastUpdateTime(){
+        try {
+            PackageInfo packageInfo = getContext().getPackageManager()
+                    .getPackageInfo(getPackageName(), 0);
+            return packageInfo.lastUpdateTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

@@ -46,7 +46,7 @@ public class ExitAppHelper {
      * @param context 上下文
      */
     public ExitAppHelper(Context context) {
-        this(context, Locale.CHINA.equals(Locale.getDefault())?DEFAULT_HINT_MESSAGE_CHINA:DEFAULT_HINT_MESSAGE_OTHER, 2000);
+        this(context, isZh(context) ? DEFAULT_HINT_MESSAGE_CHINA : DEFAULT_HINT_MESSAGE_OTHER, 2000);
     }
 
     /**
@@ -80,4 +80,15 @@ public class ExitAppHelper {
         this.hintMessage = hintMessage;
     }
 
+    /**
+     * 判断是否是中文环境
+     */
+    public static boolean isZh(Context context) {
+        Locale locale = context.getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        if (language.startsWith("zh"))
+            return true;
+        else
+            return false;
+    }
 }

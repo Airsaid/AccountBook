@@ -3,6 +3,8 @@ package com.github.airsaid.accountbook.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.github.airsaid.accountbook.BuildConfig;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +34,7 @@ public class LogUtils {
     }
 
     public static String TAG = "ghost";
-    public static boolean LOG_DEBUG = true;
+    public static boolean LOG_DEBUG = BuildConfig.DEBUG;
 
     private static final int VERBOSE = 2;
     private static final int DEBUG = 3;

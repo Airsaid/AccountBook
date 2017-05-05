@@ -23,6 +23,7 @@ import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.MainFragmentPagerAdapter;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.source.CommonDataSource;
@@ -32,9 +33,11 @@ import com.github.airsaid.accountbook.mvp.books.AccountBooksActivity;
 import com.github.airsaid.accountbook.mvp.user.UserInfoActivity;
 import com.github.airsaid.accountbook.ui.activity.MsgActivity;
 import com.github.airsaid.accountbook.ui.activity.SettingActivity;
+import com.github.airsaid.accountbook.util.AppUtils;
 import com.github.airsaid.accountbook.util.ExitAppHelper;
 import com.github.airsaid.accountbook.util.ImageLoader;
 import com.github.airsaid.accountbook.util.MenuBadgeUtils;
+import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
@@ -102,6 +105,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         mCommonRepository = new CommonRepository();
         mExitAppHelper = new ExitAppHelper(mContext);
+        SPUtils.setSP(mContext, AppConstants.KEY_LAST_UPDATE_TIME, AppUtils.getLastUpdateTime());
     }
 
     private void initView() {
