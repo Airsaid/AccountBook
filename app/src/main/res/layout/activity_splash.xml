@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:src="@mipmap/ic_logo_white"/>
