@@ -82,6 +82,8 @@
         <activity android:name=".ui.activity.TypeEditActivity"/>
         <!--添加/编辑分类-->
         <activity android:name=".ui.activity.AddEditTypeActivity"/>
+        <!--统计-->
+        <activity android:name=".mvp.count.CountActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

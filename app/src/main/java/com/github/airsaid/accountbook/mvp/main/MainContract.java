@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2017/4/6
  * @desc 首页契约类，用于统一约定接口。
  */
-public class MainContract {
+public interface MainContract {
 
     interface View extends BaseView<Presenter>{
         void querySuccess(List<Account> list);

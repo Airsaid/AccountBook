@@ -115,4 +115,15 @@ public class DateUtils {
         return weeks[c.get(Calendar.DAY_OF_WEEK) - 1];
     }
 
+    /**
+     * 根据指定格式获取当前日期
+     * @param format 日期格式
+     * @return 当前日期
+     */
+    public static String getCurrentDate(String format){
+        Calendar c = Calendar.getInstance(Locale.CHINA);
+        SimpleDateFormat f = new SimpleDateFormat(format, Locale.CHINA);
+        return f.format(c.getTime());
+    }
+
 }

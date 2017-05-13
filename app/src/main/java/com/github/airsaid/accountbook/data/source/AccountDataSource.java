@@ -22,8 +22,11 @@ public interface AccountDataSource {
     /** 删除一条账目数据 */
     void deleteAccount(Account account, Callback callback);
 
-    /** 查找指定日期内的账目信息 */
+    /** 查找默认帐薄里指定日期内的账目信息 */
     void queryAccounts(User user, String startDate, String endDate, int page, QueryAccountListCallback callback);
+
+    /** 查找默认帐薄里指定日期内的指定用户所有账目信息 */
+    void queryAccounts(User user, String startDate, String endDate, QueryAccountListCallback callback);
 
     /** 查找指定日期内默认帐薄内账目总收入、支出 */
     void queryDefBookTotalMoney(User user, String startDate, String endDate, QueryBookTotalMoneyCallback callback);

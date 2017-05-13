@@ -6,6 +6,7 @@
     <string name="op_update_pwd">您正在申请更换手机号</string>
     <!--empty-->
     <string name="empty_data">暂无数据</string>
+    <string name="empty_count_data">没有统计到数据</string>
     <string name="empty_account_data">该月还没有记账呢</string>
     <string name="empty_msg_data">暂无消息数据喔~</string>
     <!--Dialog-->
@@ -188,5 +189,7 @@
     <string name="custom">自定义</string>
     <string name="type_name">分类名称</string>
     <string name="select_type_image">选择分类图标</string>
+    <string name="pie_chart">饼状图</string>
+    <string name="line_chart">线性图</string>
 
 </resources>

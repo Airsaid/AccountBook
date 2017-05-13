@@ -94,5 +94,8 @@ dependencies {
     compile 'com.tencent.bugly:nativecrashreport:3.1.2'
     // greenDAO 数据库框架
     compile 'org.greenrobot:greendao:3.2.2'
-
+    // 图表库
+    compile 'com.github.lecho:hellocharts-android:v1.5.8'
+    // 取色库
+    compile 'com.android.support:palette-v7:25.3.0'
 }

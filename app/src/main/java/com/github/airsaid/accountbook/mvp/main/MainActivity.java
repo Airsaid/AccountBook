@@ -30,6 +30,7 @@ import com.github.airsaid.accountbook.data.source.CommonDataSource;
 import com.github.airsaid.accountbook.data.source.CommonRepository;
 import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.mvp.books.AccountBooksActivity;
+import com.github.airsaid.accountbook.mvp.count.CountActivity;
 import com.github.airsaid.accountbook.mvp.user.UserInfoActivity;
 import com.github.airsaid.accountbook.ui.activity.MsgActivity;
 import com.github.airsaid.accountbook.ui.activity.SettingActivity;
@@ -195,9 +196,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_account_books:// 帐薄
                 startActivity(new Intent(mContext, AccountBooksActivity.class));
                 break;
-//            case R.id.nav_count:        // 统计
-//                startActivity(new Intent(mContext, CountActivity.class));
-//                break;
+            case R.id.nav_count:        // 统计
+                startActivity(new Intent(mContext, CountActivity.class));
+                break;
             case R.id.nav_feedback:     // 用户反馈
                 FeedbackAgent agent = new FeedbackAgent(mContext);
                 agent.startDefaultThreadActivity();
