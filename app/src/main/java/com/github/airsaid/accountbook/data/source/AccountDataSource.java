@@ -25,8 +25,8 @@ public interface AccountDataSource {
     /** 查找默认帐薄里指定日期内的账目信息 */
     void queryAccounts(User user, String startDate, String endDate, int page, QueryAccountListCallback callback);
 
-    /** 查找默认帐薄里指定日期内的指定用户所有账目信息 */
-    void queryAccounts(User user, String startDate, String endDate, QueryAccountListCallback callback);
+    /** 查找默认帐薄里指定日期内的指定用户所有指定类型账目信息 */
+    void queryAccounts(User user, String startDate, String endDate, int type, QueryAccountsCallback callback);
 
     /** 查找指定日期内默认帐薄内账目总收入、支出 */
     void queryDefBookTotalMoney(User user, String startDate, String endDate, QueryBookTotalMoneyCallback callback);
@@ -69,6 +69,11 @@ public interface AccountDataSource {
     interface QueryAccountListCallback{
         void querySuccess(List<Account> list);
         void shareUsers(int count);
+        void queryFail(Error e);
+    }
+
+    interface QueryAccountsCallback{
+        void querySuccess(List<Account> list);
         void queryFail(Error e);
     }
 

@@ -17,13 +17,15 @@ import java.util.List;
 public interface CountContract {
 
     interface View extends BaseView<Presenter>{
-        void queryAccounts(String startDate, String endDate);
+        void queryAccounts(String startDate, String endDate, int type);
         void queryAccountsSuccess(List<Account> accounts);
         void queryAccountsFail(Error e);
+        double getTotalCostMoney();
+        double getTotalIncomeMoney();
     }
 
     interface Presenter extends BasePresenter{
-        void queryAccounts(User user, String startDate, String endDate);
+        void queryAccounts(User user, String startDate, String endDate, int type);
     }
 
 }

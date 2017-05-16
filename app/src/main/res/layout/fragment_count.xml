@@ -39,29 +39,10 @@
             android:src="@mipmap/ic_arrow_right"/>
     </RelativeLayout>
 
-    <lecho.lib.hellocharts.view.PieChartView
-        android:id="@+id/chartView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
-
-    <LinearLayout
-        android:id="@+id/llt_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_pie_empty"/>
-
-        <TextView
-            style="@style/Text.Brown"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/empty_count_data"
-            android:textSize="@dimen/text16"/>
-    </LinearLayout>
-
+        android:overScrollMode="never"
+        android:scrollbars="none"/>
 </LinearLayout>

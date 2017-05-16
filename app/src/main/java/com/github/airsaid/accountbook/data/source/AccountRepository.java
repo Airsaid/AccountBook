@@ -18,7 +18,6 @@ import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
-import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 
@@ -122,19 +121,21 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
-    public void queryAccounts(final User user, final String startDate, final String endDate, final QueryAccountListCallback callback) {
+    public void queryAccounts(final User user, final String startDate, final String endDate, final int type, final QueryAccountsCallback callback) {
         queryDefaultBook(user, new QueryDefaultBookCallback() {
             @Override
             public void querySuccess(AccountBook book) {
                 long bid = book.getBid();
                 AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
                 startDateQuery.whereEqualTo(Api.BID, bid);
+                startDateQuery.whereEqualTo(Api.TYPE, type);
                 startDateQuery.whereEqualTo(Api.OWNER, user);
                 startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
                         DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
 
                 AVQuery<Account> endDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
                 endDateQuery.whereEqualTo(Api.BID, bid);
+                endDateQuery.whereEqualTo(Api.TYPE, type);
                 endDateQuery.whereEqualTo(Api.OWNER, user);
                 endDateQuery.whereLessThan(Api.DATE,
                         DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));

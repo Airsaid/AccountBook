@@ -30,15 +30,11 @@ public class CountPresenter implements CountContract.Presenter {
     }
 
     @Override
-    public void queryAccounts(User user, String startDate, String endDate) {
-        mRepository.queryAccounts(user, startDate, endDate, new AccountDataSource.QueryAccountListCallback() {
+    public void queryAccounts(User user, String startDate, String endDate, int type) {
+        mRepository.queryAccounts(user, startDate, endDate, type, new AccountDataSource.QueryAccountsCallback() {
             @Override
             public void querySuccess(List<Account> list) {
                 mView.queryAccountsSuccess(list);
-            }
-
-            @Override
-            public void shareUsers(int count) {
             }
 
             @Override
