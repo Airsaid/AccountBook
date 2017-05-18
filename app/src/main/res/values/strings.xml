@@ -135,7 +135,7 @@
     <string name="verify">验证</string>
     <string name="finish">完成</string>
     <string name="income">收入</string>
-    <string name="pay">支出</string>
+    <string name="cost">支出</string>
     <string name="save">保存</string>
     <string name="money_normal">0.00</string>
     <string name="say_something">说点什么吧&#8230;</string>
@@ -191,5 +191,8 @@
     <string name="select_type_image">选择分类图标</string>
     <string name="pie_chart">饼状图</string>
     <string name="line_chart">线性图</string>
+    <string name="total_cost_chart">(总支出)</string>
+    <string name="total_income_chart">(总收入)</string>
+
 
 </resources>

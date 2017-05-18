@@ -20,8 +20,8 @@ public interface CountContract {
         void queryAccounts(String startDate, String endDate, int type);
         void queryAccountsSuccess(List<Account> accounts);
         void queryAccountsFail(Error e);
-        double getTotalCostMoney();
-        double getTotalIncomeMoney();
+        void setChartData();
+        double getTotalMoney();
     }
 
     interface Presenter extends BasePresenter{

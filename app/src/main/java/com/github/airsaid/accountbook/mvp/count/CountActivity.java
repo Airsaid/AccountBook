@@ -7,9 +7,14 @@ import android.widget.TextView;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.constants.AppConfig;
+import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,7 +31,8 @@ public class CountActivity extends BaseActivity {
     TextView mTxtTitleLeft;
     @BindView(R.id.txt_title_right)
     TextView mTxtTitleRight;
-    private CountFragment mFragment;
+    
+    private List<CountFragment> mFragments;
 
     @Override
     public int getLayoutRes() {
@@ -36,33 +42,45 @@ public class CountActivity extends BaseActivity {
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         initTitle();
+        initFragment();
 
-        // set fragment
-        mFragment = (CountFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
-        if (mFragment == null) {
-            // Create the fragment
-            mFragment = CountFragment.newInstance(null);
+        CountFragment fragment = (CountFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (fragment == null) {
+            fragment = mFragments.get(0);
             ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), mFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
-
-        // create the presenter
-        new CountPresenter(new AccountRepository(), mFragment);
     }
 
     private void initTitle() {
         initToolbar(null);
-        mTxtTitleLeft.setText(UiUtils.getString(R.string.pie_chart));
-        mTxtTitleRight.setText(UiUtils.getString(R.string.line_chart));
+        mTxtTitleLeft.setText(UiUtils.getString(R.string.cost));
+        mTxtTitleRight.setText(UiUtils.getString(R.string.income));
     }
 
+    private void initFragment() {
+        mFragments = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(AppConstants.EXTRA_TYPE, i == 0 ? AppConfig.TYPE_COST : AppConfig.TYPE_INCOME);
+            CountFragment fragment = CountFragment.newInstance(bundle);
+            new CountPresenter(new AccountRepository(), fragment);
+            mFragments.add(fragment);
+        }
+    }
 
     @OnClick({R.id.txt_title_left, R.id.txt_title_right})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.txt_title_left:
+            case R.id.txt_title_left:   // 支出
+                ActivityUtils.switchFragment(getSupportFragmentManager(), mFragments.get(0), R.id.contentFrame);
+                mTxtTitleLeft.setBackgroundResource(R.drawable.bg_tb_select);
+                mTxtTitleRight.setBackgroundResource(0);
                 break;
-            case R.id.txt_title_right:
+            case R.id.txt_title_right:  // 收入
+                ActivityUtils.switchFragment(getSupportFragmentManager(), mFragments.get(1), R.id.contentFrame);
+                mTxtTitleRight.setBackgroundResource(R.drawable.bg_tb_select);
+                mTxtTitleLeft.setBackgroundResource(0);
                 break;
         }
     }

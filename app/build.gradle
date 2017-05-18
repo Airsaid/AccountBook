@@ -95,7 +95,7 @@ dependencies {
     // greenDAO 数据库框架
     compile 'org.greenrobot:greendao:3.2.2'
     // 图表库
-    compile 'com.github.lecho:hellocharts-android:v1.5.8'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     // 取色库
     compile 'com.android.support:palette-v7:25.3.0'
 }

@@ -25,7 +25,7 @@
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:paddingTop="5dp"
-            android:text="@string/pay"
+            android:text="@string/cost"
             android:textColor="@color/textWhite"
             android:textSize="@dimen/text16"/>
 
