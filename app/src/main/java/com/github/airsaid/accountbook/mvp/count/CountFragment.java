@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.airsaid.accountbook.R;
@@ -35,18 +34,17 @@ import com.github.airsaid.accountbook.data.TypeDao;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.ChartUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
-import com.github.airsaid.accountbook.util.DimenUtils;
 import com.github.airsaid.accountbook.util.PaletteUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
+import com.github.airsaid.accountbook.widget.ChartFormatter;
 import com.github.airsaid.accountbook.widget.recycler.HorizontalDividerItemDecoration;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
@@ -70,7 +68,8 @@ import butterknife.OnClick;
  * @date 2017/5/12
  * @desc 统计 Fragment
  */
-public class CountFragment extends BaseFragment implements CountContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class CountFragment extends BaseFragment implements CountContract.View
+        , SwipeRefreshLayout.OnRefreshListener, ChartFormatter.OnFormattedFinishListener {
 
     @BindView(R.id.ibt_left)
     ImageButton mIbtLeft;
@@ -82,9 +81,9 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
     SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.pieChartView)
+    PieChart mChartView;
 
-    private LinearLayout mHeadView;
-    private PieChart mChartView;
     private CountListAdapter mAdapter;
     private CountContract.Presenter mPresenter;
 
@@ -92,6 +91,10 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
     private HashMap<String, Double> mMoneyMap = new HashMap<>();
     // 分类对应图标集合
     private HashMap<String, String> mIconMap = new HashMap<>();
+    // 分类对应百分比集合
+    private HashMap<String, Float> mPercentMap = new HashMap<>();
+    // 分类对应颜色值
+    private HashMap<String, Integer> mColorMap = new HashMap<>();
     // 记账类型数据
     private List<Type> mTypes;
     // 统计类型（支出/收入），默认支出
@@ -121,7 +124,6 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
         mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         mRefreshLayout.setOnRefreshListener(this);
         initTypeData();
-        initHeadView();
         initAdapter();
         initChart();
         initData();
@@ -152,18 +154,6 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
     }
 
     /**
-     * 初始化头布局
-     */
-    private void initHeadView() {
-        mHeadView = (LinearLayout) mLayoutInflater.inflate(R.layout.rlv_header_count
-                , (ViewGroup) mRecyclerView.getParent(), false);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DimenUtils.dp2px(300));
-        lp.setMargins(0, 0, 0, DimenUtils.dp2px(20));
-        mHeadView.setLayoutParams(lp);
-        mChartView = (PieChart) mHeadView.findViewById(R.id.pieChartView);
-    }
-
-    /**
      * 初始化适配器
      */
     private void initAdapter() {
@@ -174,7 +164,6 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
                 .build());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new CountListAdapter(R.layout.item_count_list, new ArrayList<CountList>());
-        mAdapter.addHeaderView(mHeadView);
         mAdapter.setEmptyView(UiUtils.getEmptyView(mContext, mRecyclerView
                 , UiUtils.getString(R.string.empty_count_data), R.mipmap.ic_pie_empty));
         mRecyclerView.setAdapter(mAdapter);
@@ -230,6 +219,8 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
     private void clearData() {
         mMoneyMap.clear();
         mIconMap.clear();
+        mPercentMap.clear();
+        mColorMap.clear();
         setChartData();
         setCountListData();
     }
@@ -252,6 +243,7 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
         mRefreshLayout.setRefreshing(false);
         mMoneyMap.clear();
         mIconMap.clear();
+        mColorMap.clear();
         if (accounts != null && accounts.size() > 0) {
             for (Account account : accounts) {
                 String type = account.getCType();
@@ -283,7 +275,6 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
         }
 
         setChartData();
-        setCountListData();
     }
 
     @Override
@@ -298,6 +289,7 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
     @Override
     public void setChartData() {
         if (mMoneyMap.size() > 0) {
+            mChartView.setVisibility(View.VISIBLE);
             // 设置总支出/收入
             String typeStr = mCountType == AppConfig.TYPE_COST
                     ? UiUtils.getString(R.string.total_cost_chart)
@@ -317,6 +309,7 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
                 String iconName = mIconMap.get(entry.getKey());
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), UiUtils.getImageResIdByName(iconName));
                 int colorRgb = PaletteUtils.getColorRgb(bitmap);
+                mColorMap.put(type,colorRgb);
                 colors.add(colorRgb);
             }
 
@@ -326,7 +319,9 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
             dataSet.setColors(colors);
 
             PieData data = new PieData(dataSet);
-            data.setValueFormatter(new PercentFormatter());
+            ChartFormatter formatter = new ChartFormatter(mPercentMap, mMoneyMap.size());
+            formatter.setOnFormattedValueListener(this);
+            data.setValueFormatter(formatter);
             data.setValueTextSize(11f);
             data.setValueTextColor(Color.WHITE);
 
@@ -334,6 +329,8 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
             mChartView.highlightValues(null);
             mChartView.invalidate();
             mChartView.animateX(1000);
+        }else{
+            mChartView.setVisibility(View.GONE);
         }
     }
 
@@ -356,6 +353,11 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
         return s;
     }
 
+    @Override
+    public void onFormattedValue(HashMap<String, Float> percentMap) {
+        setCountListData();
+    }
+
     /**
      * 设置统计列表数据
      */
@@ -365,12 +367,15 @@ public class CountFragment extends BaseFragment implements CountContract.View, S
             String type = entry.getKey();
             Double money = entry.getValue();
             String icon = mIconMap.get(type);
+            Float percent = mPercentMap.get(type);
+            Integer color = mColorMap.get(type);
 
             CountList count = new CountList();
             count.setTypeName(type)
                     .setTotalMoney(money)
                     .setIconName(icon)
-                    .setPercent(10f);
+                    .setColor(color)
+                    .setPercent(percent);
 
             list.add(count);
         }

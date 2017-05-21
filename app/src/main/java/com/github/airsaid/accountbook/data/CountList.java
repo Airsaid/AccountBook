@@ -16,6 +16,8 @@ public class CountList {
     private double totalMoney;
     /** 百分比 */
     private float percent;
+    /**　分类图标对应颜色 */
+    private Integer color;
 
     public String getIconName() {
         return iconName;
@@ -50,6 +52,15 @@ public class CountList {
 
     public CountList setPercent(float percent) {
         this.percent = percent;
+        return this;
+    }
+
+    public Integer getColor() {
+        return color;
+    }
+
+    public CountList setColor(Integer color) {
+        this.color = color;
         return this;
     }
 }

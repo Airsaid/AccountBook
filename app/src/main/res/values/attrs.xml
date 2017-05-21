@@ -21,4 +21,15 @@
         <attr name="cil_rightTextColor" format="color"/>
         <attr name="cil_rightImage" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="ZProgressBar">
+        <!--背景颜色-->
+        <attr name="zpb_backgroundColor" format="color"/>
+        <!--进度条颜色-->
+        <attr name="zpb_progressColor" format="color"/>
+        <!--背景弧度-->
+        <attr name="zpb_radius" format="dimension"/>
+        <!--动画时长-->
+        <attr name="zpb_duration" format="integer"/>
+    </declare-styleable>
 </resources>

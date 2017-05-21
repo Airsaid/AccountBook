@@ -7,15 +7,9 @@
 
     <include layout="@layout/toolbar_account"/>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/contentFrame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </android.support.design.widget.CoordinatorLayout>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
