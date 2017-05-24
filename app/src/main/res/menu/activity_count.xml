@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.github.airsaid.accountbook.ui.activity.AddShareUserActivity">
+
+    <item
+        android:id="@+id/menu_title_look_me"
+        android:orderInCategory="1"
+        android:title="@string/just_look_me"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_title_look_book"
+        android:orderInCategory="2"
+        android:title="@string/just_look_cur_book"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_title_look_book_me"
+        android:orderInCategory="3"
+        android:title="@string/just_look_cur_book_me"
+        app:showAsAction="never"/>
+
+</menu>

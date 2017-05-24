@@ -22,11 +22,39 @@ public interface AccountDataSource {
     /** 删除一条账目数据 */
     void deleteAccount(Account account, Callback callback);
 
-    /** 查找默认帐薄里指定日期内的账目信息 */
-    void queryAccounts(User user, String startDate, String endDate, int page, QueryAccountListCallback callback);
+    /**
+     * 查找指定用户指定日期内所有的账目信息
+     * @param user       用户
+     * @param startDate  开始时间
+     * @param endDate    结束时间
+     * @param type       类型 1、支出 2、收入 （-1 不分类型查找）
+     * @param page       页码 （-1 为不分页）
+     * @param callback   回调
+     */
+    void queryAccounts(User user, String startDate, String endDate, int type, int page, QueryAccountsCallback callback);
 
-    /** 查找默认帐薄里指定日期内的指定用户所有指定类型账目信息 */
-    void queryAccounts(User user, String startDate, String endDate, int type, QueryAccountsCallback callback);
+    /**
+     * 查找默认帐薄里指定日期内的账目信息
+     * @param user      用户
+     * @param startDate 开始时间
+     * @param endDate   结束时间
+     * @param type      类型 1、支出 2、收入 （-1 不分类型查找）
+     * @param page      页码 （-1 为不分页）
+     * @param isQueryMe 是否只查询指定用户账目信息
+     * @param callback  回调
+     */
+    void queryDefBookAccounts(User user, String startDate, String endDate, int type, int page, boolean isQueryMe,  QueryAccountListCallback callback);
+
+    /**
+     * 按条件查询默认帐薄内信息
+     * @param user      用户
+     * @param startDate 开始时间
+     * @param endDate   结束时间
+     * @param queryType 查询类型 1、查询指定用户所有账目 2、查询指定用户当前账目所有账目 3、查询指定用户当前帐薄中指定用户账目
+     * @param type      类型 1、支出 2、收入 （-1 不分类型查找）
+     * @param callback  回调
+     */
+    void queryCountAccounts(User user, String startDate, String endDate, int queryType, int type, QueryAccountsCallback callback);
 
     /** 查找指定日期内默认帐薄内账目总收入、支出 */
     void queryDefBookTotalMoney(User user, String startDate, String endDate, QueryBookTotalMoneyCallback callback);

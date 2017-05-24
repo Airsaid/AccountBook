@@ -71,6 +71,13 @@ import butterknife.OnClick;
 public class CountFragment extends BaseFragment implements CountContract.View
         , SwipeRefreshLayout.OnRefreshListener, ChartFormatter.OnFormattedFinishListener {
 
+    /** 统计当前用户所有账目 */
+    public static final int QUERY_TYPE_ALL_ME = 1;
+    /** 统计当前用户的当前帐薄中所有账目 */
+    public static final int QUERY_TYPE_BOOK_ALL = 2;
+    /** 统计当前用户的当前帐薄中当前用户所有账目 */
+    public static final int QUERY_TYPE_BOOK_ME = 3;
+
     @BindView(R.id.ibt_left)
     ImageButton mIbtLeft;
     @BindView(R.id.txt_month)
@@ -99,6 +106,8 @@ public class CountFragment extends BaseFragment implements CountContract.View
     private List<Type> mTypes;
     // 统计类型（支出/收入），默认支出
     private int mCountType = AppConfig.TYPE_COST;
+    // 查询类型，默认查询当前用户所有账目
+    private int mQueryType = QUERY_TYPE_ALL_ME;
 
     private String mStartDate;
     private String mEndDate;
@@ -159,8 +168,7 @@ public class CountFragment extends BaseFragment implements CountContract.View
     private void initAdapter() {
         mRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(mContext)
                 .color(R.color.colorDivide)
-                .showLastDivider()
-                .size(1)
+                .size(2)
                 .build());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new CountListAdapter(R.layout.item_count_list, new ArrayList<CountList>());
@@ -203,12 +211,14 @@ public class CountFragment extends BaseFragment implements CountContract.View
 
     @Override
     public void onRefresh() {
+        if(mRefreshLayout == null) return;
+
         mRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 clearData();
                 mRefreshLayout.setRefreshing(true);
-                queryAccounts(mStartDate, mEndDate, mCountType);
+                queryAccounts(mStartDate, mEndDate, mQueryType, mCountType);
             }
         });
     }
@@ -226,7 +236,7 @@ public class CountFragment extends BaseFragment implements CountContract.View
     }
 
     @Override
-    public void queryAccounts(String startDate, String endDate, int type) {
+    public void queryAccounts(String startDate, String endDate, int queryType, int type) {
         SimpleDateFormat f = new SimpleDateFormat(DateUtils.FORMAT_MAIN_TAB, Locale.CHINA);
         try {
             Date date = f.parse(startDate);
@@ -235,7 +245,7 @@ public class CountFragment extends BaseFragment implements CountContract.View
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        mPresenter.queryAccounts(UserUtils.getUser(), mStartDate, mEndDate, type);
+        mPresenter.queryAccounts(UserUtils.getUser(), mStartDate, mEndDate, queryType, type);
     }
 
     @Override
@@ -324,11 +334,8 @@ public class CountFragment extends BaseFragment implements CountContract.View
             data.setValueFormatter(formatter);
             data.setValueTextSize(11f);
             data.setValueTextColor(Color.WHITE);
-
             mChartView.setData(data);
-            mChartView.highlightValues(null);
-            mChartView.invalidate();
-            mChartView.animateX(1000);
+            mChartView.animateX(800);
         }else{
             mChartView.setVisibility(View.GONE);
         }
@@ -346,7 +353,7 @@ public class CountFragment extends BaseFragment implements CountContract.View
         s.setSpan(new StyleSpan(Typeface.BOLD), 0, s.length() - descText.length(), 0);
         s.setSpan(new ForegroundColorSpan(UiUtils.getColor(R.color.textRed))
                 , 0, s.length() - descText.length(), 0);
-        s.setSpan(new RelativeSizeSpan(.8f), s.length() - descText.length(), s.length(), 0);
+        s.setSpan(new RelativeSizeSpan(.9f), s.length() - descText.length(), s.length(), 0);
         s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - descText.length(), s.length(), 0);
         s.setSpan(new ForegroundColorSpan(UiUtils.getColor(R.color.textGrayish))
                 , s.length() - descText.length(), s.length(), 0);
@@ -414,6 +421,13 @@ public class CountFragment extends BaseFragment implements CountContract.View
             totalMoney = ArithUtils.add(totalMoney, entry.getValue());
         }
         return totalMoney;
+    }
+
+    @Override
+    public void setQueryType(int type) {
+        mQueryType = type;
+        if(isVisible())
+            onRefresh();
     }
 
     @OnClick({R.id.ibt_left, R.id.ibt_right})

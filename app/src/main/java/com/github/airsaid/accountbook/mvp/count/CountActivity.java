@@ -2,6 +2,8 @@ package com.github.airsaid.accountbook.mvp.count;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,9 +48,7 @@ public class CountActivity extends BaseActivity {
 
         CountFragment fragment = (CountFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (fragment == null) {
-            fragment = mFragments.get(0);
-            ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), fragment, R.id.contentFrame);
+            ActivityUtils.switchFragment(getSupportFragmentManager(), mFragments.get(0), R.id.contentFrame);
         }
     }
 
@@ -67,6 +67,33 @@ public class CountActivity extends BaseActivity {
             new CountPresenter(new AccountRepository(), fragment);
             mFragments.add(fragment);
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_count, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int queryType = -1;
+        switch (item.getItemId()) {
+            case R.id.menu_title_look_me:     // 统计所有账目信息
+                queryType = CountFragment.QUERY_TYPE_ALL_ME;
+                break;
+            case R.id.menu_title_look_book:   // 统计当前帐薄里的账目信息
+                queryType = CountFragment.QUERY_TYPE_BOOK_ALL;
+                break;
+            case R.id.menu_title_look_book_me:// 统计当前帐薄里的自己记账的账目信息
+                queryType = CountFragment.QUERY_TYPE_BOOK_ME;
+                break;
+        }
+        if(queryType != -1){
+            for (CountFragment fragment : mFragments) {
+                fragment.setQueryType(queryType);
+            }
+        }
+        return true;
     }
 
     @OnClick({R.id.txt_title_left, R.id.txt_title_right})

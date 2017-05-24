@@ -79,27 +79,73 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
-    public void queryAccounts(User user, final String startDate, final String endDate, final int page, final QueryAccountListCallback callback) {
+    public void queryAccounts(User user, String startDate, String endDate, int type, int page, final QueryAccountsCallback callback) {
+        AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+        if(type != -1)
+            startDateQuery.whereEqualTo(Api.TYPE, type);
+        startDateQuery.whereEqualTo(Api.OWNER, user);
+        startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
+                DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
+
+        AVQuery<Account> endDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+        if(type != -1)
+            endDateQuery.whereEqualTo(Api.TYPE, type);
+        endDateQuery.whereEqualTo(Api.OWNER, user);
+        endDateQuery.whereLessThan(Api.DATE,
+                DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));
+
+        AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
+        query.orderByDescending(Api.DATE);// 按时间，降序排列
+        query.include(Api.OWNER);
+        if(page != -1){
+            query.limit(AppConfig.LIMIT);
+            query.skip((page - 1) * AppConfig.LIMIT);
+        }
+        query.findInBackground(new FindCallback<Account>() {
+            @Override
+            public void done(List<Account> list, AVException e) {
+                if (e == null) {
+                    callback.querySuccess(list);
+                } else {
+                    callback.queryFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void queryDefBookAccounts(final User user, final String startDate, final String endDate
+            , final int type, final int page, final boolean isQueryMe, final QueryAccountListCallback callback) {
         queryDefaultBook(user, new QueryDefaultBookCallback() {
             @Override
             public void querySuccess(AccountBook book) {
                 long bid = book.getBid();
                 final List<User> shares = book.getShares();
                 AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+                if(type != -1)
+                    startDateQuery.whereEqualTo(Api.TYPE, type);
                 startDateQuery.whereEqualTo(Api.BID, bid);
+                if(isQueryMe)
+                    startDateQuery.whereEqualTo(Api.OWNER, user);
                 startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
                         DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
 
                 AVQuery<Account> endDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+                if(type != -1)
+                    endDateQuery.whereEqualTo(Api.TYPE, type);
                 endDateQuery.whereEqualTo(Api.BID, bid);
+                if(isQueryMe)
+                    endDateQuery.whereEqualTo(Api.OWNER, user);
                 endDateQuery.whereLessThan(Api.DATE,
                         DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));
 
                 AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
-                query.orderByDescending(Api.DATE);// 按时间，降序排列
                 query.include(Api.OWNER);
-                query.limit(AppConfig.LIMIT);
-                query.skip((page - 1) * AppConfig.LIMIT);
+                if(page != -1){
+                    query.limit(AppConfig.LIMIT);
+                    query.skip((page - 1) * AppConfig.LIMIT);
+                }
+                query.orderByDescending(Api.DATE);// 按时间，降序排列
                 query.findInBackground(new FindCallback<Account>() {
                     @Override
                     public void done(List<Account> list, AVException e) {
@@ -121,44 +167,43 @@ public class AccountRepository implements AccountDataSource {
     }
 
     @Override
-    public void queryAccounts(final User user, final String startDate, final String endDate, final int type, final QueryAccountsCallback callback) {
-        queryDefaultBook(user, new QueryDefaultBookCallback() {
-            @Override
-            public void querySuccess(AccountBook book) {
-                long bid = book.getBid();
-                AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
-                startDateQuery.whereEqualTo(Api.BID, bid);
-                startDateQuery.whereEqualTo(Api.TYPE, type);
-                startDateQuery.whereEqualTo(Api.OWNER, user);
-                startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
-                        DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
+    public void queryCountAccounts(final User user, final String startDate, final String endDate
+            , final int queryType, final int type, final QueryAccountsCallback callback) {
+        if(queryType == 1){// 查询指定用户指定日期内所有账目信息
+            queryAccounts(user, startDate, endDate, type, -1, callback);
+        }else if(queryType == 2){// 查询指定用户的当前帐薄内所有账目信息
+            queryDefBookAccounts(user, startDate, endDate, type, -1, false, new QueryAccountListCallback(){
+                @Override
+                public void querySuccess(List<Account> list) {
+                    callback.querySuccess(list);
+                }
 
-                AVQuery<Account> endDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
-                endDateQuery.whereEqualTo(Api.BID, bid);
-                endDateQuery.whereEqualTo(Api.TYPE, type);
-                endDateQuery.whereEqualTo(Api.OWNER, user);
-                endDateQuery.whereLessThan(Api.DATE,
-                        DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));
+                @Override
+                public void shareUsers(int count) {
+                }
 
-                AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
-                query.orderByDescending(Api.DATE);// 按时间，降序排列
-                query.findInBackground(new FindCallback<Account>() {
-                    @Override
-                    public void done(List<Account> list, AVException e) {
-                        if (e == null) {
-                            callback.querySuccess(list);
-                        } else {
-                            callback.queryFail(new Error(e));
-                        }
-                    }
-                });
-            }
+                @Override
+                public void queryFail(Error e) {
+                    callback.queryFail(e);
+                }
+            });
+        }else if(queryType == 3){// 查询指定用户的当前帐薄内指定用户的账目信息
+            queryDefBookAccounts(user, startDate, endDate, type, -1, true, new QueryAccountListCallback(){
+                @Override
+                public void querySuccess(List<Account> list) {
+                    callback.querySuccess(list);
+                }
 
-            @Override
-            public void queryFail(Error e) {
-                callback.queryFail(e);
-            }
-        });
+                @Override
+                public void shareUsers(int count) {
+                }
+
+                @Override
+                public void queryFail(Error e) {
+                    callback.queryFail(e);
+                }
+            });
+        }
     }
 
     @Override

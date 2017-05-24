@@ -193,6 +193,7 @@
     <string name="line_chart">线性图</string>
     <string name="total_cost_chart">(总支出)</string>
     <string name="total_income_chart">(总收入)</string>
-
-
+    <string name="just_look_me">统计我的所有账目</string>
+    <string name="just_look_cur_book">统计「当前帐薄」所有账目</string>
+    <string name="just_look_cur_book_me">统计「当前帐薄」我的账目</string>
 </resources>

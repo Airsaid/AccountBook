@@ -20,9 +20,9 @@ import org.greenrobot.greendao.database.Database;
 
 /**
  * @author Airsaid
- * @Date 2017/2/19 23:15
- * @Blog http://blog.csdn.net/airsaid
- * @Desc Application 基础类
+ * @github https://github.com/airsaid
+ * @date 2017/4/13
+ * @desc Application 基础类
  */
 public class BaseApplication extends Application{
 

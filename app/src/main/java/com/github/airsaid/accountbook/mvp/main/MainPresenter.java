@@ -32,7 +32,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void queryAccount(User user, String startDate, String endDate, int page) {
-        mRepository.queryAccounts(user, startDate, endDate, page, new AccountDataSource.QueryAccountListCallback() {
+        mRepository.queryDefBookAccounts(user, startDate, endDate, -1, page, false, new AccountDataSource.QueryAccountListCallback() {
             @Override
             public void querySuccess(List<Account> list) {
                 mView.querySuccess(list);
