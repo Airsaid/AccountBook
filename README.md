@@ -3,19 +3,25 @@
 
 ## Preview
 
-<img src="/icon/preview1.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/icon/preview2.png" alt="screenshot" title="screenshot" width="270" height="486" />
-<img src="/icon/preview3.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/icon/preview4.png" alt="screenshot" title="screenshot" width="270" height="486" />
-<img src="/icon/preview5.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/icon/preview6.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/image/preview1.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview2.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/image/preview3.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview4.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/image/preview5.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview6.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/image/preview7.png" alt="screenshot" title="screenshot" width="270" height="486" />  <img src="/image/preview8.png" alt="screenshot" title="screenshot" width="270" height="486" />
+
 
 ## Download
 
 扫码下载：
- ![icon](https://github.com/Airsaid/AccountBook/blob/master/icon/qr.png)
+ ![icon](https://github.com/Airsaid/AccountBook/blob/master/image/qr.png)
 
 网址下载：
  [点我下载](http://pre.im/account)
 
 ## Version
+
+### V1.0.5(5/24)
+- 增加了统计功能。
+- 更新了应用图标。
 
 ### V1.0.4(5/4)
 - 增加自定义分类功能。
@@ -43,10 +49,9 @@
 - [x] 账目数据增加分页功能。
 - [x] 增加应用检测更新功能。
 - [x] 增加自定义分类功能。
-- [ ] 增加单独查看记账功能。
+- [x] 增加统计功能。
 - [ ] 对应用进行瘦身。
 - [ ] 增加密码锁功能。
-- [ ] 增加统计功能。
 - [ ] 增加换肤功能。
 
 
