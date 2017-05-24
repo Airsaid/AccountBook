@@ -1,5 +1,5 @@
 # AccountBook
-一个数据存储使用的 Leancloud，架构采用 MVP 的记账本 APP。（目前正在不断完善中）
+一个数据存储使用的 Leancloud、架构采用 MVP 的记账本 APP。（目前正在不断完善中）
 
 ## Preview
 
@@ -13,7 +13,7 @@
 ## Download
 
 扫码下载：
-<img src="/image/qr.png" alt="screenshot" title="screenshot" width="50" height="50" />
+<img src="/image/qr.png" alt="screenshot" title="screenshot" width="120" height="120" />
 
 网址下载：
  [点我下载](http://sj.qq.com/myapp/detail.htm?apkName=com.github.airsaid.accountbook)
