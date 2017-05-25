@@ -25,7 +25,6 @@ import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.mvp.account.AccountActivity;
 import com.github.airsaid.accountbook.util.DateUtils;
-import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
@@ -136,6 +135,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
                 mRefreshLayout.setRefreshing(true);
                 mPage = 1;
                 requestData();
+                mPresenter.queryAccountTotalMoney(UserUtils.getUser(), mStartDate, mEndDate);
             }
         });
     }
@@ -151,7 +151,6 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
      */
     private void requestData() {
         mPresenter.queryAccount(UserUtils.getUser(), mStartDate, mEndDate, mPage);
-        mPresenter.queryAccountTotalMoney(UserUtils.getUser(), mStartDate, mEndDate);
     }
 
     @Override
@@ -161,8 +160,11 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
             mAdapter.setNewData(mAdapter.setItemType(list));
         }else{
             mAdapter.addData(mAdapter.setItemType(list));
-            mAdapter.loadMoreComplete();
-            mAdapter.loadMoreEnd(list.size() < AppConfig.LIMIT);
+            if(list.size() < AppConfig.LIMIT){
+                mAdapter.loadMoreEnd();// 隐藏加载更多
+            }else{
+                mAdapter.loadMoreComplete();
+            }
         }
     }
 

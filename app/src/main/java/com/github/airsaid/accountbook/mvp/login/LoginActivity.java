@@ -18,6 +18,12 @@ import com.github.airsaid.accountbook.util.ActivityUtils;
 public class LoginActivity extends BaseActivity {
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setSlideable(false);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public int getLayoutRes() {
         return R.layout.activity_base_toolbar;
     }
