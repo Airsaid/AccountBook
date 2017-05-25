@@ -16,7 +16,7 @@
 <img src="/image/qr.png" alt="screenshot" title="screenshot" width="120" height="120" />
 
 网址下载：
- [点我下载](http://sj.qq.com/myapp/detail.htm?apkName=com.github.airsaid.accountbook)
+ [点我下载](https://fir.im/ddaccount)
 
 
 ## Version
