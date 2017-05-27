@@ -18,6 +18,7 @@
     <string name="dialog_send_code">发送验证码</string>
     <string name="dialog_title_update_username">修改用户名</string>
     <string name="dialog_title_update_sex">修改性别</string>
+    <string name="dialog_title_update_age">修改年龄</string>
     <string name="dialog_content_clear_cache">确认清除缓存吗？</string>
     <string name="dialog_content_login_out">确认退出登录吗？</string>
     <string name="dialog_title_input_bid">输入帐薄 ID</string>

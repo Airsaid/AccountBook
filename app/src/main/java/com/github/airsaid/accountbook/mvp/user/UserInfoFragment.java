@@ -217,7 +217,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
             ages[i] = String.valueOf(i).concat(UiUtils.getString(R.string.year));
         }
         new AlertDialog.Builder(mContext)
-                .setTitle(UiUtils.getString(R.string.dialog_title_update_sex))
+                .setTitle(UiUtils.getString(R.string.dialog_title_update_age))
                 .setItems(ages, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
