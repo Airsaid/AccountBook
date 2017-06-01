@@ -66,11 +66,11 @@
 - 应用内部分页面图片来自可萌记账，非常感谢！如构成侵权请及时通知我修改或删除。
 
 - 由于应用当中用到了 leancloud 和 bugly 服务，其 appid、appkey 由于私密原因已经隐藏。
-请在 local.properties 配置如下信息，配置后即可正常运行项目：
+请在 local.properties 文件中配置如下信息，配置后即可正常运行项目：
 ```
 leancloud.appid=你在 leancloud 平台申请的 appid
 leancloud.appkey=你在 leancloud 平台申请的 appkey
-bugly.appid=你在 bugly 平台申请的 appkey
+bugly.appid=你在 bugly 平台申请的 appid
 ```
 
 ## About me

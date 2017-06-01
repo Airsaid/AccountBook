@@ -27,11 +27,11 @@ import org.greenrobot.greendao.database.Database;
  * 【注意事项：】
  *
  * 由于应用当中用到了 leancloud 和 bugly 服务，其 appid、appkey 由于私密原因已经隐藏。
- * 请在 local.properties 配置如下信息，配置后即可正常运行项目：
+ * 请在 local.properties 文件配置如下信息，配置后即可正常运行项目：
  *
  * leancloud.appid=你在 leancloud 平台申请的 appid
  * leancloud.appkey=你在 leancloud 平台申请的 appkey
- * bugly.appid=你在 bugly 平台申请的 appkey
+ * bugly.appid=你在 bugly 平台申请的 appid
  */
 public class BaseApplication extends Application{
 
