@@ -81,7 +81,7 @@ bugly.appid=你在 bugly 平台申请的 appid
 
 ## License
 ```
-Copyright (C) 2016 Airsaid
+Copyright (C) 2017 Airsaid
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
