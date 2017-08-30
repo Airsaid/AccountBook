@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -156,9 +157,9 @@ public class UiUtils {
     public static void enterHomePage(Context context){
         ActivityManager.getInstance().popAllActivity();
         Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
-        if(context instanceof  Activity){
+        if(context instanceof Activity){
             ((Activity)context).finish();
         }
     }
@@ -262,4 +263,33 @@ public class UiUtils {
         return text != null ? text : "";
     }
 
+    /**
+     * 根据自定义属性获取对应颜色值.
+     * @param context    上下文
+     * @param attrs      自定义属性
+     * @param defColor   默认颜色
+     * @return 颜色
+     */
+    public static int getColor(Context context, int attrs, int defColor){
+        int[] customAttrs = {attrs};
+        TypedArray a = context.obtainStyledAttributes(customAttrs);
+        int color = a.getColor(0, defColor);
+        a.recycle();
+        return color;
+    }
+
+    /**
+     * 根据自定义属性获取对应资源 id.
+     * @param context    上下文
+     * @param attrs      自定义属性
+     * @param defId      默认 id
+     * @return 资源 id
+     */
+    public static int getResourceId(Context context, int attrs, int defId){
+        int[] customAttrs = {attrs};
+        TypedArray a = context.obtainStyledAttributes(customAttrs);
+        int id = a.getResourceId(0, defId);
+        a.recycle();
+        return id;
+    }
 }

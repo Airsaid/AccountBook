@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.util.ActivityManager;
+import com.github.airsaid.accountbook.util.ThemeManager;
 import com.github.airsaid.accountbook.widget.slideback.SlideBackActivity;
 
 import butterknife.ButterKnife;
@@ -43,6 +44,9 @@ public abstract class BaseActivity extends SlideBackActivity {
 
         super.onCreate(savedInstanceState);
         this.mContext = this;
+
+        // 设置主题色
+        ThemeManager.getInstance().init(this);
 
         // 设置布局
         setContentView(getView());

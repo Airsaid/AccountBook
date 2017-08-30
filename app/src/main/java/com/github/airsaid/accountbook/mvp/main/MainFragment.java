@@ -101,7 +101,8 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
 
     private void initAdapter() {
         mRefreshLayout.setOnRefreshListener(this);
-        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setColorSchemeResources(
+                UiUtils.getResourceId(mContext, R.attr.colorAccent, R.color.colorAccent));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new AccountListAdapter(new ArrayList<Account>());
         mAdapter.setHeaderView(mHeadView);

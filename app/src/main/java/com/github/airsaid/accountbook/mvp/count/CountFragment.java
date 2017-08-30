@@ -130,7 +130,8 @@ public class CountFragment extends BaseFragment implements CountContract.View
 
     @Override
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
-        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setColorSchemeResources(
+                UiUtils.getResourceId(mContext, R.attr.colorAccent, R.color.colorAccent));
         mRefreshLayout.setOnRefreshListener(this);
         initTypeData();
         initAdapter();

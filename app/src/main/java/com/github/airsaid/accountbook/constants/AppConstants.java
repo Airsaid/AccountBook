@@ -23,10 +23,11 @@ public class AppConstants {
     public static String KEY_LAST_UPDATE_TIME       = "lastUpdateTime";
 
 
-    public static String EXTRA_ACCOUNT_TYPE = "com.github.airsaid.accountbook.ACCOUNT_TYPE";
-    public static String EXTRA_POSITION     = "com.github.airsaid.accountbook.POSITION";
-    public static String EXTRA_DATA         = "com.github.airsaid.accountbook.DATA";
-    public static String EXTRA_TYPE         = "com.github.airsaid.accountbook.TYPE";
+    public static String EXTRA_ACCOUNT_TYPE     = "com.github.airsaid.accountbook.ACCOUNT_TYPE";
+    public static String EXTRA_POSITION         = "com.github.airsaid.accountbook.POSITION";
+    public static String EXTRA_DATA             = "com.github.airsaid.accountbook.DATA";
+    public static String EXTRA_TYPE             = "com.github.airsaid.accountbook.TYPE";
+    public static String EXTRA_IS_UPDATE_THEME  = "com.github.airsaid.accountbook.IS_UPDATE_THEME";
 
 
 }

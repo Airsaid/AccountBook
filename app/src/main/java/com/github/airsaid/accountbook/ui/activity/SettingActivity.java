@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.avos.avoscloud.AVUser;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
+import com.github.airsaid.accountbook.constants.AppConstants;
 import com.github.airsaid.accountbook.data.Error;
 import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.source.UserDataSource;
@@ -21,6 +22,7 @@ import com.github.airsaid.accountbook.util.ClearUtils;
 import com.github.airsaid.accountbook.util.DimenUtils;
 import com.github.airsaid.accountbook.util.ProgressUtils;
 import com.github.airsaid.accountbook.util.RegexUtils;
+import com.github.airsaid.accountbook.util.ThemeManager;
 import com.github.airsaid.accountbook.util.ToastUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
@@ -41,11 +43,15 @@ public class SettingActivity extends BaseActivity {
     CommonItemLayout mCilUpdatePhone;
     @BindView(R.id.cil_update_password)
     CommonItemLayout mCilUpdatePassword;
+    @BindView(R.id.cil_update_theme)
+    CommonItemLayout mCilUpdateTheme;
     @BindView(R.id.cil_clear)
     CommonItemLayout mCilClear;
     @BindView(R.id.cil_about)
     CommonItemLayout mCilAbout;
+
     private UserRepository mRepository;
+    private boolean mIsUpdateTheme;
 
     @Override
     public int getLayoutRes() {
@@ -55,6 +61,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         initToolbar(UiUtils.getString(R.string.setting));
+        mIsUpdateTheme = getIntent().getBooleanExtra(AppConstants.EXTRA_IS_UPDATE_THEME, false);
         mRepository = new UserRepository();
         setData();
     }
@@ -66,9 +73,12 @@ public class SettingActivity extends BaseActivity {
             mCilUpdatePhone.setRightText(phone);
             mCilClear.setRightText(ClearUtils.getCacheSize());
         }
+        // 设置当前主题色名称
+        mCilUpdateTheme.setRightText(ThemeManager.getInstance().getCurThemeName(mContext));
     }
 
-    @OnClick({R.id.cil_update_phone, R.id.cil_update_password, R.id.cil_clear, R.id.cil_about, R.id.llt_login_out})
+    @OnClick({R.id.cil_update_phone, R.id.cil_update_password, R.id.cil_update_theme
+            , R.id.cil_clear, R.id.cil_about, R.id.llt_login_out})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cil_update_phone:     // 修改手机号
@@ -79,6 +89,9 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.cil_clear:            // 清除缓存
                 showClearCacheDialog();
+                break;
+            case R.id.cil_update_theme:     // 修改主题色
+                showUpdateThemeDialog();
                 break;
             case R.id.cil_about:            // 关于 APP
                 startActivity(new Intent(mContext, AboutPageActivity.class));
@@ -260,6 +273,21 @@ public class SettingActivity extends BaseActivity {
     }
 
     /**
+     * 显示修改主题色 Dialog
+     */
+    private void showUpdateThemeDialog() {
+        final String[] themes = ThemeManager.getInstance().getThemes();
+        new AlertDialog.Builder(mContext)
+                .setTitle(UiUtils.getString(R.string.dialog_title))
+                .setItems(themes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ThemeManager.getInstance().setTheme(mContext, themes[which]);
+                    }
+                }).create().show();
+    }
+
+    /**
      * 显示确认退出 Dialog
      */
     private void showLoginOutDialog(){
@@ -275,5 +303,32 @@ public class SettingActivity extends BaseActivity {
                         UiUtils.enterLoginPage(mContext, true);
                     }
                 }).create().show();
+    }
+
+    @Override
+    protected void onBack() {
+        if(!back()){
+            super.onBack();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!back()){
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onSlideBack() {
+        back();
+    }
+
+    private boolean back(){
+        if(mIsUpdateTheme){
+            UiUtils.enterHomePage(mContext);
+            return true;
+        }
+        return false;
     }
 }

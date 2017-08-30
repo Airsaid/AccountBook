@@ -15,7 +15,7 @@
     <!--相机拍照-->
     <uses-permission android:name="android.permission.CAMERA"/>
     <!--读取日志-->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -26,13 +26,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="LEANCLOUD_APPID"
             android:value="${leancloud_appid}"/>
@@ -41,15 +42,18 @@
             android:value="${leancloud_appkey}"/>
         <meta-data
             android:name="BUGLY_APPID"
-            android:value="${bugly_appid}" />
+            android:value="${bugly_appid}"/>
+
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent"/>
         <!--用户反馈组件-->
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"/>
         <!--主页-->
-        <activity android:name=".mvp.main.MainActivity"/>
+        <activity
+            android:name=".mvp.main.MainActivity"
+            android:launchMode="singleTop"/>
         <!--登录-->
         <activity
             android:name=".mvp.login.LoginActivity"
@@ -84,6 +88,7 @@
         <activity android:name=".ui.activity.AddEditTypeActivity"/>
         <!--统计-->
         <activity android:name=".mvp.count.CountActivity"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
@@ -96,11 +101,11 @@
         <provider
             android:name=".util.MyFileProvider"
             android:authorities="${applicationId}.provider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
     </application>
 

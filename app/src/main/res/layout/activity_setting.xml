@@ -69,6 +69,26 @@
         tools:targetApi="lollipop">
 
         <com.github.airsaid.accountbook.widget.CommonItemLayout
+            android:id="@+id/cil_update_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cil_leftText="@string/update_theme"
+            app:cil_leftTextColor="@color/textBrown"
+            app:cil_rightTextColor="@color/textMaple"/>
+
+        <View style="@style/Divide.Default"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
+
+        <com.github.airsaid.accountbook.widget.CommonItemLayout
             android:id="@+id/cil_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

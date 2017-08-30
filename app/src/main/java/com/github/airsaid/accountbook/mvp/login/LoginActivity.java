@@ -32,6 +32,7 @@ public class LoginActivity extends BaseActivity {
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         Toolbar toolbar = initToolbar("");
         toolbar.setNavigationIcon(null);
+        toolbar.setBackgroundResource(R.color.colorPrimary);
 
         // set fragment
         LoginFragment fragment =

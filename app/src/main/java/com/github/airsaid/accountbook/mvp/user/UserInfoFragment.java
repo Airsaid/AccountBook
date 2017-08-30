@@ -1,6 +1,7 @@
 package com.github.airsaid.accountbook.mvp.user;
 
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -123,7 +124,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoContract.V
                 .setSelectMode(FunctionConfig.MODE_SINGLE)
                 .setEnableCrop(true)
                 .setCircularCut(true)
-                .setThemeStyle(ContextCompat.getColor(mContext, R.color.colorPrimary))
+                .setThemeStyle(UiUtils.getColor(mContext, R.attr.colorPrimary, R.color.colorPrimary))
                 .create();
 
         PictureConfig.getInstance().init(options).openPhoto(getActivity(), new PictureConfig.OnSelectResultCallback() {

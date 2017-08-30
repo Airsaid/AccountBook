@@ -57,7 +57,8 @@ public class MsgActivity extends BaseActivity implements SwipeRefreshLayout.OnRe
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
         initToolbar(UiUtils.getString(R.string.title_msg));
         mRefreshLayout.setOnRefreshListener(this);
-        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setColorSchemeResources(
+                UiUtils.getResourceId(mContext, R.attr.colorAccent, R.color.colorAccent));
         mRepository = new CommonRepository();
         initAdapter();
         onRefresh();

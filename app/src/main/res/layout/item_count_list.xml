@@ -43,7 +43,7 @@
         android:layout_toEndOf="@id/img_icon"
         android:max="100"
         app:zpb_backgroundColor="@color/grayish"
-        app:zpb_progressColor="@color/colorAccent"
+        app:zpb_progressColor="?attr/colorAccent"
         app:zpb_radius="10dp"/>
 
 </RelativeLayout>

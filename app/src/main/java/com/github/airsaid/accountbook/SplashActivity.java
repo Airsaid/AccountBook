@@ -16,6 +16,7 @@ import com.github.airsaid.accountbook.mvp.login.LoginActivity;
 import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.util.AppUtils;
 import com.github.airsaid.accountbook.util.SPUtils;
+import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
 import butterknife.BindView;
@@ -70,7 +71,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 2000);
+        }, 1000);
     }
 
     /**

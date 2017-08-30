@@ -38,6 +38,7 @@
     <string name="dialog_item_delete_book">删除账薄</string>
     <string name="dialog_item_exit_book">退出账薄</string>
     <string name="dialog_delete_type">确认删除该分类吗？</string>
+    <string name="dialog_title_update_theme">修改主题色</string>
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -159,6 +160,7 @@
     <string name="clear_cache">清除缓存</string>
     <string name="update_phone">修改手机号</string>
     <string name="update_password">修改账户密码</string>
+    <string name="update_theme">修改主题色</string>
     <string name="about_app">关于大大记账本</string>
     <string name="login_out">退出登录</string>
     <string name="developers">Developers</string>

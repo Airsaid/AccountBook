@@ -150,7 +150,7 @@ public class SlideBackActivity extends ActivityInterfaceImpl implements SlideFra
 
             // Modified by lihong 2016/09/11 begin
             //
-            // FixBug：在某此系统上面（例如YunOS），滑动退出时可能会闪一下，原因是
+            // FixBug：在某此系统上面（例如YunOS），滑动退w出时可能会闪一下，原因是
             // 调用 finish() 方法的时机太早了，当滑动松开手后，当前 activity 上面的 SlideFrameLayout
             // 仍然会继续滑动一段距离，而在这个过程中，SlideFrameLayout 中的绘制上一个 activity 内容的 PreviewView
             // 可能会继续绘制，就会看起来闪烁一下，如果将 PreviewView 背景设置为红色，就会清晰看到这样的效果。

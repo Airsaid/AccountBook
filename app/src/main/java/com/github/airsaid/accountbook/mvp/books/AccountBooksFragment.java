@@ -76,7 +76,8 @@ public class AccountBooksFragment extends BaseFragment implements AccountBooksCo
     @Override
     public void onCreateFragment(@Nullable Bundle savedInstanceState) {
         mRefreshLayout.setOnRefreshListener(this);
-        mRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mRefreshLayout.setColorSchemeResources(
+                UiUtils.getResourceId(mContext, R.attr.colorAccent, R.color.colorAccent));
         initAdapter();
         onRefresh();
     }

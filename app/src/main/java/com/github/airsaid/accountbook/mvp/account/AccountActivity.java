@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.mvp.account;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.source.AccountRepository;
 import com.github.airsaid.accountbook.util.ActivityUtils;
 import com.github.airsaid.accountbook.util.AnimUtils;
+import com.github.airsaid.accountbook.util.UiUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -82,7 +84,8 @@ public class AccountActivity extends BaseActivity {
     private void showAnim() {
         if(mIsEdit) return;
 
-        TransitionsHeleper.getInstance().setShowMethod(new ColorShowMethod(R.color.white, R.color.colorPrimary) {
+        int color = UiUtils.getResourceId(mContext, R.attr.colorPrimary, R.color.colorPrimary);
+        TransitionsHeleper.getInstance().setShowMethod(new ColorShowMethod(R.color.white, color) {
             @Override
             public void loadCopyView(InfoBean bean, ImageView copyView) {
                 AnimatorSet set = new AnimatorSet();

@@ -2,6 +2,7 @@ package com.github.airsaid.accountbook.mvp.register;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.base.BaseActivity;
@@ -24,7 +25,8 @@ public class RegisterActivity extends BaseActivity{
 
     @Override
     public void onCreateActivity(@Nullable Bundle savedInstanceState) {
-        initToolbar(UiUtils.getString(R.string.title_register));
+        Toolbar toolbar = initToolbar(UiUtils.getString(R.string.title_register));
+        toolbar.setBackgroundResource(R.color.colorPrimary);
 
         // set fragment
         RegisterFragment fragment =

@@ -12,6 +12,48 @@
         <item name="android:windowAnimationStyle">@style/activityAnim</item>
     </style>
 
+    <!--酷炫黑-->
+    <style name="AppTheme.Black">
+        <item name="colorPrimary">@color/colorPrimaryBlack</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlack</item>
+        <item name="colorAccent">@color/colorAccentBlack</item>
+    </style>
+
+    <!--原谅绿-->
+    <style name="AppTheme.Green">
+        <item name="colorPrimary">@color/colorPrimaryGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGreen</item>
+        <item name="colorAccent">@color/colorAccentGreen</item>
+    </style>
+
+    <!--胖次蓝-->
+    <style name="AppTheme.Blue">
+        <item name="colorPrimary">@color/colorPrimaryBlue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+    </style>
+
+    <!--基佬紫-->
+    <style name="AppTheme.Purple">
+        <item name="colorPrimary">@color/colorPrimaryPurple</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkPurple</item>
+        <item name="colorAccent">@color/colorAccentPurple</item>
+    </style>
+
+    <!--活力橙-->
+    <style name="AppTheme.Orange">
+        <item name="colorPrimary">@color/colorPrimaryOrange</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOrange</item>
+        <item name="colorAccent">@color/colorAccentOrange</item>
+    </style>
+
+    <!--大地棕-->
+    <style name="AppTheme.Brown">
+        <item name="colorPrimary">@color/colorPrimaryBrown</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBrown</item>
+        <item name="colorAccent">@color/colorAccentBrown</item>
+    </style>
+
     <style name="AppTheme.GrayControl">
         <item name="colorControlNormal">@color/colorControlNormal</item>
     </style>
@@ -27,17 +69,14 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <!-- Splash主题 -->
+    <!-- Splash 主题 -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- Toolbar 长按弹出Popup主题 -->
@@ -68,7 +107,7 @@
     <style name="Button.Default">
         <item name="android:textColor">@color/textWhite</item>
         <item name="android:background">@drawable/bg_button_default</item>
-        <!--<item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>-->
+        <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
     </style>
 
     <style name="Button.Default.Margin">
@@ -79,7 +118,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:textSize">@dimen/text12</item>
-        <!--<item name="com.github.airsaid.accountbook:backgroundTint">@color/colorAccent</item>-->
+        <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
     </style>
 
     <!--文字样式-->
@@ -117,7 +156,7 @@
         <item name="snpNumberColor">@android:color/white</item>
         <item name="snpBackspaceColor">@android:color/white</item>
         <item name="colorAccent">@android:color/white</item>
-        <item name="snpDialogBackground">@color/colorAccent</item>
+        <item name="snpDialogBackground">?attr/colorAccent</item>
     </style>
 
     <!--自定义 TabLayout 样式-->
@@ -126,7 +165,7 @@
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabPaddingStart">12dp</item>
         <item name="tabPaddingEnd">12dp</item>
-        <item name="tabBackground">@color/colorPrimary</item>
+        <item name="tabBackground">?attr/colorPrimary</item>
         <item name="tabTextAppearance">@style/CustomTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/tabSelectedTextColor</item>
     </style>

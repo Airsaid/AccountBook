@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#FF6E00</color>
-    <color name="colorPrimaryDark">#FF6E00</color>
-    <color name="colorAccent">#FF6E00</color>-->
+    <!--默认(少女粉)-->
     <color name="colorPrimaryDark">#FF82A8</color>
     <color name="colorPrimary">#FEACC3</color>
     <color name="colorAccent">#FFBACD</color>
+
+    <!--酷炫黑-->
+    <color name="colorPrimaryDarkBlack">#010001</color>
+    <color name="colorPrimaryBlack">#010001</color>
+    <color name="colorAccentBlack">#010001</color>
+
+    <!--原谅绿-->
+    <color name="colorPrimaryDarkGreen">#00BA91</color>
+    <color name="colorPrimaryGreen">#00BA91</color>
+    <color name="colorAccentGreen">#00BA91</color>
+
+    <!--胖次蓝-->
+    <color name="colorPrimaryDarkBlue">#4E77FF</color>
+    <color name="colorPrimaryBlue">#4E77FF</color>
+    <color name="colorAccentBlue">#4E77FF</color>
+
+    <!--基佬紫-->
+    <color name="colorPrimaryDarkPurple">#A33DF9</color>
+    <color name="colorPrimaryPurple">#A33DF9</color>
+    <color name="colorAccentPurple">#A33DF9</color>
+
+    <!--活力橙-->
+    <color name="colorPrimaryDarkOrange">#FF9150</color>
+    <color name="colorPrimaryOrange">#FF9150</color>
+    <color name="colorAccentOrange">#FF9150</color>
+
+    <!--大地棕-->
+    <color name="colorPrimaryDarkBrown">#88564D</color>
+    <color name="colorPrimaryBrown">#88564D</color>
+    <color name="colorAccentBrown">#88564D</color>
+
     <color name="colorDivide">#F9F9F9</color>
     <color name="colorTabSelect">#FFE0AA</color>
     <color name="colorMainDateBg">#F7F7F7</color>
