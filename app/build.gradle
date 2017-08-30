@@ -17,7 +17,7 @@ android {
         versionName "1.0.7"
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi', 'x86' , 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
 
@@ -28,16 +28,16 @@ android {
 
             manifestPlaceholders = [
                     "leancloud_appid" : properties.getProperty("leancloud.appid"),
-                    "leancloud_appkey" : properties.getProperty("leancloud.appkey"),
-                    "bugly_appid" : properties.getProperty("bugly.appid")
+                    "leancloud_appkey": properties.getProperty("leancloud.appkey"),
+                    "bugly_appid"     : properties.getProperty("bugly.appid")
             ]
         }
         debug {
             minifyEnabled false
             manifestPlaceholders = [
                     "leancloud_appid" : properties.getProperty("leancloud.appid"),
-                    "leancloud_appkey" : properties.getProperty("leancloud.appkey"),
-                    "bugly_appid" : properties.getProperty("bugly.appid")
+                    "leancloud_appkey": properties.getProperty("leancloud.appkey"),
+                    "bugly_appid"     : properties.getProperty("bugly.appid")
             ]
         }
     }
@@ -49,7 +49,7 @@ android {
     }
 
     // 为了解决部分第三方库重复打包了META-INF的问题
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
