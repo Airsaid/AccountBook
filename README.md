@@ -83,4 +83,4 @@ bugly.appid=你在 bugly 平台申请的 appid
 - **Email：** airsaid1024@gmail.com
 
 ## License
-(GPL-3.0)[https://github.com/Airsaid/AccountBook/blob/master/LICENSE]
+[GPL-3.0](https://github.com/Airsaid/AccountBook/blob/master/LICENSE)
