@@ -76,6 +76,12 @@ leancloud.appkey=你在 leancloud 平台申请的 appkey
 bugly.appid=你在 bugly 平台申请的 appid
 ```
 
+- 登录失败问题：
+```
+{"code":101,"error":"Class or object doesn't exists."}
+```
+请参照该 Issues 在 ```Leancloud``` 后台进行相应配置：[#3](https://github.com/Airsaid/AccountBook/issues/3)。
+
 ## About me
 
 - **QQ 群：** 5707887
