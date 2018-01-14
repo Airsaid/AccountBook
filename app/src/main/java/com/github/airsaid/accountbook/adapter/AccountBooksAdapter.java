@@ -37,8 +37,8 @@ public class AccountBooksAdapter extends BaseQuickAdapter<AccountBook, BaseViewH
         helper.setImageResource(R.id.img_cover, coverId)
                 .setImageResource(R.id.img_scene, sceneId)
                 .setText(R.id.txt_name, item.getName())
-                .setText(R.id.txt_total_cost, item.getTotalCost())
-                .setText(R.id.txt_total_income, item.getTotalIncome())
+//                .setText(R.id.txt_total_cost, item.getTotalCost())
+//                .setText(R.id.txt_total_income, item.getTotalIncome())
                 .setVisible(R.id.txt_current, item.isCurrent());
 
         LinearLayout lltIcons = helper.getView(R.id.llt_icons);

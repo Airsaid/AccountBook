@@ -51,6 +51,7 @@
             android:layout_below="@id/txt_name"
             android:layout_marginTop="20dp"
             android:textSize="@dimen/text16"
+            android:visibility="gone"
             tools:text="总支出：10000.00"/>
 
         <TextView
@@ -60,6 +61,7 @@
             android:layout_below="@id/txt_total_cost"
             android:layout_marginTop="10dp"
             android:textSize="@dimen/text16"
+            android:visibility="gone"
             tools:text="总收入：10000.00"/>
 
         <TextView

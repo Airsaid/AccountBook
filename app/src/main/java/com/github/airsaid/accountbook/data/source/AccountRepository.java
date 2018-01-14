@@ -18,11 +18,10 @@ import com.github.airsaid.accountbook.data.User;
 import com.github.airsaid.accountbook.data.i.Callback;
 import com.github.airsaid.accountbook.util.ArithUtils;
 import com.github.airsaid.accountbook.util.DateUtils;
-import com.github.airsaid.accountbook.util.LogUtils;
 import com.github.airsaid.accountbook.util.SPUtils;
 import com.github.airsaid.accountbook.util.UiUtils;
+import com.github.airsaid.accountbook.util.UserUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -328,26 +327,7 @@ public class AccountRepository implements AccountDataSource {
             @Override
             public void done(final List<AccountBook> list, AVException e) {
                 if (e == null) {
-                    // 查询每个帐薄的总支出、收入
-                    final List<Integer> items = new ArrayList<>();
-                    for (final AccountBook book : list) {
-                        queryBookTotalMoney(book.getBid(), new QueryBookTotalMoneyCallback() {
-                            @Override
-                            public void querySuccess(double totalCost, double totalIncome) {
-                                synchronized (items){
-                                    items.add(0);
-                                    book.totalCost = totalCost;
-                                    book.totalIncome = totalIncome;
-                                    if(list.size() == items.size()){
-                                        callback.querySuccess(list);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void queryFail(Error e) {}
-                        });
-                    }
+                    callback.querySuccess(list);
                 } else {
                     callback.queryFail(new Error(e));
                 }
@@ -591,6 +571,44 @@ public class AccountRepository implements AccountDataSource {
                         }
                     }
                     callback.querySuccess(costTotalMoney, incomeTotalMoney);
+                } else {
+                    callback.queryFail(new Error(e));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void queryTypeDetailAccount(String startDate, String endDate, String cType, int type, int page, final QueryAccountsCallback callback) {
+        AVQuery<Account> startDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+        User user = UserUtils.getUser();
+        if(type != -1)
+            startDateQuery.whereEqualTo(Api.TYPE, type);
+        startDateQuery.whereEqualTo(Api.OWNER, user);
+        startDateQuery.whereEqualTo(Api.CTYPE, cType);
+        startDateQuery.whereGreaterThanOrEqualTo(Api.DATE,
+                DateUtils.getDateWithDateString(startDate, DateUtils.FORMAT_MAIN_TAB));
+
+        AVQuery<Account> endDateQuery = new AVQuery<>(Api.TAB_ACCOUNT);
+        if(type != -1)
+            endDateQuery.whereEqualTo(Api.TYPE, type);
+        endDateQuery.whereEqualTo(Api.OWNER, user);
+        startDateQuery.whereEqualTo(Api.CTYPE, cType);
+        endDateQuery.whereLessThan(Api.DATE,
+                DateUtils.getDateWithDateString(endDate, DateUtils.FORMAT_MAIN_TAB));
+
+        AVQuery<Account> query = AVQuery.and(Arrays.asList(startDateQuery, endDateQuery));
+        query.orderByDescending(Api.DATE);// 按时间，降序排列
+        query.include(Api.OWNER);
+        if(page != -1){
+            query.limit(AppConfig.LIMIT);
+            query.skip((page - 1) * AppConfig.LIMIT);
+        }
+        query.findInBackground(new FindCallback<Account>() {
+            @Override
+            public void done(List<Account> list, AVException e) {
+                if (e == null) {
+                    callback.querySuccess(list);
                 } else {
                     callback.queryFail(new Error(e));
                 }

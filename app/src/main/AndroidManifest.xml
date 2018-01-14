@@ -88,6 +88,8 @@
         <activity android:name=".ui.activity.AddEditTypeActivity"/>
         <!--统计-->
         <activity android:name=".mvp.count.CountActivity"/>
+        <!--分类收支详情-->
+        <activity android:name=".mvp.count.TypeCountDetailActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

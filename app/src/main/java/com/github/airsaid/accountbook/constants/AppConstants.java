@@ -28,6 +28,9 @@ public class AppConstants {
     public static String EXTRA_DATA             = "com.github.airsaid.accountbook.DATA";
     public static String EXTRA_TYPE             = "com.github.airsaid.accountbook.TYPE";
     public static String EXTRA_IS_UPDATE_THEME  = "com.github.airsaid.accountbook.IS_UPDATE_THEME";
+    public static String EXTRA_TYPE_NAME        = "com.github.airsaid.accountbook.TYPE_NAME";
+    public static String EXTRA_START_DATE       = "com.github.airsaid.accountbook.START_DATE";
+    public static String EXTRA_END_DATE         = "com.github.airsaid.accountbook.END_DATE";
 
 
 }

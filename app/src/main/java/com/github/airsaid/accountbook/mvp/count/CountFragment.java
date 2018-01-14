@@ -1,10 +1,12 @@
 package com.github.airsaid.accountbook.mvp.count;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,12 +22,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.airsaid.accountbook.R;
 import com.github.airsaid.accountbook.adapter.CountListAdapter;
 import com.github.airsaid.accountbook.base.BaseApplication;
 import com.github.airsaid.accountbook.base.BaseFragment;
 import com.github.airsaid.accountbook.constants.AppConfig;
 import com.github.airsaid.accountbook.constants.AppConstants;
+import com.github.airsaid.accountbook.constants.MsgConstants;
 import com.github.airsaid.accountbook.data.Account;
 import com.github.airsaid.accountbook.data.CountList;
 import com.github.airsaid.accountbook.data.Error;
@@ -40,6 +44,7 @@ import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 import com.github.airsaid.accountbook.widget.ChartFormatter;
 import com.github.airsaid.accountbook.widget.recycler.HorizontalDividerItemDecoration;
+import com.github.airsaid.accountbook.widget.recycler.OnSimpleClickListener;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -47,6 +52,10 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -139,6 +148,14 @@ public class CountFragment extends BaseFragment implements CountContract.View
         initData();
     }
 
+    @Override
+    public void onStart() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        super.onStart();
+    }
+
     /**
      * 初始化分类数据
      */
@@ -176,6 +193,17 @@ public class CountFragment extends BaseFragment implements CountContract.View
         mAdapter.setEmptyView(UiUtils.getEmptyView(mContext, mRecyclerView
                 , UiUtils.getString(R.string.empty_count_data), R.mipmap.ic_pie_empty));
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new OnSimpleClickListener(){
+            @Override
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                CountList count = (CountList) baseQuickAdapter.getData().get(i);
+                startActivity(new Intent(mContext, TypeCountDetailActivity.class)
+                        .putExtra(AppConstants.EXTRA_TYPE_NAME, count.getTypeName())
+                        .putExtra(AppConstants.EXTRA_TYPE, mCountType)
+                        .putExtra(AppConstants.EXTRA_START_DATE, mStartDate)
+                        .putExtra(AppConstants.EXTRA_END_DATE, mEndDate));
+            }
+        });
     }
 
     /**
@@ -445,5 +473,22 @@ public class CountFragment extends BaseFragment implements CountContract.View
                 onRefresh();
                 break;
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Message msg) {
+        switch (msg.what) {
+            case MsgConstants.MSG_SAVE_ACCOUNT_SUCCESS:
+                onRefresh();
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
     }
 }

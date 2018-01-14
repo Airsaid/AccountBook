@@ -89,6 +89,18 @@ public interface AccountDataSource {
     /** 查询帐薄 id 对应帐薄下所有账目的总支出、收入 */
     void queryBookTotalMoney(long bid, QueryBookTotalMoneyCallback callback);
 
+    /**
+     * 查询当前用户下，从开始时间到结束时间内，指定分类的账目数据。
+     * @param startDate 开始时间
+     * @param endDate   结束时间
+     * @param cType     分类名称
+     * @param type      收支类型 1、支出 2、收入 （-1 不分类型查找）
+     * @param page      页码
+     * @param callback  结果回调
+     */
+    void queryTypeDetailAccount(String startDate, String endDate, String cType, int type,
+                                int page, QueryAccountsCallback callback);
+
     interface CreateBookCallback{
         void createSuccess(AccountBook book);
         void createFail(Error e);
