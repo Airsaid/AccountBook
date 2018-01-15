@@ -16,7 +16,6 @@ import com.github.airsaid.accountbook.mvp.login.LoginActivity;
 import com.github.airsaid.accountbook.mvp.main.MainActivity;
 import com.github.airsaid.accountbook.util.AppUtils;
 import com.github.airsaid.accountbook.util.SPUtils;
-import com.github.airsaid.accountbook.util.UiUtils;
 import com.github.airsaid.accountbook.util.UserUtils;
 
 import butterknife.BindView;
@@ -81,7 +80,7 @@ public class SplashActivity extends BaseActivity {
         mTxtVersion.setText("V".concat(AppUtils.getAppVersionName()));
         AlphaAnimation anim = new AlphaAnimation(0f, 1f);
         mTxtVersion.startAnimation(anim);
-        anim.setDuration(2000);
+        anim.setDuration(1000);
         anim.start();
     }
 
