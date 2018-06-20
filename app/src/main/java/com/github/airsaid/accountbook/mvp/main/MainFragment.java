@@ -136,7 +136,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
                 mRefreshLayout.setRefreshing(true);
                 mPage = 1;
                 requestData();
-                mPresenter.queryAccountTotalMoney(UserUtils.getUser(), mStartDate, mEndDate);
+//                mPresenter.queryAccountTotalMoney(UserUtils.getUser(), mStartDate, mEndDate);
             }
         });
     }

@@ -1,5 +1,7 @@
 package com.github.airsaid.accountbook.data.source;
 
+import android.util.Log;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
@@ -289,7 +291,22 @@ public class AccountRepository implements AccountDataSource {
                         });
                     }
                 } else {
-                    callback.queryFail(new Error(e));
+                    if (e.getCode() == 101) {
+                        // 创建默认帐薄
+                        createDefaultBook(user, new CreateBookCallback() {
+                            @Override
+                            public void createSuccess(AccountBook book) {
+                                callback.querySuccess(book);
+                            }
+
+                            @Override
+                            public void createFail(Error e) {
+                                callback.queryFail(e);
+                            }
+                        });
+                    } else {
+                        callback.queryFail(new Error(e));
+                    }
                 }
             }
         });
@@ -304,6 +321,7 @@ public class AccountRepository implements AccountDataSource {
         book.setCover(UiUtils.getString(R.string.def_book_cover));
         book.setScene(UiUtils.getString(R.string.def_book_scene));
         book.addShare(user);
+        book.setBid(10000);
         book.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
